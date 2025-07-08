@@ -1,0 +1,247 @@
+<script type="text/javascript">
+    var gk_isXlsx = false;
+    var gk_xlsxFileLookup = {};
+    var gk_fileData = {};
+    function filledCell(cell) {
+        return cell !== '' && cell != null;
+    }
+    function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                    row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                    headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+    }
+</script>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nguyen Cong Hung - Portfolio</title>
+    <script src="https://cdn.jsdelivr.net/npm/react@18.2.0/umd/react.production.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-dom@18.2.0/umd/react-dom.production.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@babel/standalone@7.20.15/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .section-title {
+            @apply text-3xl font-bold mb-6 text-gray-800;
+        }
+
+        .project-card {
+            @apply bg-white shadow-lg rounded-lg p-6 mb-6 hover:shadow-xl transition-shadow duration-300;
+        }
+
+        .tech-tag {
+            @apply inline-block bg-blue-100 text-blue-800 text-sm px-3 py-1 rounded-full mr-2 mb-2;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100">
+    <div id="root"></div>
+    <script type="text/babel">
+        const { useState } = React;
+
+        const projects = [
+            {
+                title: "AVB-ARC – Service Management Platform",
+                period: "Feb 2025 – Present",
+                company: "N.A.M Tech",
+                role: "Lead Architect & Senior Developer",
+                description: "A cross-department platform to manage services and internal operations.",
+                contributions: [
+                    "Designed modular frontend architecture and CI/CD pipelines",
+                    "Led collaboration with UI/UX, Backend, and QA teams"
+                ],
+                techStack: ["React Native", "Jenkins", "CodePush"]
+            },
+            {
+                title: "BShip – Management",
+                period: "Oct 2024 – Feb 2025",
+                company: "BUTL Tech",
+                role: "Lead Developer",
+                description: "Personnel, accounting, debt, and vehicle management system.",
+                contributions: [
+                    "Led project from ideation to deployment",
+                    "Built full architecture with CI/CD integration"
+                ],
+                techStack: ["Next.js", "TypeScript", "Jest", "Jenkins", "ESLint", "Prettier"]
+            },
+            {
+                title: "Emart Mall – E-commerce Mobile App",
+                period: "Jan 2022 – Oct 2024",
+                company: "Thiso Retail",
+                role: "Mid-Level React Native Developer",
+                description: "Official mobile app for Emart Retail with 100K+ daily active users.",
+                contributions: [
+                    "Developed features and cart logic using React Navigation",
+                    "Optimized performance across platforms"
+                ],
+                techStack: ["React Native", "Redux", "Jest"]
+            },
+            {
+                title: "Emart VOC – Customer Feedback Application",
+                period: "Jan 2022 – Oct 2024",
+                company: "Thiso Retail",
+                role: "Project Leader",
+                description: "Platform for collecting and managing customer feedback.",
+                contributions: [
+                    "Designed MobX State Tree architecture",
+                    "Led delivery, testing, and app improvement"
+                ],
+                techStack: ["React Native", "MobX", "Maestro", "EAS Build"]
+            },
+            {
+                title: "Check Date – Expiry Management App",
+                period: "Dec 2020 – May 2021",
+                company: "Promote",
+                role: "Lead Developer",
+                description: "Mobile-first app to track expiry dates and reminders.",
+                contributions: [
+                    "Built the entire app from scratch with responsive UI",
+                    "Handled frontend logic and optimization"
+                ],
+                techStack: ["jQuery", "HTML", "CSS", "Bootstrap"]
+            },
+            {
+                title: "9Health – Health Management App",
+                period: "Dec 2020 – May 2021",
+                company: "Promote",
+                role: "Main Frontend Developer",
+                description: "Health tracking and lifestyle management application.",
+                contributions: [
+                    "Enhanced performance and integrated Redux state",
+                    "Implemented reusable UI components"
+                ],
+                techStack: ["React Native", "Redux Saga", "Native Base"]
+            },
+            {
+                title: "EVN – Electricity & eCommerce Platform",
+                period: "May 2021 – Dec 2022",
+                company: "Intellin Tech",
+                role: "Frontend Developer",
+                description: "Platform for electricity purchasing and shopping.",
+                contributions: [
+                    "Developed Material UI-based modules with ReactJS",
+                    "Managed Jenkins-based deployment flows"
+                ],
+                techStack: ["ReactJS", "Material UI", "Jenkins"]
+            },
+            {
+                title: "Affina – Insurance Management Platform",
+                period: "May 2021 – Dec 2022",
+                company: "Intellin Tech",
+                role: "Frontend Developer",
+                description: "Insurance sales dashboard and tracking system.",
+                contributions: [
+                    "Built dashboards and user flows",
+                    "Ensured visual consistency and delivery"
+                ],
+                techStack: ["ReactJS", "Material UI", "Jenkins"]
+            }
+        ];
+
+        const ProjectCard = ({ project }) => (
+            <div className="project-card">
+                <h3 className="text-xl font-semibold text-gray-800">{project.title}</h3>
+                <p className="text-sm text-gray-500">{project.period} | {project.company}</p>
+                <p className="text-sm font-medium text-blue-600">{project.role}</p>
+                <p className="mt-2 text-gray-600">{project.description}</p>
+                <h4 className="mt-4 font-medium text-gray-700">Key Contributions:</h4>
+                <ul className="list-disc list-inside text-gray-600">
+                    {project.contributions.map((contribution, index) => (
+                        <li key={index}>{contribution}</li>
+                    ))}
+                </ul>
+                <h4 className="mt-4 font-medium text-gray-700">Tech Stack:</h4>
+                <div>
+                    {project.techStack.map((tech, index) => (
+                        <span key={index} className="tech-tag">
+                            {tech}{index < project.techStack.length - 1 && ', '}
+                        </span>
+                    ))}
+                </div>
+            </div>
+        );
+
+        const Portfolio = () => {
+            const [filter, setFilter] = useState("");
+
+            const filteredProjects = projects.filter(project =>
+                project.title.toLowerCase().includes(filter.toLowerCase()) ||
+                project.company.toLowerCase().includes(filter.toLowerCase()) ||
+                project.techStack.some(tech => tech.toLowerCase().includes(filter.toLowerCase()))
+            );
+
+            return (
+                <div className="container mx-auto px-4 py-12">
+                    <header className="text-center mb-12">
+                        <h1 className="text-5xl font-extrabold text-gray-800">Nguyen Cong Hung</h1>
+                        <p className="text-xl text-gray-600 mt-2">Senior Frontend Developer | Architect | Project Leader</p>
+                        <p className="text-gray-500 mt-2">
+                            Passionate about building scalable, user-centric applications with modern technologies.
+                        </p>
+                    </header>
+
+                    <div className="mb-8">
+                        <input
+                            type="text"
+                            placeholder="Search projects by title, company, or tech..."
+                            className="w-full p-3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            value={filter}
+                            onChange={(e) => setFilter(e.target.value)}
+                        />
+                    </div>
+
+                    <section>
+                        <h2 className="section-title">Projects</h2>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            {filteredProjects.map((project, index) => (
+                                <ProjectCard key={index} project={project} />
+                            ))}
+                        </div>
+                    </section>
+
+                    <footer className="text-center mt-12 text-gray-500">
+                        <p>&copy; 2025 Nguyen Cong Hung. All rights reserved.</p>
+                    </footer>
+                </div>
+            );
+        };
+
+        ReactDOM.render(<Portfolio />, document.getElementById('root'));
+    </script>
+</body>
+
+</html>
