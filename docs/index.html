@@ -1,246 +1,561 @@
-<script type="text/javascript">
-    var gk_isXlsx = false;
-    var gk_xlsxFileLookup = {};
-    var gk_fileData = {};
-    function filledCell(cell) {
-        return cell !== '' && cell != null;
-    }
-    function loadFileData(filename) {
-        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
-            try {
-                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
-                var firstSheetName = workbook.SheetNames[0];
-                var worksheet = workbook.Sheets[firstSheetName];
-
-                // Convert sheet to JSON to filter blank rows
-                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
-                // Filter out blank rows (rows where all cells are empty, null, or undefined)
-                var filteredData = jsonData.filter(row => row.some(filledCell));
-
-                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
-                var headerRowIndex = filteredData.findIndex((row, index) =>
-                    row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
-                );
-                // Fallback
-                if (headerRowIndex === -1 || headerRowIndex > 25) {
-                    headerRowIndex = 0;
-                }
-
-                // Convert filtered JSON back to CSV
-                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
-                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
-                return csv;
-            } catch (e) {
-                console.error(e);
-                return "";
-            }
-        }
-        return gk_fileData[filename] || "";
-    }
-</script>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nguyen Cong Hung - Portfolio</title>
+    <title>Hung Nguyen | Software Architect & Senior Developer</title>
+    <!-- SEO -->
+    <meta name="description" content="Portfolio of Hung Nguyen, a Senior Software Architect and Developer specializing in Clean Architecture, High-Performance Web, and Offline-First Mobile Systems.">
+    <meta name="keywords" content="Software Architect, Clean Architecture, React, Next.js, Node.js, React Native, Fullstack Developer, Vietnam">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- CDNs -->
     <script src="https://cdn.jsdelivr.net/npm/react@18.2.0/umd/react.production.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/react-dom@18.2.0/umd/react-dom.production.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@babel/standalone@7.20.15/babel.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        display: ['Outfit', 'sans-serif'],
+                        body: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        },
+                        surface: {
+                            900: '#0A0A0B',
+                            800: '#121214',
+                            700: '#1C1C1F',
+                            600: '#252529',
+                        }
+                    },
+                    backgroundImage: {
+                        'hero-pattern': "url('assets/hero-bg.png')",
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
+        .glass-card {
+            background: rgba(28, 28, 31, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
         }
-
-        .section-title {
-            @apply text-3xl font-bold mb-6 text-gray-800;
+        .hero-gradient {
+            background: radial-gradient(circle at 50% 50%, rgba(14, 165, 233, 0.15) 0%, transparent 60%);
         }
-
-        .project-card {
-            @apply bg-white shadow-lg rounded-lg p-6 mb-6 hover:shadow-xl transition-shadow duration-300;
+        .animate-subtle {
+            animation: subtle 6s ease-in-out infinite alternate;
         }
-
-        .tech-tag {
-            @apply inline-block bg-blue-100 text-blue-800 text-sm px-3 py-1 rounded-full mr-2 mb-2;
+        @keyframes subtle {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-10px); }
+        }
+        .tech-pill {
+            @apply flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-300;
+        }
+        .mermaid {
+            background: white !important;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
         }
     </style>
 </head>
 
-<body class="bg-gray-100">
+<body class="bg-surface-900 text-slate-100 font-body antialiased">
     <div id="root"></div>
+
     <script type="text/babel">
-        const { useState } = React;
+        const { useState, useEffect } = React;
+
+        const LucideIcon = ({ name, className = "w-5 h-5" }) => {
+            // Simple SVG mapping for common icons to avoid large library weight
+            const icons = {
+                code: <path d="m18 16 4-4-4-4M6 8l-4 4 4 4M14.5 4l-5 16"/>,
+                layout: <><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18M9 21V9"/></>,
+                smartphone: <><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/></>,
+                database: <><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></>,
+                zap: <path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/>,
+                shield: <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>,
+                external: <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14 21 3"/>,
+                architecture: <><path d="M3 12h18"/><path d="M12 3v18"/><path d="M5 19l14-14"/><path d="M19 19L5 5"/></>,
+            };
+            return (
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                    {icons[name] || <circle cx="12" cy="12" r="10"/>}
+                </svg>
+            );
+        };
 
         const projects = [
             {
-                title: "AVB-ARC – Service Management Platform",
-                period: "Feb 2025 – Present",
-                company: "N.A.M Tech",
-                role: "Lead Architect & Senior Developer",
-                description: "A cross-department platform to manage services and internal operations.",
-                contributions: [
-                    "Designed modular frontend architecture and CI/CD pipelines",
-                    "Led collaboration with UI/UX, Backend, and QA teams"
-                ],
-                techStack: ["React Native", "Jenkins", "CodePush"]
+                id: "order-manager",
+                title: "Order Manager (Enterprise Core)",
+                type: "Fullstack Architecture",
+                role: "Lead Architect / Senior Developer",
+                desc: "A mission-critical management system for handling complex inventory and high-volume order flows. Focuses on data integrity and strict auditability.",
+                philosophy: "Clean Architecture | DDD Lite | Audit-First",
+                tech: ["React 18", "Node.js", "PostgreSQL", "Prisma", "Typescript", "Zod"],
+                tags: ["Complex Business Logic", "RBAC", "Audit Log System"],
+                isPriority: true,
+                architecture: `graph TD
+    User([User]) --> SPA[React SPA]
+    SPA --> API[Express API Layer]
+    subgraph API_SERVER [API Application]
+        API --> Auth[Auth MW]
+        Auth --> Val[Zod Validator]
+        Val --> Controllers[Domain Controllers]
+        Controllers --> Audit[Audit Service]
+        Controllers --> ORM[Prisma Client]
+    end
+    ORM --> DB[(PostgreSQL)]
+    Audit --> DB`,
+                details: [
+                    "Strict layer separation: Route -> Middleware -> Controller -> Service -> Persistence.",
+                    "Implemented 'Water-fall' payment logic (FIFO) to handle complex debt settlements.",
+                    "Developed fully-automated audit logging capturing before/after states for all critical mutations.",
+                    "Implemented core features for Cruncher (Financial & Tax system) handling secure data workflows."
+                ]
             },
             {
-                title: "BShip – Management",
-                period: "Oct 2024 – Feb 2025",
-                company: "BUTL Tech",
+                id: "bsp-customer",
+                title: "BSP Customer (Service Management)",
+                type: "Enterprise System",
                 role: "Lead Developer",
-                description: "Personnel, accounting, debt, and vehicle management system.",
-                contributions: [
-                    "Led project from ideation to deployment",
-                    "Built full architecture with CI/CD integration"
-                ],
-                techStack: ["Next.js", "TypeScript", "Jest", "Jenkins", "ESLint", "Prettier"]
+                desc: "A ticket and customer feedback management system for service providers (appliance repair, utility services).",
+                philosophy: "Modular Architecture | Scalability | Efficiency",
+                tech: ["React Native", "TypeScript", "App Flow", "Real-time Sync"],
+                tags: ["Service Excellence", "Ticket System"],
+                isPriority: true,
+                architecture: `graph TD
+    App[Mobile App] --> API[Management API]
+    API --> CRM[Internal CRM]
+    API --> FeedbackVault[Feedback Storage]`,
+                details: [
+                    "Spearheaded the development of a unified ticket management system.",
+                    "Optimized feedback loops between service providers and end-customers.",
+                    "Mentored junior developers and conducted rigorous code reviews."
+                ]
             },
             {
-                title: "Emart Mall – E-commerce Mobile App",
-                period: "Jan 2022 – Oct 2024",
-                company: "Thiso Retail",
-                role: "Mid-Level React Native Developer",
-                description: "Official mobile app for Emart Retail with 100K+ daily active users.",
-                contributions: [
-                    "Developed features and cart logic using React Navigation",
-                    "Optimized performance across platforms"
-                ],
-                techStack: ["React Native", "Redux", "Jest"]
+                id: "shopify-minis",
+                title: "AI & AR Retail Experience",
+                type: "Innovative Mobile App",
+                role: "Senior Developer",
+                desc: "Built a Shopify Minis App for furniture suppliers, integrating AI and AR for immersive shopping.",
+                philosophy: "AI-Driven UX | AR Visualization",
+                tech: ["ReactJS", "Shopify API", "AR Engine", "AI Recommendations"],
+                tags: ["AI Integration", "AR Preview", "Next-Gen Retail"],
+                isPriority: true,
+                architecture: `graph LR
+    User --> AI[AI Recommendation Engine]
+    AI --> Product[Product Selection]
+    Product --> AR[In-room AR Preview]`,
+                details: [
+                    "Integrated AI product recommendations based on natural language user descriptions.",
+                    "Implemented AR preview for in-room visualization of furniture products.",
+                    "Ensured high-performance rendering on mobile web platforms."
+                ]
             },
             {
-                title: "Emart VOC – Customer Feedback Application",
-                period: "Jan 2022 – Oct 2024",
-                company: "Thiso Retail",
-                role: "Project Leader",
-                description: "Platform for collecting and managing customer feedback.",
-                contributions: [
-                    "Designed MobX State Tree architecture",
-                    "Led delivery, testing, and app improvement"
-                ],
-                techStack: ["React Native", "MobX", "Maestro", "EAS Build"]
+                id: "hann-nong-san",
+                title: "Hann Nông Sản (E-commerce Excellence)",
+                type: "High-Performance Web",
+                role: "Fullstack Developer",
+                desc: "A modern agricultural marketplace built for extreme speed and SEO optimization. Focuses on premium branding and high conversion rates.",
+                philosophy: "Performance (Core Web Vitals) | SEO-First | Modern UX",
+                tech: ["Next.js 15", "App Router", "Tailwind CSS", "TypeScript"],
+                tags: ["Premium UI/UX", "SEO Optimized", "Next.js 15"],
+                isPriority: true,
+                architecture: `graph LR
+    User --> Edge[Vercel Edge Network]
+    Edge --> ISR[Incremental Static Regeneration]
+    ISR --> RSC[React Server Components]
+    RSC --> Client[Hydrated Interaction]`,
+                details: [
+                    "Leveraged Next.js 15 App Router for superior routing and performance.",
+                    "Achieved nearly 100 on all Lighthouse metrics through image optimization and zero-cumulative-layout-shift.",
+                    "Implemented advanced SEO strategies involving dynamic Open Graph generation and structured data schemas."
+                ]
             },
             {
-                title: "Check Date – Expiry Management App",
-                period: "Dec 2020 – May 2021",
-                company: "Promote",
+                id: "mobile-sync",
+                title: "Mobile Sync Architecture",
+                id_slug: "sync-arch",
+                type: "Cross-Platform Mobile",
                 role: "Lead Developer",
-                description: "Mobile-first app to track expiry dates and reminders.",
-                contributions: [
-                    "Built the entire app from scratch with responsive UI",
-                    "Handled frontend logic and optimization"
-                ],
-                techStack: ["jQuery", "HTML", "CSS", "Bootstrap"]
-            },
-            {
-                title: "9Health – Health Management App",
-                period: "Dec 2020 – May 2021",
-                company: "Promote",
-                role: "Main Frontend Developer",
-                description: "Health tracking and lifestyle management application.",
-                contributions: [
-                    "Enhanced performance and integrated Redux state",
-                    "Implemented reusable UI components"
-                ],
-                techStack: ["React Native", "Redux Saga", "Native Base"]
-            },
-            {
-                title: "EVN – Electricity & eCommerce Platform",
-                period: "May 2021 – Dec 2021",
-                company: "Intellin Tech",
-                role: "Frontend Developer",
-                description: "Platform for electricity purchasing and shopping.",
-                contributions: [
-                    "Developed Material UI-based modules with ReactJS",
-                    "Managed Jenkins-based deployment flows"
-                ],
-                techStack: ["ReactJS", "Material UI", "Jenkins"]
-            },
-            {
-                title: "Affina – Insurance Management Platform",
-                period: "May 2021 – Dec 2021",
-                company: "Intellin Tech",
-                role: "Frontend Developer",
-                description: "Insurance sales dashboard and tracking system.",
-                contributions: [
-                    "Built dashboards and user flows",
-                    "Ensured visual consistency and delivery"
-                ],
-                techStack: ["ReactJS", "Material UI", "Jenkins"]
+                desc: "A creative solution for data synchronization across platforms without a traditional dedicated backend, utilizing GitHub API as a temporary staging/sync DB.",
+                philosophy: "Offline-First | Strategic Syncing | Cost Efficiency",
+                tech: ["React Native", "GitHub API", "Sub-DB Logic", "Async Storage"],
+                tags: ["Creative Architecture", "Offline Support", "Sync Logic"],
+                isPriority: true,
+                architecture: `graph LR
+    App[Mobile App] -- Offline --> Local[(Local Storage)]
+    App -- Sync Request --> GH[GitHub API as Sync Layer]
+    GH -- Approved Data --> MainDB[(Primary DB/Dashboard)]`,
+                details: [
+                    "Designed an innovative sync engine using GitHub APIs as a serverless data staging area.",
+                    "Robust offline-first architecture ensuring seamless data entry without network connectivity.",
+                    "Automated approval/rejection workflows integrated into a central dashboard for data integrity."
+                ]
             }
         ];
 
-        const ProjectCard = ({ project }) => (
-            <div className="project-card">
-                <h3 className="text-xl font-semibold text-gray-800">{project.title}</h3>
-                <p className="text-sm text-gray-500">{project.period} | {project.company}</p>
-                <p className="text-sm font-medium text-blue-600">{project.role}</p>
-                <p className="mt-2 text-gray-600">{project.description}</p>
-                <h4 className="mt-4 font-medium text-gray-700">Key Contributions:</h4>
-                <ul className="list-disc list-inside text-gray-600">
-                    {project.contributions.map((contribution, index) => (
-                        <li key={index}>{contribution}</li>
-                    ))}
-                </ul>
-                <h4 className="mt-4 font-medium text-gray-700">Tech Stack:</h4>
-                <div>
-                    {project.techStack.map((tech, index) => (
-                        <span key={index} className="tech-tag">
-                            {tech}{index < project.techStack.length - 1 && ', '}
-                        </span>
-                    ))}
-                </div>
-            </div>
-        );
+        const otherProjects = [
+            {
+                title: "AVB-ARC – Service Management",
+                company: "N.A.M Tech",
+                tech: "React Native, Flutter, Cubit, Jenkins, Fastlane, CodePush",
+                role: "Lead Architect",
+                period: "2024 - Present",
+                desc: "Cross-departmental service management platform with modular components and automated CI/CD."
+            },
+            {
+                title: "Emart Mall & VOC",
+                company: "Thiso Retail",
+                tech: "React Native, Redux, Recoil, Redux-Saga",
+                role: "React Native Developer",
+                period: "2022 - 2024",
+                desc: "Full ownership of frontend architecture. Introduced Redux/Recoil for scalable state management."
+            },
+            {
+                title: "Insurance & Electricity Apps",
+                company: "Intellin Tech",
+                tech: "ReactJS, Redux, Material UI, Jenkins",
+                role: "React Native Developer",
+                period: "2021 - 2022",
+                desc: "Delivered UI features across Android/iOS. Worked in Agile methodology with daily standups."
+            },
+            {
+                title: "9Health & Check Date",
+                company: "Promote",
+                tech: "React Native, Hooks, Firebase, Stripe API",
+                role: "Frontend Developer",
+                period: "2020 - 2021",
+                desc: "Migrated legacy class components to modern hooks. Integrated Stripe for secure payments."
+            }
+        ];
 
-        const Portfolio = () => {
-            const [filter, setFilter] = useState("");
+        const achievements = [
+            { title: "Outstanding Performance Award", giver: "Thiso Retail (Emart)" },
+            { title: "Excellent Staff of the Year", giver: "Thiso Retail (Emart)" }
+        ];
 
-            const filteredProjects = projects.filter(project =>
-                project.title.toLowerCase().includes(filter.toLowerCase()) ||
-                project.company.toLowerCase().includes(filter.toLowerCase()) ||
-                project.techStack.some(tech => tech.toLowerCase().includes(filter.toLowerCase()))
-            );
+        const ProjectCard = ({ project, index }) => {
+            const [showArch, setShowArch] = useState(false);
+
+            useEffect(() => {
+                if (showArch) {
+                    mermaid.init(undefined, `.mermaid-${project.id}`);
+                }
+            }, [showArch]);
 
             return (
-                <div className="container mx-auto px-4 py-12">
-                    <header className="text-center mb-12">
-                        <h1 className="text-5xl font-extrabold text-gray-800">Nguyen Cong Hung</h1>
-                        <p className="text-xl text-gray-600 mt-2">Senior Frontend Developer | Architect | Project Leader</p>
-                        <p className="text-gray-500 mt-2">
-                            Passionate about building scalable, user-centric applications with modern technologies.
-                        </p>
-                    </header>
+                <div 
+                    className="glass-card rounded-2xl overflow-hidden group hover:-translate-y-2 transition-all duration-500 hover:shadow-2xl hover:shadow-brand-500/10 flex flex-col md:flex-row"
+                    style={{ animationDelay: `${index * 150}ms` }}
+                >
+                    <div className="p-8 md:w-3/5 flex flex-col justify-between">
+                        <div>
+                            <div className="flex items-center gap-3 mb-4">
+                                <span className="bg-brand-500/20 text-brand-400 px-3 py-1 rounded-md text-[10px] font-bold uppercase tracking-widest">{project.type}</span>
+                                <span className="text-slate-500 text-xs font-medium">{project.philosophy}</span>
+                            </div>
+                            <h3 className="text-3xl font-extrabold text-white mb-3 font-display">{project.title}</h3>
+                            <p className="text-slate-400 text-sm leading-relaxed mb-6">
+                                {project.desc}
+                            </p>
+                            
+                            <ul className="mb-8 space-y-2">
+                                {project.details.map((detail, i) => (
+                                    <li key={i} className="flex items-start gap-2 text-xs text-slate-300">
+                                        <span className="text-brand-400 mt-1">•</span>
+                                        <span>{detail}</span>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                        
+                        <div className="flex flex-wrap gap-2 mt-auto">
+                            {project.tech.map((t, i) => (
+                                <span key={i} className="bg-surface-600 text-slate-400 px-2.5 py-1 rounded text-[10px] font-medium border border-white/5">{t}</span>
+                            ))}
+                        </div>
+                    </div>
+                    
+                    <div className="md:w-2/5 md:border-l border-white/5 bg-surface-800/30 p-8 flex flex-col">
+                        <h4 className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-6 flex items-center gap-2">
+                            <LucideIcon name="architecture" className="w-3.5 h-3.5" />
+                            Architectural Blueprint
+                        </h4>
+                        
+                        <button 
+                            onClick={() => setShowArch(!showArch)}
+                            className="w-full bg-brand-600 hover:bg-brand-500 text-white font-bold py-3 px-6 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 text-sm shadow-lg shadow-brand-600/20 mb-6"
+                        >
+                            <LucideIcon name={showArch ? "shield" : "zap"} className="w-4 h-4" />
+                            {showArch ? "Hide Analysis" : "Show System Design"}
+                        </button>
+                        
+                        {showArch && (
+                            <div className={`mermaid mermaid-${project.id} transition-all duration-700 opacity-100 scale-100 origin-top`}>
+                                {project.architecture}
+                            </div>
+                        )}
+                        
+                        {!showArch && (
+                            <div className="mt-4 p-6 border-2 border-dashed border-white/5 rounded-2xl flex flex-col items-center justify-center text-center opacity-40 group-hover:opacity-70 transition-opacity">
+                                <LucideIcon name="architecture" className="w-12 h-12 text-slate-600 mb-4" />
+                                <p className="text-xs text-slate-500 font-medium leading-relaxed">Click button above to review the system architecture visualization.</p>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            );
+        };
 
-                    <div className="mb-8">
-                        <input
-                            type="text"
-                            placeholder="Search projects by title, company, or tech..."
-                            className="w-full p-3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            value={filter}
-                            onChange={(e) => setFilter(e.target.value)}
-                        />
+        const App = () => {
+            const [scrolled, setScrolled] = useState(false);
+
+            useEffect(() => {
+                const handleScroll = () => setScrolled(window.scrollY > 20);
+                window.addEventListener('scroll', handleScroll);
+                return () => window.removeEventListener('scroll', handleScroll);
+            }, []);
+
+            return (
+                <div className="min-h-screen relative">
+                    {/* Fixed BG */}
+                    <div className="fixed inset-0 z-[-1] bg-surface-900 pointer-events-none">
+                        <div className="absolute inset-0 bg-hero-pattern bg-cover bg-center opacity-[0.03] scale-110"></div>
+                        <div className="hero-gradient absolute inset-0"></div>
                     </div>
 
-                    <section>
-                        <h2 className="section-title">Projects</h2>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            {filteredProjects.map((project, index) => (
-                                <ProjectCard key={index} project={project} />
-                            ))}
+                    {/* Navbar */}
+                    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 h-20 flex items-center ${scrolled ? 'glass-card h-16 border-b' : ''}`}>
+                        <div className="container mx-auto px-6 lg:px-12 flex justify-between items-center">
+                            <div className="flex items-center gap-2">
+                                <div className="w-8 h-8 bg-brand-600 rounded-lg flex items-center justify-center font-bold text-white shadow-lg shadow-brand-600/30">H</div>
+                                <span className="text-lg font-black tracking-tighter font-display text-white">CONG HUNG</span>
+                            </div>
+                            <div className="hidden md:flex gap-10 text-xs font-bold uppercase tracking-widest text-slate-400">
+                                <a href="#work" className="hover:text-brand-400 transition-colors">Work</a>
+                                <a href="#skills" className="hover:text-brand-400 transition-colors">Skills</a>
+                                <a href="mailto:business.nc.hung@gmail.com" className="bg-brand-600 text-white px-5 py-2 rounded-full hover:bg-brand-500 transition-all shadow-lg shadow-brand-600/20">Let's Talk</a>
+                            </div>
+                        </div>
+                    </nav>
+
+                    {/* Hero Section */}
+                    <section className="pt-40 pb-32 px-6 lg:px-12 relative overflow-hidden">
+                        <div className="container mx-auto max-w-6xl">
+                            <div className="relative z-10 flex flex-col md:flex-row items-end justify-between gap-12">
+                                <div className="max-w-3xl">
+                                    <div className="flex items-center gap-3 mb-6 animate-pulse">
+                                        <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]"></div>
+                                        <span className="text-emerald-500 text-[10px] font-black uppercase tracking-[0.2em]">Open for high-impact roles</span>
+                                    </div>
+                                    <h1 className="text-6xl md:text-8xl font-black font-display text-white leading-[0.9] mb-8 tracking-tighter">
+                                        Architecting<br/>
+                                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-emerald-400">Scalable Systems.</span>
+                                    </h1>
+                                    <p className="text-lg md:text-xl text-slate-400 max-w-xl leading-relaxed mb-10 font-normal">
+                                        Senior Developer & Software Architect based in Vietnam. I build robust digital foundations for enterprises, focusing on 
+                                        <span className="text-slate-100 font-bold"> Clean Architecture</span>, 
+                                        <span className="text-slate-100 font-bold"> High-Performance Web</span>, and 
+                                        <span className="text-slate-100 font-bold"> Offline-First Mobile</span> ecosystems.
+                                    </p>
+                                    <div className="flex items-center gap-6">
+                                        <a href="#work" className="group flex items-center gap-3 bg-brand-600 hover:bg-brand-500 text-white font-black py-4 px-8 rounded-2xl transition-all duration-300 shadow-xl shadow-brand-600/20 text-sm">
+                                            Explore Masterpieces
+                                            <LucideIcon name="zap" className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                                        </a>
+                                        <div className="flex items-center gap-4 border-l border-white/10 pl-6 py-2">
+                                            <div className="flex flex-col">
+                                                <span className="text-xl font-bold text-white leading-none">6+</span>
+                                                <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-1">Years Exp.</span>
+                                            </div>
+                                            <div className="flex flex-col">
+                                                <span className="text-xl font-bold text-white leading-none">20+</span>
+                                                <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-1">Project Done</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div className="hidden lg:block w-72 h-72 relative">
+                                    <div className="absolute inset-0 bg-brand-500/10 rounded-full blur-3xl"></div>
+                                    <div className="glass-card absolute inset-0 rounded-3xl p-8 flex flex-col justify-center animate-subtle border border-brand-500/20 shadow-2xl shadow-brand-500/5">
+                                        <LucideIcon name="shield" className="w-12 h-12 text-brand-400 mb-6" />
+                                        <h4 className="text-lg font-black font-display text-white mb-2 tracking-tight">System Integrity</h4>
+                                        <p className="text-xs text-slate-400 leading-relaxed font-medium">Protecting data through strict validation patterns and immutable audit trails.</p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </section>
 
-                    <footer className="text-center mt-12 text-gray-500">
-                        <p>&copy; 2025 Nguyen Cong Hung. All rights reserved.</p>
+                    {/* Work Section */}
+                    <section id="work" className="py-24 px-6 lg:px-12 bg-surface-800/30">
+                        <div className="container mx-auto max-w-6xl">
+                            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-20">
+                                <div>
+                                    <span className="text-brand-500 text-[10px] font-black uppercase tracking-[0.3em] mb-4 block">Proven Experience</span>
+                                    <h2 className="text-5xl md:text-6xl font-black font-display text-white tracking-tighter">Selected Legacy.</h2>
+                                </div>
+                                <p className="text-slate-400 text-sm max-w-xs leading-relaxed font-medium">
+                                    A curated selection of projects demonstrating architectural complexity and visual excellence.
+                                </p>
+                            </div>
+
+                            <div className="space-y-16">
+                                {projects.map((p, i) => (
+                                    <ProjectCard key={p.id} project={p} index={i} />
+                                ))}
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* Experience Grid */}
+                    <section className="py-24 px-6 lg:px-12">
+                        <div className="container mx-auto max-w-6xl text-center">
+                            <h2 className="text-4xl font-extrabold text-white mb-16 font-display">Professional Journey</h2>
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                {otherProjects.map((op, i) => (
+                                    <div key={i} className="glass-card p-8 rounded-2xl border-white/5 text-left group hover:border-brand-500/30 transition-all duration-300">
+                                        <span className="text-brand-500 text-[10px] font-black tracking-widest uppercase mb-4 block">{op.period}</span>
+                                        <h3 className="text-xl font-bold text-white mb-2">{op.title}</h3>
+                                        <p className="text-brand-400 text-xs font-bold mb-2 uppercase tracking-tighter">{op.role} @ {op.company}</p>
+                                        <p className="text-slate-400 text-xs leading-relaxed mb-4">{op.desc}</p>
+                                        <p className="text-slate-500 text-[9px] font-semibold uppercase tracking-wider">{op.tech}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* Achievements Section */}
+                    <section className="py-24 px-6 lg:px-12 bg-emerald-500/5">
+                        <div className="container mx-auto max-w-6xl">
+                            <h2 className="text-3xl font-black font-display text-white mb-12 text-center">Industry Recognition</h2>
+                            <div className="flex flex-wrap justify-center gap-8">
+                                {achievements.map((a, i) => (
+                                    <div key={i} className="glass-card p-6 rounded-2xl border-emerald-500/20 flex flex-col items-center text-center max-w-xs">
+                                        <div className="w-12 h-12 bg-emerald-500/10 rounded-full flex items-center justify-center text-emerald-400 mb-4">
+                                            <LucideIcon name="shield" />
+                                        </div>
+                                        <h4 className="text-white font-bold mb-1">{a.title}</h4>
+                                        <p className="text-slate-400 text-xs font-medium">{a.giver}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* Skills section */}
+                    <section id="skills" className="py-24 px-6 lg:px-12 bg-brand-600/5">
+                        <div className="container mx-auto max-w-6xl">
+                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+                                <div>
+                                    <h2 className="text-5xl font-black font-display text-white tracking-tighter mb-8 leading-[1.1]">
+                                        Weaponized<br/>
+                                        Tech Stack.
+                                    </h2>
+                                    <p className="text-slate-400 text-sm leading-relaxed mb-10 font-medium">
+                                        I don't just write code; I design sustainable software ecosystems using modern industry standards.
+                                    </p>
+                                    
+                                    <div className="space-y-6">
+                                        {[
+                                            { name: "Clean Architecture & SOLID", val: 95 },
+                                            { name: "React / Next.js Expert", val: 98 },
+                                            { name: "Database Design & Optimization", val: 92 },
+                                            { name: "Mobile Development (React Native)", val: 94 }
+                                        ].map((s, i) => (
+                                            <div key={i} className="space-y-2">
+                                                <div className="flex justify-between text-xs font-bold uppercase tracking-widest">
+                                                    <span className="text-slate-200">{s.name}</span>
+                                                    <span className="text-brand-400">{s.val}%</span>
+                                                </div>
+                                                <div className="h-1 w-full bg-surface-600 rounded-full overflow-hidden">
+                                                    <div className="h-full bg-brand-500 rounded-full" style={{ width: `${s.val}%` }}></div>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                                
+                                <div className="grid grid-cols-2 gap-4">
+                                    {[
+                                        { icon: "code", n: "Frontend", d: "React Native, ReactJS, Next.js, Flutter" },
+                                        { icon: "database", n: "State & Logic", d: "Redux (Toolkit/Saga), MobX, Cubit, Recoil" },
+                                        { icon: "smartphone", n: "Mobile Mastery", d: "Fastlane, CodePush, EAS Build, Firebase" },
+                                        { icon: "shield", n: "Industry Quality", d: "Agile, CI/CD, Jest, Maestro, Clean Architecture" }
+                                    ].map((s, i) => (
+                                        <div key={i} className="glass-card p-6 rounded-2xl border-white/5 group hover:bg-brand-600/10 transition-colors">
+                                            <div className="w-10 h-10 bg-brand-500/10 rounded-xl flex items-center justify-center text-brand-400 mb-4 group-hover:scale-110 transition-transform">
+                                                <LucideIcon name={s.icon} />
+                                            </div>
+                                            <h4 className="text-white font-bold text-sm mb-1">{s.n}</h4>
+                                            <p className="text-slate-500 text-[10px] font-medium leading-relaxed">{s.d}</p>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* Footer */}
+                    <footer className="py-20 px-6 lg:px-12 border-t border-white/5">
+                        <div className="container mx-auto max-w-6xl">
+                            <div className="flex flex-col md:flex-row justify-between items-center gap-10">
+                                <div>
+                                    <h3 className="text-4xl font-black font-display text-white tracking-tighter mb-2">Build something iconic.</h3>
+                                    <p className="text-slate-500 text-xs font-medium uppercase tracking-widest">Available for selective world-class projects.</p>
+                                </div>
+                                <div className="flex gap-4">
+                                    <a href="mailto:business.nc.hung@gmail.com" className="bg-white text-black font-black px-8 py-4 rounded-2xl hover:bg-slate-200 transition-all text-sm shadow-xl shadow-white/5">business.nc.hung@gmail.com</a>
+                                    <a href="tel:0981815237" className="glass-card text-white font-black px-8 py-4 rounded-2xl border-white/10 hover:bg-white/5 transition-all text-sm">+84 981 815 237</a>
+                                </div>
+                            </div>
+                            <div className="mt-20 pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6 text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em]">
+                                <p>&copy; 2025 Nguyen Cong Hung. Architecting the future.</p>
+                                <div className="flex gap-8">
+                                    <a href="https://www.linkedin.com/in/h%C6%B0ng-nguy%E1%BB%85n-han-1060b6247/" target="_blank" className="hover:text-white transition-colors">LinkedIn</a>
+                                    <a href="https://github.com/nc-hung" target="_blank" className="hover:text-white transition-colors">GitHub</a>
+                                    <a href="assets/cv.pdf" target="_blank" className="hover:text-white transition-colors">Resume</a>
+                                </div>
+                            </div>
+                        </div>
                     </footer>
                 </div>
             );
         };
 
-        ReactDOM.render(<Portfolio />, document.getElementById('root'));
+        ReactDOM.createRoot(document.getElementById('root')).render(<App />);
     </script>
 </body>
 
