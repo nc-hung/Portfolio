@@ -1,0 +1,123 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Job {
+  id           String   @id @default(uuid())
+  url          String?
+  source       String   // itviec, careerviet, topcv, vietnamworks, manual
+  title        String
+  company      String
+  location     String?
+  salary       String?
+  requirements String?  // JSON string or comma separated
+  skills       String?  // JSON string or comma separated
+  rawContent   String?  // The original HTML or extracted text
+  analyzedData String?  // JSON
+  matchScore   Int?
+  topic        String?  // IT, LEGAL, CUSTOM
+  status       String   @default("NEW") // NEW, SAVED, APPLIED
+  scrapedAt    DateTime @default(now())
+  
+  applications Application[]
+  cvs          CV[]
+}
+
+model CVTemplate {
+  id               String   @id @default(uuid())
+  name             String
+  originalFileName String?
+  originalPdfPath  String?
+  layoutConfig     String   // JSON
+  sections         String?  // JSON
+  colorScheme      String?  // JSON
+  typography       String?  // JSON
+  isDefault        Boolean  @default(false)
+  createdAt        DateTime @default(now())
+
+  cvs              CV[]
+}
+
+model CV {
+  id             String   @id @default(uuid())
+  jobId          String?
+  templateId     String?
+  language       String   @default("VI") // VI, EN
+  title          String
+  summary        String?  // JSON or text
+  skills         String?  // JSON
+  experience     String?  // JSON
+  education      String?  // JSON
+  achievements   String?  // JSON
+  version        Int      @default(1)
+  pdfUrl         String?
+  createdAt      DateTime @default(now())
+
+  job            Job?        @relation(fields: [jobId], references: [id])
+  template       CVTemplate? @relation(fields: [templateId], references: [id])
+  applications   Application[]
+  cvVersions     CVVersion[]
+}
+
+model CVVersion {
+  id        String   @id @default(uuid())
+  cvId      String
+  diff      String   // JSON containing the difference or full snapshot
+  createdAt DateTime @default(now())
+
+  cv        CV       @relation(fields: [cvId], references: [id], onDelete: Cascade)
+}
+
+model Application {
+  id             String   @id @default(uuid())
+  jobId          String
+  cvId           String
+  status         String   // SAVED, APPLIED, INTERVIEW, OFFER, REJECTED
+  appliedAt      DateTime?
+  notes          String?
+  nextAction     String?
+  nextActionDate DateTime?
+  createdAt      DateTime @default(now())
+
+  job            Job      @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  cv             CV       @relation(fields: [cvId], references: [id])
+}
+
+model Profile {
+  id             String          @id @default(uuid())
+  name           String
+  email          String?
+  phone          String?
+  address        String?
+  github         String?
+  linkedin       String?
+  website        String?
+  isActive       Boolean         @default(true)
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  blocks         MasterCVBlock[]
+}
+
+model MasterCVBlock {
+  id        String   @id @default(uuid())
+  category  String   // TITLE, SUMMARY, SKILL, PROJECT, EDUCATION, ACHIEVEMENT
+  variant   String   // A, B, C or custom names like "Manager", "Backend", "Mobile"
+  content   String   // Text or JSON
+  keywords  String?  // Comma separated
+  language  String   @default("VI") // VI, EN
+  createdAt DateTime @default(now())
+  profileId String?
+  profile   Profile? @relation(fields: [profileId], references: [id], onDelete: Cascade)
+}
+
+model ScrapeTopic {
+  id        String   @id @default(uuid())
+  name      String
+  keywords  String   // comma separated keywords
+  isDefault Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
