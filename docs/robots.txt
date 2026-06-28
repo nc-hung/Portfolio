@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# TODO: replace the domain below with your final Railway / custom domain.
+Sitemap: https://nc-hung.github.io/Portfolio/sitemap.xml

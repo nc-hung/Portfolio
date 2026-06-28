@@ -1,0 +1,34 @@
+# Nguyen Cong Hung - Freelance Full-stack Web & Mobile App Developer
+
+> Freelance software engineer available worldwide (remote), working in English. Builds web and mobile apps: order/invoice/debt systems, admin dashboards, and AI automation. Money-accurate, audited, deployed.
+
+## Summary
+- Name: Nguyen Cong Hung (Hann)
+- Role: Freelance Full-stack Software Engineer (web + mobile apps)
+- Location: Vietnam; works remotely with clients worldwide, including Europe and Germany
+- Languages: English, Vietnamese
+- Contact: business.nc.hung@gmail.com, +84 981 815 237
+- GitHub: https://github.com/nc-hung
+
+## Services
+- Web and mobile app development (React, React Native, Next.js, Zalo Mini App)
+- Invoicing, billing and financial-ledger systems (FIFO reconciliation, supplier statements)
+- AI automation and internal tools (chatbots, POS/ERP integrations, reporting, payment reminders)
+- Admin dashboards and internal tools
+- Rescue and stabilize existing systems
+
+## Tech stack
+TypeScript, Node.js, NestJS, Express, React, React Native, Next.js, PostgreSQL, Prisma, Redis, Docker; AI integration (Claude, Gemini, GPT).
+
+## Selected work
+- Order & debt platform for a wholesale distributor (FIFO reconciliation, supplier statements, print/QR invoices).
+- Zalo Mini App commerce platform with a NestJS BFF (Clean Architecture) and resilient Pancake POS sync.
+- Warehouse & sales operations bot (Pancake POS + Zalo OA + AI analysis + payment reminders).
+- Hann Nong San high-performance Next.js e-commerce storefront.
+
+## Experience
+- Senior Mobile Developer, N.A.M Tech (2024-present).
+- Technical Lead, ERP/WMS/CRM, Thiso Retail / Emart (2022-2024).
+
+## Availability
+Available for freelance web and app development worldwide, including Europe and Germany. Remote, English-speaking. Replies within 24 hours.

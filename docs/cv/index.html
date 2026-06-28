@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -309,7 +309,7 @@ function render(d) {
   `;
 }
 
-let lang = (() => { try { return (localStorage.getItem('lang') === 'en') ? 'en' : 'vi'; } catch (e) { return 'vi'; } })();
+let lang = (() => { try { return (localStorage.getItem('lang') === 'vi') ? 'vi' : 'en'; } catch (e) { return 'en'; } })();
 
 function apply() {
   const d = CV[lang];

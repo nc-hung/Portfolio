@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="vi" class="scroll-smooth">
+<html lang="en" class="scroll-smooth">
 
 <head>
     <meta charset="UTF-8">
@@ -7,12 +7,14 @@
     <title>Nguyen Cong Hung - Freelance Full-stack Engineer | Invoicing, Debt & AI Automation</title>
 
     <!-- Primary SEO -->
-    <meta name="description" content="Freelance full-stack engineer. I build order, invoice and customer-debt systems, admin dashboards and AI automation - money-accurate, audited, deployed. Node.js, React, NestJS, PostgreSQL.">
-    <meta name="keywords" content="freelance developer, invoicing system, debt management, ledger software, admin dashboard, AI automation, Node.js, React, NestJS, PostgreSQL, Vietnam">
+    <meta name="description" content="Freelance full-stack web and mobile app developer, available worldwide (remote). I build order/invoice/debt systems, admin dashboards and AI automation - money-accurate, audited, deployed. Node.js, React, NestJS, React Native.">
+    <meta name="keywords" content="freelance web developer, freelance app developer, mobile app developer, remote developer, full-stack engineer, web development, app development, React, React Native, Node.js, NestJS, AI automation, invoicing system, Europe, Germany, worldwide">
     <meta name="author" content="Nguyen Cong Hung">
-    <meta name="robots" content="index, follow">
-    <!-- TODO: set this to your real published URL (e.g. GitHub Pages or custom domain) -->
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <!-- TODO: when you have the final Railway / custom domain, replace every nc-hung.github.io URL below
+         (canonical, hreflang, og:url, og:image, twitter:image, JSON-LD @id/url, robots.txt, sitemap.xml) with it. -->
     <link rel="canonical" href="https://nc-hung.github.io/Portfolio/">
+    <link rel="alternate" hreflang="x-default" href="https://nc-hung.github.io/Portfolio/">
 
     <!-- Open Graph -->
     <meta property="og:type" content="website">
@@ -21,8 +23,8 @@
     <meta property="og:url" content="https://nc-hung.github.io/Portfolio/">
     <!-- TODO: replace with a dedicated 1200x630 social cover for best results -->
     <meta property="og:image" content="https://nc-hung.github.io/Portfolio/assets/hero-bg.png">
-    <meta property="og:locale" content="vi_VN">
-    <meta property="og:locale:alternate" content="en_US">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:locale:alternate" content="vi_VN">
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
@@ -30,20 +32,53 @@
     <meta name="twitter:description" content="Order, invoice and debt systems + AI automation. Money-accurate, audited, deployed.">
     <meta name="twitter:image" content="https://nc-hung.github.io/Portfolio/assets/hero-bg.png">
 
-    <!-- Structured data: Person -->
+    <!-- Structured data: Person + freelance service offered worldwide -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "Nguyen Cong Hung",
-      "alternateName": "Hann",
-      "jobTitle": "Freelance Full-stack Software Engineer",
-      "url": "https://nc-hung.github.io/Portfolio/",
-      "email": "mailto:business.nc.hung@gmail.com",
-      "telephone": "+84981815237",
-      "address": { "@type": "PostalAddress", "addressCountry": "VN" },
-      "knowsAbout": ["Invoicing systems","Debt reconciliation","Financial ledger software","Admin dashboards","AI automation","Node.js","React","NestJS","PostgreSQL","Prisma","TypeScript"],
-      "sameAs": ["https://github.com/nc-hung"]
+      "@graph": [
+        {
+          "@type": "Person",
+          "@id": "https://nc-hung.github.io/Portfolio/#person",
+          "name": "Nguyen Cong Hung",
+          "alternateName": "Hann",
+          "jobTitle": "Freelance Full-stack Software Engineer",
+          "url": "https://nc-hung.github.io/Portfolio/",
+          "email": "mailto:business.nc.hung@gmail.com",
+          "telephone": "+84981815237",
+          "address": { "@type": "PostalAddress", "addressCountry": "VN" },
+          "knowsLanguage": ["Vietnamese", "English"],
+          "knowsAbout": ["Web development","Mobile app development","React Native","Invoicing systems","Debt reconciliation","Admin dashboards","AI automation","Node.js","React","NestJS","PostgreSQL","TypeScript"],
+          "sameAs": ["https://github.com/nc-hung"]
+        },
+        {
+          "@type": "ProfessionalService",
+          "@id": "https://nc-hung.github.io/Portfolio/#service",
+          "name": "Freelance Web & App Development - Nguyen Cong Hung",
+          "provider": { "@id": "https://nc-hung.github.io/Portfolio/#person" },
+          "url": "https://nc-hung.github.io/Portfolio/",
+          "image": "https://nc-hung.github.io/Portfolio/assets/hero-bg.png",
+          "areaServed": "Worldwide",
+          "availableLanguage": ["English", "Vietnamese"],
+          "serviceType": ["Web development", "Mobile app development", "Full-stack development", "AI automation", "Invoicing and debt systems"],
+          "priceRange": "$$"
+        }
+      ]
+    }
+    </script>
+
+    <!-- Structured data: FAQ (helps Google AI Overviews / answer engines extract facts) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        { "@type": "Question", "name": "What does Nguyen Cong Hung do?", "acceptedAnswer": { "@type": "Answer", "text": "He is a freelance full-stack software engineer who builds web and mobile apps: order, invoice and customer-debt systems, admin dashboards, and AI automation, using Node.js, React, NestJS and React Native." } },
+        { "@type": "Question", "name": "Is he available for remote and international projects?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. He works remotely with clients worldwide, including Europe and Germany, communicating in English." } },
+        { "@type": "Question", "name": "What is his tech stack?", "acceptedAnswer": { "@type": "Answer", "text": "TypeScript, Node.js, NestJS, Express, React, React Native, Next.js, PostgreSQL, Prisma, Redis and Docker, plus AI integration with Claude, Gemini and GPT." } },
+        { "@type": "Question", "name": "What kind of projects has he built?", "acceptedAnswer": { "@type": "Answer", "text": "A Zalo Mini App commerce platform with a resilient Pancake POS sync, an order and debt reconciliation system with FIFO payment allocation, AI sales and operations bots, and ERP/WMS apps used on the Emart supermarket floor." } },
+        { "@type": "Question", "name": "How can I hire him?", "acceptedAnswer": { "@type": "Answer", "text": "Email business.nc.hung@gmail.com or use the contact form on this site. He replies with an approach and quote within 24 hours." } }
+      ]
     }
     </script>
 
@@ -103,16 +138,31 @@
 <body class="text-zinc-100 font-body antialiased selection:bg-accent-500/30">
     <!-- SEO / no-JS fallback: this page is client-rendered, so expose core content to crawlers -->
     <noscript>
-        <div style="max-width:760px;margin:40px auto;padding:0 20px;font-family:system-ui;color:#e4e4e7;background:#09090b">
-            <h1>Nguyen Cong Hung - Freelance Full-stack Engineer</h1>
-            <p>I build order, invoice and customer-debt systems, admin dashboards, and AI automation. Money-accurate, audited, deployed. Stack: Node.js, React, NestJS, Prisma, PostgreSQL, TypeScript, Docker.</p>
+        <div style="max-width:820px;margin:40px auto;padding:0 20px;font-family:system-ui;line-height:1.5;color:#e4e4e7;background:#09090b">
+            <h1>Nguyen Cong Hung - Freelance Full-stack Web &amp; Mobile App Developer</h1>
+            <p>Freelance full-stack engineer available worldwide (remote), working in English. I build web and mobile apps that businesses run on: order, invoice and customer-debt systems, admin dashboards, and AI automation - money-accurate, audited, and deployed. Stack: TypeScript, Node.js, NestJS, Express, React, React Native, Next.js, PostgreSQL, Prisma, Docker, plus AI integration (Claude, Gemini, GPT).</p>
             <h2>Services</h2>
             <ul>
+                <li>Web and mobile app development (React, React Native, Next.js, Zalo Mini App).</li>
                 <li>Invoicing, billing and financial-ledger systems (FIFO reconciliation, supplier statements).</li>
-                <li>AI automation and internal tools (chatbots, POS/ERP integrations, reporting).</li>
-                <li>Admin dashboards and internal tools (React + MUI, roles, audit logs).</li>
+                <li>AI automation and internal tools (chatbots, POS/ERP integrations, reporting, payment reminders).</li>
+                <li>Admin dashboards and internal tools (roles, audit logs).</li>
                 <li>Rescue and stabilize existing systems.</li>
             </ul>
+            <h2>Selected work</h2>
+            <ul>
+                <li>Order &amp; debt platform for a wholesale distributor: automatic FIFO payment reconciliation, supplier statements, print/QR invoices (Node.js, Express, Prisma, PostgreSQL, React).</li>
+                <li>Zalo Mini App commerce platform: built from scratch with a NestJS BFF (Clean Architecture) and a resilient Pancake POS sync so orders are never lost on supplier errors.</li>
+                <li>Warehouse &amp; sales operations bot: Pancake POS + Zalo OA integration, AI (Gemini) analysis, Recharts dashboards, automated payment reminders.</li>
+                <li>Hann Nong San: a high-performance Next.js e-commerce storefront (Lighthouse near 100).</li>
+            </ul>
+            <h2>Experience</h2>
+            <ul>
+                <li>Senior Mobile Developer at N.A.M Tech (2024-present): offline-first apps, native iOS/Android, App Store and Google Play releases.</li>
+                <li>Technical Lead, ERP/WMS/CRM at Thiso Retail / Emart (2022-2024): operational apps used on the supermarket floor; Outstanding Performance and Staff of the Year awards.</li>
+            </ul>
+            <h2>Availability</h2>
+            <p>Available for freelance web and app development worldwide, including Europe and Germany. Works remotely; communicates in English and Vietnamese.</p>
             <p>Contact: <a href="mailto:business.nc.hung@gmail.com">business.nc.hung@gmail.com</a> | +84 981 815 237 | <a href="https://github.com/nc-hung">GitHub</a></p>
         </div>
     </noscript>
@@ -427,7 +477,7 @@
 
         const App = () => {
             const [scrolled, setScrolled] = useState(false);
-            const [lang, setLang] = useState(() => { try { return localStorage.getItem('lang') || 'vi'; } catch (e) { return 'vi'; } });
+            const [lang, setLang] = useState(() => { try { return localStorage.getItem('lang') || 'en'; } catch (e) { return 'en'; } });
             const t = STR[lang];
 
             // Nav background toggle via IntersectionObserver sentinel (no scroll listener; see skill 5.D)
