@@ -4,21 +4,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hung Nguyen | Full-stack Engineer — Invoicing, Debt & AI Automation</title>
-    <!-- SEO -->
-    <meta name="description"
-        content="Nguyen Cong Hung — Senior Full-stack Engineer. I build invoicing, debt/ledger and admin systems plus AI automation. Available for freelance projects. Node.js, React, NestJS, PostgreSQL.">
-    <meta name="keywords"
-        content="Full-stack Developer, Freelance, Invoicing System, Debt Management, Ledger, Admin Dashboard, AI Automation, Node.js, React, NestJS, Vietnam">
+    <title>Nguyen Cong Hung - Freelance Full-stack Engineer | Invoicing, Debt & AI Automation</title>
 
-    <!-- Fonts -->
+    <!-- Primary SEO -->
+    <meta name="description" content="Freelance full-stack engineer. I build order, invoice and customer-debt systems, admin dashboards and AI automation - money-accurate, audited, deployed. Node.js, React, NestJS, PostgreSQL.">
+    <meta name="keywords" content="freelance developer, invoicing system, debt management, ledger software, admin dashboard, AI automation, Node.js, React, NestJS, PostgreSQL, Vietnam">
+    <meta name="author" content="Nguyen Cong Hung">
+    <meta name="robots" content="index, follow">
+    <!-- TODO: set this to your real published URL (e.g. GitHub Pages or custom domain) -->
+    <link rel="canonical" href="https://nc-hung.github.io/Portfolio/">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Nguyen Cong Hung - Freelance Full-stack Engineer">
+    <meta property="og:description" content="I build order, invoice and customer-debt systems, admin dashboards and AI automation. Money-accurate, audited, deployed.">
+    <meta property="og:url" content="https://nc-hung.github.io/Portfolio/">
+    <!-- TODO: replace with a dedicated 1200x630 social cover for best results -->
+    <meta property="og:image" content="https://nc-hung.github.io/Portfolio/assets/hero-bg.png">
+    <meta property="og:locale" content="vi_VN">
+    <meta property="og:locale:alternate" content="en_US">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Nguyen Cong Hung - Freelance Full-stack Engineer">
+    <meta name="twitter:description" content="Order, invoice and debt systems + AI automation. Money-accurate, audited, deployed.">
+    <meta name="twitter:image" content="https://nc-hung.github.io/Portfolio/assets/hero-bg.png">
+
+    <!-- Structured data: Person -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Nguyen Cong Hung",
+      "alternateName": "Hann",
+      "jobTitle": "Freelance Full-stack Software Engineer",
+      "url": "https://nc-hung.github.io/Portfolio/",
+      "email": "mailto:business.nc.hung@gmail.com",
+      "telephone": "+84981815237",
+      "address": { "@type": "PostalAddress", "addressCountry": "VN" },
+      "knowsAbout": ["Invoicing systems","Debt reconciliation","Financial ledger software","Admin dashboards","AI automation","Node.js","React","NestJS","PostgreSQL","Prisma","TypeScript"],
+      "sameAs": ["https://github.com/nc-hung"]
+    }
+    </script>
+
+    <!-- Fonts: Outfit (display), Geist (body), Geist Mono (figures) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800;900&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
 
-    <!-- CDNs -->
+    <!-- Icons: Phosphor (real icon family, no hand-rolled SVG) -->
+    <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
+
+    <!-- App libs -->
     <script src="https://cdn.jsdelivr.net/npm/react@18.2.0/umd/react.production.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/react-dom@18.2.0/umd/react-dom.production.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@babel/standalone@7.20.15/babel.min.js"></script>
@@ -31,786 +68,566 @@
             theme: {
                 extend: {
                     fontFamily: {
-                        display: ['Outfit', 'sans-serif'],
-                        body: ['Inter', 'sans-serif'],
+                        display: ['Outfit', 'system-ui', 'sans-serif'],
+                        body: ['Geist', 'system-ui', 'sans-serif'],
+                        mono: ['"Geist Mono"', 'ui-monospace', 'monospace'],
                     },
                     colors: {
-                        brand: {
-                            50: '#f0f9ff', 100: '#e0f2fe', 200: '#bae6fd', 300: '#7dd3fc',
-                            400: '#38bdf8', 500: '#0ea5e9', 600: '#0284c7', 700: '#0369a1',
-                            800: '#075985', 900: '#0c4a6e',
-                        },
-                        surface: { 900: '#0A0A0B', 800: '#121214', 700: '#1C1C1F', 600: '#252529' }
+                        // Single locked accent (emerald = "reconciled / verified / money-accurate")
+                        accent: { 400: '#34d399', 500: '#10b981', 600: '#059669', 700: '#047857' },
                     },
-                    backgroundImage: { 'hero-pattern': "url('assets/hero-bg.png')" }
                 }
             }
         }
     </script>
     <style type="text/tailwindcss">
-        .glass-card { background: rgba(28, 28, 31, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); }
-        .hero-gradient { background: radial-gradient(circle at 50% 50%, rgba(14, 165, 233, 0.15) 0%, transparent 60%); }
-        .animate-subtle { animation: subtle 6s ease-in-out infinite alternate; }
-        @keyframes subtle { 0% { transform: translateY(0); } 100% { transform: translateY(-10px); } }
-        .tech-pill { @apply flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-300; }
-        .mermaid { background: white !important; padding: 20px; border-radius: 12px; margin-top: 20px; }
+        body { background-color: #09090b; } /* zinc-950, off-black (never pure #000) */
+        .panel { background: rgba(24,24,27,0.6); border: 1px solid rgba(255,255,255,0.06); }
+        .reveal { opacity: 0; transform: translateY(18px); transition: opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1); }
+        .reveal.is-in { opacity: 1; transform: none; }
+        .lift { transition: transform .3s cubic-bezier(.16,1,.3,1), border-color .3s ease, background-color .3s ease; }
+        .lift:hover { transform: translateY(-4px); }
+        .press:active { transform: translateY(1px); }
+        .avail-dot { box-shadow: 0 0 0 0 rgba(52,211,153,.6); animation: avail 2.4s infinite; }
+        @keyframes avail { 0%{box-shadow:0 0 0 0 rgba(52,211,153,.5)} 70%{box-shadow:0 0 0 8px rgba(52,211,153,0)} 100%{box-shadow:0 0 0 0 rgba(52,211,153,0)} }
+        .mermaid { background: #fafafa !important; padding: 18px; border-radius: 12px; margin-top: 16px; }
+        @media (prefers-reduced-motion: reduce) {
+            .reveal { opacity: 1; transform: none; transition: none; }
+            .lift { transition: none; }
+            .avail-dot { animation: none; }
+            html { scroll-behavior: auto; }
+        }
     </style>
 </head>
 
-<body class="bg-surface-900 text-slate-100 font-body antialiased">
+<body class="text-zinc-100 font-body antialiased selection:bg-accent-500/30">
+    <!-- SEO / no-JS fallback: this page is client-rendered, so expose core content to crawlers -->
+    <noscript>
+        <div style="max-width:760px;margin:40px auto;padding:0 20px;font-family:system-ui;color:#e4e4e7;background:#09090b">
+            <h1>Nguyen Cong Hung - Freelance Full-stack Engineer</h1>
+            <p>I build order, invoice and customer-debt systems, admin dashboards, and AI automation. Money-accurate, audited, deployed. Stack: Node.js, React, NestJS, Prisma, PostgreSQL, TypeScript, Docker.</p>
+            <h2>Services</h2>
+            <ul>
+                <li>Invoicing, billing and financial-ledger systems (FIFO reconciliation, supplier statements).</li>
+                <li>AI automation and internal tools (chatbots, POS/ERP integrations, reporting).</li>
+                <li>Admin dashboards and internal tools (React + MUI, roles, audit logs).</li>
+                <li>Rescue and stabilize existing systems.</li>
+            </ul>
+            <p>Contact: <a href="mailto:business.nc.hung@gmail.com">business.nc.hung@gmail.com</a> | +84 981 815 237 | <a href="https://github.com/nc-hung">GitHub</a></p>
+        </div>
+    </noscript>
+
     <div id="root"></div>
 
     <script type="text/babel">
-        const { useState, useEffect } = React;
+        const { useState, useEffect, useRef } = React;
 
-        // ── Contact config — fill these in to enable booking & form delivery ──
+        // Contact config - fill in to enable booking + form-to-inbox. Empty values fall back gracefully.
         const CONTACT = {
             email: "business.nc.hung@gmail.com",
             phone: "+84 981 815 237",
             phoneHref: "tel:0981815237",
-            // Paste your Calendly link to show a "Book a call" button, e.g. "https://calendly.com/your-name/30min".
-            // Leave "" to hide the booking button.
-            calendly: "",
-            // Paste your Formspree form id (the part after /f/) to deliver the form to your inbox with no backend.
-            // Get one free at https://formspree.io. Leave "" to fall back to the visitor's email app (mailto).
-            formspreeId: ""
+            github: "https://github.com/nc-hung",
+            calendly: "",     // paste Calendly URL to show a "book a call" button
+            formspreeId: ""   // paste Formspree form id (after /f/) to deliver the form; else opens email app
         };
 
-        const LucideIcon = ({ name, className = "w-5 h-5" }) => {
-            const icons = {
-                code: <path d="m18 16 4-4-4-4M6 8l-4 4 4 4M14.5 4l-5 16" />,
-                layout: <><rect width="18" height="18" x="3" y="3" rx="2" /><path d="M3 9h18M9 21V9" /></>,
-                smartphone: <><rect width="14" height="20" x="5" y="2" rx="2" ry="2" /><path d="M12 18h.01" /></>,
-                database: <><ellipse cx="12" cy="5" rx="9" ry="3" /><path d="M3 5V19A9 3 0 0 0 21 19V5" /><path d="M3 12A9 3 0 0 0 21 12" /></>,
-                zap: <path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z" />,
-                shield: <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />,
-                external: <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14 21 3" />,
-                architecture: <><path d="M3 12h18" /><path d="M12 3v18" /><path d="M5 19l14-14" /><path d="M19 19L5 5" /></>,
-            };
-            return (
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-                    {icons[name] || <circle cx="12" cy="12" r="10" />}
-                </svg>
-            );
-        };
+        const Icon = ({ name, className = "" }) => <i className={`ph-bold ph-${name} ${className}`} aria-hidden="true"></i>;
 
-        // ---- Language-neutral project metadata (tech stack + architecture diagrams) ----
-        const PROJECT_ORDER = ["ledger-system", "order-manager", "bsp-customer", "shopify-minis", "hann-nong-san", "mobile-sync"];
+        // ---- Language-neutral project metadata (tech + architecture diagrams) ----
+        const PROJECT_ORDER = ["ledger-system", "zalo-commerce", "warehouse-bot", "ecommerce"];
         const PROJECT_META = {
             "ledger-system": {
-                tech: ["Node.js", "Express", "Prisma", "PostgreSQL", "Docker", "CI/CD"],
+                featured: true,
+                tech: ["Node.js", "Express", "Prisma", "PostgreSQL", "React", "Docker"],
                 architecture: `graph TD
-    Client([Web/Mobile Client]) --> API[Express Backend]
-    subgraph BACKEND [Backend Infrastructure]
-        API --> Guard[Auth & Zod Validation]
-        Guard --> Service[Financial Logic Layer]
-        Service --> Ledger[Ledger Engine]
-        Service --> Debt[Debt Settlement Logic]
-        Ledger --> ORM[Prisma ORM]
-        Debt --> ORM
-    end
-    ORM --> DB[(PostgreSQL)]
-    subgraph DEVOPS [Ops]
-        Docker[Docker Containerization]
-        Pipeline[Auto CI/CD]
-    end`
+    Client([Web Client]) --> API[Express API]
+    API --> Guard[Auth + Zod]
+    Guard --> Svc[Order + Debt Logic]
+    Svc --> FIFO[FIFO Reconciliation]
+    Svc --> Stmt[Statements + Invoices]
+    FIFO --> ORM[Prisma]
+    Stmt --> ORM
+    ORM --> DB[(PostgreSQL)]`
             },
-            "order-manager": {
-                tech: ["React 18", "Node.js", "PostgreSQL", "Prisma", "TypeScript", "Zod"],
+            "zalo-commerce": {
+                tech: ["Zalo Mini App", "NestJS", "Pancake POS", "Zalo OA", "Redis", "PostgreSQL"],
                 architecture: `graph TD
-    User([User]) --> SPA[React SPA]
-    SPA --> API[Express API Layer]
-    subgraph API_SERVER [API Application]
-        API --> Auth[Auth MW]
-        Auth --> Val[Zod Validator]
-        Val --> Controllers[Domain Controllers]
-        Controllers --> Audit[Audit Service]
-        Controllers --> ORM[Prisma Client]
-    end
-    ORM --> DB[(PostgreSQL)]
-    Audit --> DB`
+    Mini[Zalo Mini App zmp-ui] --> BFF[NestJS BFF - Clean Arch]
+    BFF --> Sync[Stock-Consistency Sync]
+    Sync --> POS[Pancake POS Open API]
+    BFF --> OA[Zalo OA notify + tracking]
+    BFF --> Cache[(Redis)]
+    BFF --> DB[(PostgreSQL)]`
             },
-            "bsp-customer": {
-                tech: ["React Native", "TypeScript", "App Flow", "Real-time Sync"],
-                architecture: `graph TD
-    App[Mobile App] --> API[Management API]
-    API --> CRM[Internal CRM]
-    API --> FeedbackVault[Feedback Storage]`
-            },
-            "shopify-minis": {
-                tech: ["ReactJS", "Shopify API", "AR Engine", "AI Recommendations"],
+            "warehouse-bot": {
+                tech: ["Node.js", "React", "Pancake POS", "Zalo OA", "Gemini", "node-cron"],
                 architecture: `graph LR
-    User --> AI[AI Recommendation Engine]
-    AI --> Product[Product Selection]
-    Product --> AR[In-room AR Preview]`
+    POS[Pancake POS] --> Bot[Ops Bot]
+    Bot --> AI[Gemini Analysis]
+    Bot --> Dash[Recharts Reports]
+    Bot --> Remind[Payment Reminders]
+    Remind --> OA[Zalo OA + VietQR]`
             },
-            "hann-nong-san": {
-                tech: ["Next.js 15", "App Router", "Tailwind CSS", "TypeScript"],
+            "ecommerce": {
+                tech: ["Next.js", "App Router", "Tailwind", "TypeScript"],
                 architecture: `graph LR
-    User --> Edge[Vercel Edge Network]
-    Edge --> ISR[Incremental Static Regeneration]
-    ISR --> RSC[React Server Components]
-    RSC --> Client[Hydrated Interaction]`
-            },
-            "mobile-sync": {
-                tech: ["React Native", "GitHub API", "Sub-DB Logic", "Async Storage"],
-                architecture: `graph LR
-    App[Mobile App] -- Offline --> Local[(Local Storage)]
-    App -- Sync Request --> GH[GitHub API as Sync Layer]
-    GH -- Approved Data --> MainDB[(Primary DB/Dashboard)]`
+    User --> Edge[Edge Network]
+    Edge --> ISR[Static Regeneration]
+    ISR --> RSC[Server Components]
+    RSC --> Client[Hydration]`
             }
         };
 
-        // ---- All translatable content ----
         const STR = {
             vi: {
-                nav: { services: "Dịch vụ", process: "Quy trình", work: "Dự án", skills: "Kỹ năng", talk: "Thuê tôi" },
+                nav: { services: "Dịch vụ", process: "Quy trình", work: "Dự án", contact: "Liên hệ" },
                 hero: {
-                    status: "Nhận dự án freelance · Hệ thống đơn–hoá đơn–công nợ & tự động hoá AI",
-                    titleA: "Kiến tạo", titleB: "Giá trị Tối ưu.",
-                    roleStrong: "Senior Software Engineer | Full-stack & Mobile",
-                    summaryParts: ["Tôi xây ", "hệ thống vận hành nội bộ", " cho doanh nghiệp — quản lý đơn, hoá đơn, công nợ, dashboard quản trị và ", "tự động hoá bằng AI", " — và làm đúng phần khó nhất: tính tiền, audit, và deploy thật."],
-                    ctaPrimary: "Xem dự án", ctaServices: "Dịch vụ freelance",
-                    statYears: "Năm KN", statProjects: "Dự án",
-                    cardTitle: "Toàn vẹn dữ liệu", cardDesc: "Bảo vệ dữ liệu bằng validation chặt và audit log bất biến."
+                    avail: "Đang nhận dự án freelance",
+                    h1: "Hệ thống vận hành,", h2: "chuẩn từng đồng.",
+                    sub: "Tôi xây phần mềm quản lý đơn hàng, hoá đơn, công nợ và tự động hoá bằng AI cho doanh nghiệp.",
+                    ctaPrimary: "Liên hệ", ctaSecondary: "Xem dự án",
+                    cardRole: "Full-stack Engineer", cardLoc: "Việt Nam, làm việc remote",
                 },
+                trust: { years: "Năm kinh nghiệm", projects: "Dự án đã làm", stackLabel: "Công nghệ chính" },
                 services: {
-                    eyebrow: "Nhận freelance", heading: "Tôi giúp bạn được gì.",
-                    sub: "Hai ngách tôi chuyên sâu và có bằng chứng thật — không phải full-stack chung chung.",
+                    h: "Tôi giúp gì",
                     items: [
-                        { icon: "database", title: "Hoá đơn – Công nợ – Sổ cái", desc: "Đơn hàng, hoá đơn, đối soát thanh toán FIFO, bảng kê NCC, số học tiền chính xác (không float)." },
-                        { icon: "zap", title: "Tự động hoá & Internal Tools bằng AI", desc: "Chatbot, tích hợp POS/ERP, báo cáo do AI tạo, QR thanh toán, nhắc nợ tự động." },
-                        { icon: "layout", title: "Dashboard quản trị & công cụ nội bộ", desc: "React + MUI sạch, nhanh, phân quyền, audit log — đội ngũ dùng được ngay." },
-                        { icon: "shield", title: "Cứu & ổn định hệ thống cũ", desc: "Đọc codebase lạ nhanh; vá lỗi, tăng tốc, hoàn thiện mà không cần viết lại." }
+                        { icon: "scales", title: "Hoá đơn, công nợ, sổ cái", desc: "Đơn hàng, hoá đơn, đối soát thanh toán FIFO, bảng kê NCC, số học tiền chính xác." },
+                        { icon: "robot", title: "Tự động hoá & internal tool bằng AI", desc: "Chatbot, tích hợp POS/ERP, báo cáo do AI tạo, QR thanh toán, nhắc nợ tự động." },
+                        { icon: "squares-four", title: "Dashboard quản trị", desc: "React + MUI sạch, nhanh, phân quyền, audit log. Đội ngũ dùng được ngay từ ngày đầu." },
+                        { icon: "wrench", title: "Cứu & ổn định hệ thống cũ", desc: "Đọc codebase lạ nhanh, vá lỗi, tăng tốc, hoàn thiện mà không cần viết lại." },
                     ]
                 },
                 process: {
-                    eyebrow: "Cách làm việc", heading: "Hợp tác minh bạch.",
-                    sub: "Quy trình rõ ràng để bạn yên tâm: biết trước chi phí, tiến độ và kết quả.",
+                    h: "Cách làm việc",
+                    sub: "Quy trình rõ ràng: bạn biết trước chi phí, tiến độ và kết quả.",
                     steps: [
-                        { n: "01", title: "Trao đổi & chốt phạm vi", desc: "Hỏi rõ bài toán nghiệp vụ, edge case và tiêu chí thành công." },
-                        { n: "02", title: "Báo giá theo cột mốc", desc: "Giá rõ ràng theo milestone, timeline trung thực — không 'tính sau'." },
-                        { n: "03", title: "Build & demo từng phần", desc: "Giao tăng dần, kiểm thử bằng lần chạy thật, cập nhật thường xuyên." },
-                        { n: "04", title: "Bàn giao & bảo hành", desc: "Deploy thật, tài liệu vận hành, sửa lỗi sau bàn giao." }
+                        { icon: "magnifying-glass", title: "Trao đổi", desc: "Hiểu rõ bài toán nghiệp vụ, edge case và tiêu chí thành công." },
+                        { icon: "note-pencil", title: "Báo giá", desc: "Giá theo cột mốc, timeline trung thực. Không 'tính sau'." },
+                        { icon: "code", title: "Xây dựng", desc: "Giao tăng dần, kiểm thử bằng lần chạy thật, cập nhật thường xuyên." },
+                        { icon: "rocket-launch", title: "Bàn giao", desc: "Deploy thật, tài liệu vận hành, bảo hành sửa lỗi sau bàn giao." },
                     ]
                 },
                 work: {
-                    eyebrow: "Kinh nghiệm thực chiến", heading: "Dự án tiêu biểu.",
-                    sub: "Tuyển chọn các dự án thể hiện độ phức tạp kiến trúc và chất lượng.",
-                    showArch: "Xem thiết kế hệ thống", hideArch: "Ẩn phân tích",
-                    blueprint: "Sơ đồ kiến trúc", archHint: "Bấm nút trên để xem trực quan kiến trúc hệ thống."
+                    h: "Dự án tiêu biểu",
+                    showArch: "Xem kiến trúc", hideArch: "Ẩn kiến trúc",
+                    featuredTag: "Dự án chủ lực",
                 },
-                journey: { heading: "Kinh nghiệm & Nền tảng" },
-                recognition: { heading: "Ghi nhận chuyên môn" },
+                exp: {
+                    h: "Kinh nghiệm",
+                    awards: "2 giải thưởng tại Thiso Retail (Emart): Hiệu suất xuất sắc, Nhân viên của năm.",
+                },
                 skills: {
-                    heading: "Bộ kỹ năng.",
-                    sub: "Tôi không chỉ viết code; tôi thiết kế hệ sinh thái phần mềm bền vững theo chuẩn ngành.",
+                    h: "Công nghệ",
                     bars: [
-                        { name: "Clean Architecture & Offline-First", val: 96 },
-                        { name: "Backend (Node.js / PostgreSQL)", val: 92 },
-                        { name: "Hệ thống tài chính & đối soát", val: 93 },
-                        { name: "Tích hợp & Tự động hoá AI", val: 92 }
+                        { name: "Hệ thống tài chính & đối soát", val: 95 },
+                        { name: "Backend (Node, NestJS, PostgreSQL)", val: 92 },
+                        { name: "Tích hợp & tự động hoá AI", val: 90 },
+                        { name: "Frontend (React, MUI, offline-first)", val: 90 },
                     ],
-                    cards: [
-                        { icon: "database", n: "Backend", d: "Node.js, Express, NestJS, Prisma, PostgreSQL, SQLite" },
-                        { icon: "architecture", n: "Kiến trúc", d: "Offline-first, Clean Architecture, Event-driven, RBAC + Audit" },
-                        { icon: "zap", n: "AI & Hiệu quả", d: "Tích hợp AI, tối ưu chi phí vận hành, tự động hoá" },
-                        { icon: "shield", n: "DevOps & Chất lượng", d: "Docker, CI/CD, Jest, kiểm thử bằng lần chạy thật" }
-                    ]
+                    groups: ["Node.js", "TypeScript", "React", "React Native", "NestJS", "Zalo Mini App", "Prisma", "PostgreSQL", "Docker", "CI/CD", "Tích hợp AI"],
                 },
                 contact: {
-                    eyebrow: "Liên hệ", heading: "Bắt đầu dự án của bạn.",
-                    sub: "Mô tả bài toán (kèm ảnh/Excel mẫu nếu có). Tôi phản hồi cách tiếp cận + báo giá trong 24h.",
-                    book: "Đặt lịch tư vấn 30'", or: "hoặc gửi tin nhắn nhanh",
+                    h: "Bắt đầu dự án",
+                    sub: "Mô tả bài toán (kèm ảnh hoặc Excel mẫu nếu có). Tôi phản hồi cách tiếp cận và báo giá trong 24h.",
+                    book: "Đặt lịch tư vấn 30 phút", or: "hoặc gửi tin nhắn nhanh",
                     name: "Tên của bạn", emailField: "Email", project: "Bạn cần làm gì?",
-                    send: "Gửi yêu cầu", sending: "Đang gửi…", sent: "Đã gửi! Tôi sẽ phản hồi trong 24h.",
-                    error: "Có lỗi — vui lòng email trực tiếp giúp tôi."
+                    send: "Gửi yêu cầu", sending: "Đang gửi", sent: "Đã gửi. Tôi sẽ phản hồi trong 24h.",
+                    error: "Có lỗi. Vui lòng email trực tiếp giúp tôi.",
                 },
-                footer: { cta: "Bạn có một dự án?", availability: "Nhận dự án freelance chọn lọc & hợp tác dài hạn.", rights: "Nguyen Cong Hung. Kiến tạo tương lai.", resume: "CV" },
+                footer: { availability: "Nhận dự án freelance chọn lọc và hợp tác dài hạn.", rights: "Nguyen Cong Hung", resume: "CV" },
                 projects: {
-                    "ledger-system": {
-                        title: "Quản lý Sổ cái & Công nợ (Đơn hàng KH)", type: "Kiến trúc Full-stack",
-                        role: "Lead Architect / Senior Developer", philosophy: "Clean Architecture | DDD | CI/CD",
-                        desc: "Hệ thống quản lý tài chính phức tạp: theo dõi sổ cái quy mô doanh nghiệp và tự động hoá quy trình tất toán công nợ, chú trọng khả năng audit và logic kế toán hiệu năng cao.",
-                        details: [
-                            "Thiết kế schema quan hệ phức tạp cho đa tiền tệ và cấn trừ công nợ theo tầng (cascading).",
-                            "Validation nghiêm ngặt bằng Zod cho mọi giao dịch tài chính.",
-                            "Tối ưu runtime ~30% nhờ đánh index nâng cao và tối ưu truy vấn PostgreSQL.",
-                            "Tự động hoá deploy bằng Docker + GitHub Actions, môi trường production nhất quán."
-                        ]
-                    },
-                    "order-manager": {
-                        title: "Quản lý Đơn hàng (Lõi doanh nghiệp)", type: "Kiến trúc Full-stack",
-                        role: "Senior Fullstack Engineer", philosophy: "Clean Architecture | DDD Lite | Audit-First",
-                        desc: "Hệ thống trọng yếu xử lý kho phức tạp và dòng đơn hàng lớn, chú trọng toàn vẹn dữ liệu và khả năng audit chặt chẽ.",
-                        details: [
-                            "Phân tầng nghiêm ngặt: Route → Middleware → Controller → Service → Persistence.",
-                            "Logic thanh toán 'Water-fall' (FIFO) cho các khoản cấn trừ công nợ phức tạp.",
-                            "Audit log tự động ghi trạng thái before/after cho mọi thay đổi trọng yếu.",
-                            "Dùng AI phân tích dữ liệu để dự báo nhu cầu và tối ưu mức tồn kho."
-                        ]
-                    },
-                    "bsp-customer": {
-                        title: "BSP Customer (Quản lý dịch vụ)", type: "Hệ thống doanh nghiệp",
-                        role: "Lead Developer", philosophy: "Modular | Scalability | Efficiency",
-                        desc: "Hệ thống quản lý vé (ticket) và phản hồi khách hàng cho nhà cung cấp dịch vụ (bảo trì thiết bị, tiện ích).",
-                        details: [
-                            "Dẫn dắt phát triển hệ thống quản lý ticket hợp nhất.",
-                            "Tối ưu vòng phản hồi giữa nhà cung cấp dịch vụ và khách hàng cuối.",
-                            "Mentor lập trình viên junior và review code nghiêm túc."
-                        ]
-                    },
-                    "shopify-minis": {
-                        title: "Trải nghiệm bán lẻ AI & AR", type: "Ứng dụng mobile đột phá",
-                        role: "Senior Developer", philosophy: "AI-Driven UX | AR Visualization",
-                        desc: "Ứng dụng Shopify Minis cho nhà cung cấp nội thất, tích hợp AI và AR cho trải nghiệm mua sắm nhập vai.",
-                        details: [
-                            "Gợi ý sản phẩm bằng AI dựa trên mô tả ngôn ngữ tự nhiên của người dùng.",
-                            "Xem trước AR sản phẩm nội thất ngay trong phòng thực tế.",
-                            "Đảm bảo render hiệu năng cao trên mobile web."
-                        ]
-                    },
-                    "hann-nong-san": {
-                        title: "Hann Nông Sản (TMĐT hiệu năng cao)", type: "Web hiệu năng cao",
-                        role: "Fullstack Developer", philosophy: "Core Web Vitals | SEO-First | UX hiện đại",
-                        desc: "Sàn nông sản hiện đại tối ưu tốc độ và SEO tuyệt đối, chú trọng thương hiệu cao cấp và tỷ lệ chuyển đổi.",
-                        details: [
-                            "Tận dụng Next.js 15 App Router cho routing và hiệu năng vượt trội.",
-                            "Đạt gần 100 điểm trên mọi chỉ số Lighthouse nhờ tối ưu ảnh và zero layout-shift.",
-                            "SEO nâng cao: Open Graph động và structured data schema."
-                        ]
-                    },
-                    "mobile-sync": {
-                        title: "Kiến trúc Đồng bộ Mobile", type: "Mobile đa nền tảng",
-                        role: "Lead Developer", philosophy: "Offline-First | Sync chiến lược | Tiết kiệm chi phí",
-                        desc: "Giải pháp đồng bộ dữ liệu đa nền tảng không cần backend truyền thống — dùng GitHub API làm tầng staging/sync.",
-                        details: [
-                            "Thiết kế engine đồng bộ dùng GitHub API như vùng staging serverless.",
-                            "Kiến trúc offline-first bền vững, nhập liệu mượt khi mất mạng.",
-                            "Tự động hoá luồng duyệt/từ chối tích hợp vào dashboard trung tâm."
-                        ]
-                    }
+                    "ledger-system": { title: "Quản lý đơn & công nợ cho vựa sỉ", type: "Full-stack", role: "Fullstack Developer (AI-assisted)",
+                        desc: "Hệ thống đơn hàng và công nợ với đối soát thanh toán FIFO, bảng kê nhà cung cấp, hoá đơn in/QR và nhập Excel. Số học tiền chính xác để số dư không bao giờ lệch.",
+                        details: ["Đối soát FIFO tự động, số học Decimal chính xác.", "Bảng kê NCC + hoá đơn in/QR một chạm.", "Phân tích nghiệp vụ và phát triển cùng AI; chạy production cho vựa thật."] },
+                    "zalo-commerce": { title: "Bán hàng trên Zalo Mini App (Ivy)", type: "Zalo Mini App + BFF", role: "Fullstack Developer (AI-assisted)",
+                        desc: "Nền tảng bán hàng Zalo Mini App xây từ đầu: lên kế hoạch theo Scrum, design chuẩn đủ màn hình & state, kiến trúc đồng bộ Pancake POS chống hụt đơn do lỗi nhà cung cấp.",
+                        details: ["Phân tích điểm nghẽn + đồng bộ tồn kho (ADR), đơn không bị hụt.", "BFF NestJS Clean Architecture + Pancake POS Open API + Zalo OA.", "Kế hoạch mở rộng sang web & mobile để tăng kênh bán."] },
+                    "warehouse-bot": { title: "Bot vận hành kho & bán hàng (Pancake POS + Zalo OA)", type: "AI Automation", role: "Fullstack Developer (AI-assisted)",
+                        desc: "Bot tích hợp Pancake POS và Zalo OA kéo dữ liệu kho và bán hàng, phân tích bằng AI, hiển thị báo cáo và nhắc thanh toán tự động.",
+                        details: ["AI (Gemini) phân tích + chat assistant tóm tắt doanh số/tồn kho.", "Dashboard báo cáo (Recharts) doanh thu & kho.", "Nhắc thanh toán tự động qua Zalo OA + VietQR (node-cron)."] },
+                    "ecommerce": { title: "Hann Nông Sản (TMĐT hiệu năng cao)", type: "Web", role: "Tech Lead (AI-assisted)",
+                        desc: "Sàn nông sản Next.js xây từ thiết kế tới triển khai; script Python tích hợp AI tự kiểm UI, test luồng và tối ưu SEO, giảm QA thủ công.",
+                        details: ["Tối ưu tốc độ & SEO, Lighthouse gần 100.", "Script Python + AI API kiểm UI/SEO tự động.", "Phân tích Google Analytics để cải thiện tính năng."] },
                 },
                 otherProjects: [
-                    { title: "AVB-ARC – Quản lý dịch vụ (Offline-First)", company: "N.A.M Tech", role: "Lead Architect", period: "2024 - Nay", tech: "React Native, Flutter, Hive, SQLite, Cubit, Background Geolocation", desc: "Dẫn dắt kiến trúc offline-first bền bỉ. Xây dựng tracking vị trí nền độ chính xác cao và tối ưu định tuyến cho kỹ thuật viên hiện trường." },
-                    { title: "SmartOffice – Hệ sinh thái ERP/WMS", company: "Thiso Retail", role: "Senior Mobile Developer", period: "2022 - 2024", tech: "React Native, Redux, Recoil, Redux-Saga, Big Data Visualization", desc: "Xây các module ERP/WMS lõi: DC Stock (tồn kho), quản lý hạn dùng, báo cáo doanh thu realtime. Tối ưu hiệu năng mobile cho dữ liệu cực lớn." },
-                    { title: "Customer Orders Management", company: "Dự án cá nhân", role: "Fullstack Developer", period: "2024", tech: "Node.js, Express, Prisma, PostgreSQL, Docker, CI/CD", desc: "Hệ thống Sổ cái & Công nợ end-to-end. Thiết kế schema quan hệ phức tạp và pipeline CI/CD tự động với Docker." },
-                    { title: "Ứng dụng Bảo hiểm & Điện lực", company: "Intellin Tech", role: "Frontend Developer", period: "2021 - 2022", tech: "ReactJS, Redux, Material UI, Jenkins", desc: "Phát triển tính năng UI trên Android/iOS. Làm việc theo Agile với daily standup." }
+                    { title: "Senior Mobile Developer (Ticking App, AVB)", company: "N.A.M Tech", role: "Senior Mobile Developer", period: "2024 đến nay", desc: "Dẫn dắt phát triển mobile, offline-first + background sync, native bridge iOS/Android, sở hữu release App Store / Google Play. Bàn giao tài liệu kỹ thuật cho khách." },
+                    { title: "SmartOffice (ERP / WMS / CRM)", company: "Thiso Retail (Emart)", role: "Technical Lead, ERP/WMS/CRM", period: "2022 - 2024", desc: "Xây app hỗ trợ vận hành dùng thật tại sàn Emart (tồn kho, hạn dùng, báo cáo, xếp lượt, màn hình TV báo lượt tài xế). 2 giải thưởng tại Emart." },
+                    { title: "Ứng dụng bảo hiểm & điện lực", company: "Intellin Tech", role: "Frontend Developer", period: "2021 - 2022", desc: "Phát triển tính năng UI trên Android/iOS theo quy trình Agile." },
                 ],
-                achievements: [
-                    { title: "Giải thưởng Hiệu suất xuất sắc", giver: "Thiso Retail (Emart)" },
-                    { title: "Nhân viên xuất sắc của năm", giver: "Thiso Retail (Emart)" }
-                ]
             },
             en: {
-                nav: { services: "Services", process: "Process", work: "Work", skills: "Skills", talk: "Hire Me" },
+                nav: { services: "Services", process: "Process", work: "Work", contact: "Get in touch" },
                 hero: {
-                    status: "Available for freelance · Invoicing, debt & AI-automation builds",
-                    titleA: "Engineering", titleB: "Optimal Value.",
-                    roleStrong: "Senior Software Engineer | Full-stack & Mobile",
-                    summaryParts: ["I build the ", "internal systems that run a business", " — order/invoice/debt management, admin dashboards, and ", "AI automation", " — and I get the hard parts right: money math, audit trails, and a real deployment."],
-                    ctaPrimary: "Explore Work", ctaServices: "Freelance Services",
-                    statYears: "Years Exp.", statProjects: "Projects",
-                    cardTitle: "System Integrity", cardDesc: "Protecting data through strict validation and immutable audit trails."
+                    avail: "Available for freelance",
+                    h1: "Back-office systems,", h2: "money-accurate.",
+                    sub: "I build order, invoice, debt and AI-automation systems that businesses actually run on.",
+                    ctaPrimary: "Get in touch", ctaSecondary: "See work",
+                    cardRole: "Full-stack Engineer", cardLoc: "Vietnam, works remote",
                 },
+                trust: { years: "Years experience", projects: "Projects shipped", stackLabel: "Core stack" },
                 services: {
-                    eyebrow: "Available for hire", heading: "How I help.",
-                    sub: "Two niches I specialize in with real proof — not generic full-stack.",
+                    h: "How I help",
                     items: [
-                        { icon: "database", title: "Invoicing, Billing & Ledger Systems", desc: "Orders, invoices, FIFO payment reconciliation, supplier statements, exact decimal money (never floats)." },
-                        { icon: "zap", title: "AI Automation & Internal Tools", desc: "Chatbots, POS/ERP integrations, AI-generated reports, QR payments, automated reminders." },
-                        { icon: "layout", title: "Admin Dashboards & Internal Tools", desc: "Clean, fast React + MUI with roles and audit logs — usable by your team on day one." },
-                        { icon: "shield", title: "Rescue & Stabilize Legacy Systems", desc: "Read unfamiliar codebases fast; fix, speed up, and finish without a rewrite." }
+                        { icon: "scales", title: "Invoicing, debt & ledger systems", desc: "Orders, invoices, FIFO payment reconciliation, supplier statements, exact decimal money." },
+                        { icon: "robot", title: "AI automation & internal tools", desc: "Chatbots, POS/ERP integrations, AI-generated reports, QR payments, automated reminders." },
+                        { icon: "squares-four", title: "Admin dashboards", desc: "Clean, fast React + MUI with roles and audit logs. Usable by your team on day one." },
+                        { icon: "wrench", title: "Rescue & stabilize legacy systems", desc: "Read unfamiliar codebases fast, fix, speed up and finish without a rewrite." },
                     ]
                 },
                 process: {
-                    eyebrow: "How I work", heading: "Transparent partnership.",
-                    sub: "A clear process so you're never in the dark: known cost, timeline, and outcome.",
+                    h: "How it works",
+                    sub: "A clear process: you know the cost, timeline and outcome up front.",
                     steps: [
-                        { n: "01", title: "Talk & scope it", desc: "Understand the business problem, edge cases and success criteria first." },
-                        { n: "02", title: "Quote by milestones", desc: "Clear milestone pricing and honest timelines — no 'figure it out later'." },
-                        { n: "03", title: "Build & demo in slices", desc: "Incremental delivery, verified by real runs, with frequent updates." },
-                        { n: "04", title: "Deliver & support", desc: "Real deployment, ops docs, and post-handover bug fixes." }
+                        { icon: "magnifying-glass", title: "Scope", desc: "Understand the business problem, edge cases and success criteria." },
+                        { icon: "note-pencil", title: "Quote", desc: "Milestone pricing and honest timelines. No 'figure it out later'." },
+                        { icon: "code", title: "Build", desc: "Incremental delivery, verified by real runs, frequent updates." },
+                        { icon: "rocket-launch", title: "Deliver", desc: "Real deployment, ops docs, and post-handover bug fixes." },
                     ]
                 },
-                work: {
-                    eyebrow: "Proven Experience", heading: "Selected Work.",
-                    sub: "A curated selection demonstrating architectural complexity and quality.",
-                    showArch: "Show System Design", hideArch: "Hide Analysis",
-                    blueprint: "Architectural Blueprint", archHint: "Click the button above to review the system architecture."
-                },
-                journey: { heading: "Experience & Background" },
-                recognition: { heading: "Industry Recognition" },
+                work: { h: "Selected work", showArch: "Show architecture", hideArch: "Hide architecture", featuredTag: "Flagship" },
+                exp: { h: "Experience", awards: "Two awards at Thiso Retail (Emart): Outstanding Performance, Staff of the Year." },
                 skills: {
-                    heading: "Tech Stack.",
-                    sub: "I don't just write code; I design sustainable software ecosystems using modern standards.",
+                    h: "Stack",
                     bars: [
-                        { name: "Clean Architecture & Offline-First", val: 96 },
-                        { name: "Backend (Node.js / PostgreSQL)", val: 92 },
-                        { name: "Financial & Reconciliation Systems", val: 93 },
-                        { name: "AI Integration & Automation", val: 92 }
+                        { name: "Financial & reconciliation systems", val: 95 },
+                        { name: "Backend (Node, NestJS, PostgreSQL)", val: 92 },
+                        { name: "AI integration & automation", val: 90 },
+                        { name: "Frontend (React, MUI, offline-first)", val: 90 },
                     ],
-                    cards: [
-                        { icon: "database", n: "Backend", d: "Node.js, Express, NestJS, Prisma, PostgreSQL, SQLite" },
-                        { icon: "architecture", n: "Architecture", d: "Offline-first, Clean Architecture, Event-driven, RBAC + Audit" },
-                        { icon: "zap", n: "AI & Efficiency", d: "AI Integration, Operational Cost Optimization, Automation" },
-                        { icon: "shield", n: "DevOps & Quality", d: "Docker, CI/CD, Jest, verify-by-real-run" }
-                    ]
+                    groups: ["Node.js", "TypeScript", "React", "React Native", "NestJS", "Zalo Mini App", "Prisma", "PostgreSQL", "Docker", "CI/CD", "AI integration"],
                 },
                 contact: {
-                    eyebrow: "Contact", heading: "Start your project.",
-                    sub: "Describe the problem (attach a screenshot/Excel if handy). I reply with an approach + quote within 24h.",
+                    h: "Start a project",
+                    sub: "Describe the problem (attach a screenshot or Excel if handy). I reply with an approach and quote within 24h.",
                     book: "Book a 30-min call", or: "or send a quick message",
                     name: "Your name", emailField: "Email", project: "What do you need built?",
-                    send: "Send request", sending: "Sending…", sent: "Sent! I'll reply within 24h.",
-                    error: "Something went wrong — please email me directly."
+                    send: "Send request", sending: "Sending", sent: "Sent. I'll reply within 24h.",
+                    error: "Something went wrong. Please email me directly.",
                 },
-                footer: { cta: "Have a project in mind?", availability: "Available for selective freelance projects & long-term work.", rights: "Nguyen Cong Hung. Architecting the future.", resume: "Resume" },
+                footer: { availability: "Available for selective freelance projects and long-term work.", rights: "Nguyen Cong Hung", resume: "Resume" },
                 projects: {
-                    "ledger-system": {
-                        title: "Ledger & Debt Management (Customer Orders)", type: "Fullstack Architecture",
-                        role: "Lead Architect / Senior Developer", philosophy: "Clean Architecture | DDD | CI/CD Focused",
-                        desc: "A sophisticated financial management system for enterprise-scale ledger tracking and automated debt settlement workflows. Built with a focus on auditability and high-performance accounting logic.",
-                        details: [
-                            "Designed complex relational schemas to support multi-currency ledgers and cascading debt settlement.",
-                            "Implemented rigorous data validation using Zod for critical financial transactions.",
-                            "Optimized system runtime by 30% through advanced indexing and query optimization on PostgreSQL.",
-                            "Automated the entire deployment process using Docker and GitHub Actions for consistent production environments."
-                        ]
-                    },
-                    "order-manager": {
-                        title: "Order Manager (Enterprise Core)", type: "Fullstack Architecture",
-                        role: "Senior Fullstack Engineer", philosophy: "Clean Architecture | DDD Lite | Audit-First",
-                        desc: "A mission-critical management system for handling complex inventory and high-volume order flows. Focuses on data integrity and strict auditability.",
-                        details: [
-                            "Strict layer separation: Route → Middleware → Controller → Service → Persistence.",
-                            "Implemented 'Water-fall' payment logic (FIFO) to handle complex debt settlements.",
-                            "Developed fully-automated audit logging capturing before/after states for all critical mutations.",
-                            "Leveraged AI-driven data analysis to predict inventory demand and optimize stock levels."
-                        ]
-                    },
-                    "bsp-customer": {
-                        title: "BSP Customer (Service Management)", type: "Enterprise System",
-                        role: "Lead Developer", philosophy: "Modular Architecture | Scalability | Efficiency",
-                        desc: "A ticket and customer feedback management system for service providers (appliance repair, utility services).",
-                        details: [
-                            "Spearheaded the development of a unified ticket management system.",
-                            "Optimized feedback loops between service providers and end-customers.",
-                            "Mentored junior developers and conducted rigorous code reviews."
-                        ]
-                    },
-                    "shopify-minis": {
-                        title: "AI & AR Retail Experience", type: "Innovative Mobile App",
-                        role: "Senior Developer", philosophy: "AI-Driven UX | AR Visualization",
-                        desc: "Built a Shopify Minis App for furniture suppliers, integrating AI and AR for immersive shopping.",
-                        details: [
-                            "Integrated AI product recommendations based on natural language user descriptions.",
-                            "Implemented AR preview for in-room visualization of furniture products.",
-                            "Ensured high-performance rendering on mobile web platforms."
-                        ]
-                    },
-                    "hann-nong-san": {
-                        title: "Hann Nông Sản (E-commerce Excellence)", type: "High-Performance Web",
-                        role: "Fullstack Developer", philosophy: "Performance (Core Web Vitals) | SEO-First | Modern UX",
-                        desc: "A modern agricultural marketplace built for extreme speed and SEO optimization. Focuses on premium branding and high conversion rates.",
-                        details: [
-                            "Leveraged Next.js 15 App Router for superior routing and performance.",
-                            "Achieved nearly 100 on all Lighthouse metrics through image optimization and zero cumulative layout shift.",
-                            "Implemented advanced SEO strategies involving dynamic Open Graph generation and structured data schemas."
-                        ]
-                    },
-                    "mobile-sync": {
-                        title: "Mobile Sync Architecture", type: "Cross-Platform Mobile",
-                        role: "Lead Developer", philosophy: "Offline-First | Strategic Syncing | Cost Efficiency",
-                        desc: "A creative solution for cross-platform data synchronization without a traditional dedicated backend, utilizing the GitHub API as a staging/sync layer.",
-                        details: [
-                            "Designed an innovative sync engine using GitHub APIs as a serverless data staging area.",
-                            "Robust offline-first architecture ensuring seamless data entry without network connectivity.",
-                            "Automated approval/rejection workflows integrated into a central dashboard for data integrity."
-                        ]
-                    }
+                    "ledger-system": { title: "Order & debt platform for a wholesale distributor", type: "Full-stack", role: "Fullstack Developer (AI-assisted)",
+                        desc: "Orders and debt with automatic FIFO payment reconciliation, supplier statements, print/QR invoices and Excel import. Exact decimal math so balances never drift.",
+                        details: ["Automatic FIFO reconciliation, exact decimal math.", "Supplier statements + print/QR invoices in one click.", "Business analysis and AI-assisted development; runs in production for a real business."] },
+                    "zalo-commerce": { title: "Zalo Mini App commerce (Ivy)", type: "Zalo Mini App + BFF", role: "Fullstack Developer (AI-assisted)",
+                        desc: "A Zalo Mini App sales platform built from scratch: Scrum-style planning, a complete design (all screens and states), and a resilient Pancake POS sync that keeps orders from being lost on supplier errors.",
+                        details: ["Analyzed bottlenecks + stock-consistency (ADRs); orders never shorted.", "NestJS BFF (Clean Architecture) + Pancake POS Open API + Zalo OA.", "Planned expansion to web and mobile to grow sales channels."] },
+                    "warehouse-bot": { title: "Warehouse & sales ops bot (Pancake POS + Zalo OA)", type: "AI Automation", role: "Fullstack Developer (AI-assisted)",
+                        desc: "A bot integrating Pancake POS and Zalo OA to pull warehouse and sales data, analyze it with AI, surface reports and send automated payment reminders.",
+                        details: ["AI (Gemini) analysis + chat assistant for sales and inventory.", "Recharts dashboards for revenue and warehouse reporting.", "Automated payment reminders over Zalo OA + VietQR (node-cron)."] },
+                    "ecommerce": { title: "Hann Nong San (high-performance e-commerce)", type: "Web", role: "Tech Lead (AI-assisted)",
+                        desc: "A Next.js agricultural marketplace from design to deployment; Python + AI scripts auto-check UI, test flows and optimize SEO, cutting manual QA.",
+                        details: ["Optimized speed & SEO, Lighthouse near 100.", "Python scripts with AI APIs for automated UI/SEO checks.", "Used Google Analytics to guide feature improvements."] },
                 },
                 otherProjects: [
-                    { title: "AVB-ARC – Service Management (Offline-First)", company: "N.A.M Tech", role: "Lead Architect", period: "2024 - Present", tech: "React Native, Flutter, Hive, SQLite, Cubit, Background Geolocation", desc: "Spearheaded a resilient Offline-first architecture. Engineered high-precision Background Location Tracking and Routing Optimization for field technicians." },
-                    { title: "SmartOffice – ERP/WMS Ecosystem", company: "Thiso Retail", role: "Senior Mobile Developer", period: "2022 - 2024", tech: "React Native, Redux, Recoil, Redux-Saga, Big Data Visualization", desc: "Engineered core ERP/WMS modules: DC Stock (Inventory), Expiry Management, and Real-time Sales Reports. Optimized mobile performance for massive datasets." },
-                    { title: "Customer Orders Management", company: "Side Project", role: "Fullstack Developer", period: "2024", tech: "Node.js, Express, Prisma, PostgreSQL, Docker, CI/CD", desc: "End-to-end Ledger & Debt Management system. Designed complex relational schemas and automated CI/CD pipelines with Docker orchestration." },
-                    { title: "Insurance & Electricity Apps", company: "Intellin Tech", role: "Frontend Developer", period: "2021 - 2022", tech: "ReactJS, Redux, Material UI, Jenkins", desc: "Delivered UI features across Android/iOS. Worked in Agile methodology with daily standups." }
+                    { title: "Senior Mobile Developer (Ticking App, AVB)", company: "N.A.M Tech", role: "Senior Mobile Developer", period: "2024 to now", desc: "Led mobile development, offline-first + background sync, native iOS/Android bridges, and owned App Store / Google Play releases. Handed over technical documentation to the client." },
+                    { title: "SmartOffice (ERP / WMS / CRM)", company: "Thiso Retail (Emart)", role: "Technical Lead, ERP/WMS/CRM", period: "2022 - 2024", desc: "Built operational-support apps used on the Emart floor (inventory, expiry, reporting, queue, a TV driver-queue display). Two awards at Emart." },
+                    { title: "Insurance & electricity apps", company: "Intellin Tech", role: "Frontend Developer", period: "2021 - 2022", desc: "Built UI features across Android/iOS in an Agile workflow." },
                 ],
-                achievements: [
-                    { title: "Outstanding Performance Award", giver: "Thiso Retail (Emart)" },
-                    { title: "Excellent Staff of the Year", giver: "Thiso Retail (Emart)" }
-                ]
             }
-        };
-
-        const ProjectCard = ({ project, index, t }) => {
-            const [showArch, setShowArch] = useState(false);
-            useEffect(() => { if (showArch) mermaid.init(undefined, `.mermaid-${project.id}`); }, [showArch]);
-            return (
-                <div className="glass-card rounded-2xl overflow-hidden group hover:-translate-y-2 transition-all duration-500 hover:shadow-2xl hover:shadow-brand-500/10 flex flex-col md:flex-row" style={{ animationDelay: `${index * 150}ms` }}>
-                    <div className="p-8 md:w-3/5 flex flex-col justify-between">
-                        <div>
-                            <div className="flex items-center gap-3 mb-4">
-                                <span className="bg-brand-500/20 text-brand-400 px-3 py-1 rounded-md text-[10px] font-bold uppercase tracking-widest">{project.type}</span>
-                                <span className="text-slate-500 text-xs font-medium">{project.philosophy}</span>
-                            </div>
-                            <h3 className="text-3xl font-extrabold text-white mb-3 font-display">{project.title}</h3>
-                            <p className="text-slate-400 text-sm leading-relaxed mb-6">{project.desc}</p>
-                            <ul className="mb-8 space-y-2">
-                                {project.details.map((detail, i) => (
-                                    <li key={i} className="flex items-start gap-2 text-xs text-slate-300">
-                                        <span className="text-brand-400 mt-1">•</span><span>{detail}</span>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                        <div className="flex flex-wrap gap-2 mt-auto">
-                            {project.tech.map((tc, i) => (
-                                <span key={i} className="bg-surface-600 text-slate-400 px-2.5 py-1 rounded text-[10px] font-medium border border-white/5">{tc}</span>
-                            ))}
-                        </div>
-                    </div>
-                    <div className="md:w-2/5 md:border-l border-white/5 bg-surface-800/30 p-8 flex flex-col">
-                        <h4 className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-6 flex items-center gap-2">
-                            <LucideIcon name="architecture" className="w-3.5 h-3.5" />{t.work.blueprint}
-                        </h4>
-                        <button onClick={() => setShowArch(!showArch)} className="w-full bg-brand-600 hover:bg-brand-500 text-white font-bold py-3 px-6 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 text-sm shadow-lg shadow-brand-600/20 mb-6">
-                            <LucideIcon name={showArch ? "shield" : "zap"} className="w-4 h-4" />{showArch ? t.work.hideArch : t.work.showArch}
-                        </button>
-                        {showArch && (
-                            <div className={`mermaid mermaid-${project.id} transition-all duration-700 opacity-100 scale-100 origin-top`}>{project.architecture}</div>
-                        )}
-                        {!showArch && (
-                            <div className="mt-4 p-6 border-2 border-dashed border-white/5 rounded-2xl flex flex-col items-center justify-center text-center opacity-40 group-hover:opacity-70 transition-opacity">
-                                <LucideIcon name="architecture" className="w-12 h-12 text-slate-600 mb-4" />
-                                <p className="text-xs text-slate-500 font-medium leading-relaxed">{t.work.archHint}</p>
-                            </div>
-                        )}
-                    </div>
-                </div>
-            );
         };
 
         const ContactForm = ({ t }) => {
-            const [status, setStatus] = useState('idle'); // idle | sending | sent | error
+            const [status, setStatus] = useState('idle');
             const [form, setForm] = useState({ name: '', email: '', message: '' });
             const upd = (k) => (e) => setForm({ ...form, [k]: e.target.value });
-
             const submit = async (e) => {
                 e.preventDefault();
                 if (CONTACT.formspreeId) {
                     try {
                         setStatus('sending');
                         const res = await fetch(`https://formspree.io/f/${CONTACT.formspreeId}`, {
-                            method: 'POST',
-                            headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+                            method: 'POST', headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
                             body: JSON.stringify(form)
                         });
                         setStatus(res.ok ? 'sent' : 'error');
                     } catch (err) { setStatus('error'); }
                 } else {
-                    // No backend configured → open the visitor's email client, prefilled.
-                    const subject = encodeURIComponent(`[Dự án] ${form.name || 'Liên hệ từ website'}`);
-                    const body = encodeURIComponent(`${form.message}\n\n— ${form.name} (${form.email})`);
+                    const subject = encodeURIComponent(`[Du an] ${form.name || 'Lien he tu website'}`);
+                    const body = encodeURIComponent(`${form.message}\n\n${form.name} (${form.email})`);
                     window.location.href = `mailto:${CONTACT.email}?subject=${subject}&body=${body}`;
                     setStatus('sent');
                 }
             };
-
-            const inputCls = "bg-surface-600 border border-white/5 rounded-xl px-4 py-3 text-sm text-white placeholder-slate-500 focus:border-brand-500 focus:outline-none transition-colors";
-
-            if (status === 'sent') {
-                return (
-                    <div className="glass-card rounded-2xl p-8 border-emerald-500/20 text-center">
-                        <div className="w-12 h-12 mx-auto bg-emerald-500/10 rounded-full flex items-center justify-center text-emerald-400 mb-4"><LucideIcon name="shield" /></div>
-                        <p className="text-white font-bold">{t.contact.sent}</p>
-                    </div>
-                );
-            }
+            const field = "w-full bg-zinc-900 border border-white/10 rounded-xl px-4 py-3 text-sm text-zinc-100 placeholder-zinc-500 focus:border-accent-500 focus:outline-none focus:ring-1 focus:ring-accent-500 transition-colors";
+            if (status === 'sent') return (
+                <div className="panel rounded-xl p-8 text-center" style={{ borderColor: 'rgba(52,211,153,0.3)' }}>
+                    <Icon name="check-circle" className="text-accent-400 text-3xl" />
+                    <p className="text-zinc-100 font-medium mt-3">{t.contact.sent}</p>
+                </div>
+            );
             return (
-                <form onSubmit={submit} className="glass-card rounded-2xl p-8 border-white/5 space-y-4">
+                <form onSubmit={submit} className="panel rounded-xl p-6 sm:p-8 space-y-4">
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <input required value={form.name} onChange={upd('name')} placeholder={t.contact.name} className={inputCls} />
-                        <input required type="email" value={form.email} onChange={upd('email')} placeholder={t.contact.emailField} className={inputCls} />
+                        <div className="flex flex-col gap-1.5">
+                            <label className="text-xs font-medium text-zinc-400">{t.contact.name}</label>
+                            <input required value={form.name} onChange={upd('name')} className={field} />
+                        </div>
+                        <div className="flex flex-col gap-1.5">
+                            <label className="text-xs font-medium text-zinc-400">{t.contact.emailField}</label>
+                            <input required type="email" value={form.email} onChange={upd('email')} className={field} />
+                        </div>
                     </div>
-                    <textarea required value={form.message} onChange={upd('message')} placeholder={t.contact.project} rows="4" className={`w-full resize-none ${inputCls}`}></textarea>
-                    {status === 'error' && <p className="text-rose-400 text-xs font-medium">{t.contact.error}</p>}
-                    <button type="submit" disabled={status === 'sending'} className="w-full bg-brand-600 hover:bg-brand-500 disabled:opacity-60 text-white font-black py-3.5 px-6 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 text-sm shadow-lg shadow-brand-600/20">
-                        {status === 'sending' ? t.contact.sending : t.contact.send}<LucideIcon name="zap" className="w-4 h-4" />
+                    <div className="flex flex-col gap-1.5">
+                        <label className="text-xs font-medium text-zinc-400">{t.contact.project}</label>
+                        <textarea required value={form.message} onChange={upd('message')} rows="4" className={`${field} resize-none`}></textarea>
+                    </div>
+                    {status === 'error' && <p className="text-red-400 text-xs">{t.contact.error}</p>}
+                    <button type="submit" disabled={status === 'sending'} className="press w-full bg-accent-500 hover:bg-accent-400 disabled:opacity-60 text-zinc-950 font-semibold py-3.5 px-6 rounded-full transition-colors flex items-center justify-center gap-2 text-sm">
+                        {status === 'sending' ? t.contact.sending : t.contact.send}<Icon name="paper-plane-tilt" />
                     </button>
                 </form>
             );
         };
 
+        const ProjectCard = ({ p, t, featured }) => {
+            const [open, setOpen] = useState(false);
+            useEffect(() => { if (open) mermaid.init(undefined, `.mermaid-${p.id}`); }, [open]);
+            return (
+                <div className={`panel lift rounded-xl p-7 flex flex-col ${featured ? 'md:col-span-2' : ''}`}>
+                    <div className="flex items-center justify-between gap-3 mb-4">
+                        <span className="font-mono text-[11px] uppercase tracking-wider text-accent-400">{p.type}</span>
+                        {featured && <span className="text-[10px] font-semibold uppercase tracking-wider text-zinc-950 bg-accent-400 px-2 py-0.5 rounded-full">{t.work.featuredTag}</span>}
+                    </div>
+                    <h3 className={`font-display font-bold text-white mb-3 ${featured ? 'text-3xl' : 'text-2xl'}`}>{p.title}</h3>
+                    <p className="text-zinc-400 text-sm leading-relaxed mb-5 max-w-[60ch]">{p.desc}</p>
+                    <ul className="space-y-2 mb-6">
+                        {p.details.map((d, i) => (
+                            <li key={i} className="flex items-start gap-2.5 text-xs text-zinc-300">
+                                <Icon name="check-circle" className="text-accent-500 mt-0.5 shrink-0" /><span>{d}</span>
+                            </li>
+                        ))}
+                    </ul>
+                    <div className="flex flex-wrap gap-2 mb-5 mt-auto">
+                        {p.tech.map((tc, i) => <span key={i} className="font-mono text-[10px] text-zinc-400 bg-white/5 border border-white/5 px-2 py-1 rounded">{tc}</span>)}
+                    </div>
+                    <button onClick={() => setOpen(!open)} className="press self-start inline-flex items-center gap-2 text-xs font-medium text-zinc-300 hover:text-accent-400 transition-colors">
+                        <Icon name="tree-structure" />{open ? t.work.hideArch : t.work.showArch}
+                    </button>
+                    {open && <div className={`mermaid mermaid-${p.id}`}>{p.architecture}</div>}
+                </div>
+            );
+        };
+
+        const Reveal = ({ children, className = "", as = "div" }) => {
+            const ref = useRef(null);
+            useEffect(() => {
+                const el = ref.current; if (!el) return;
+                const io = new IntersectionObserver((entries) => {
+                    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } });
+                }, { threshold: 0.15 });
+                io.observe(el);
+                return () => io.disconnect();
+            }, []);
+            const Tag = as;
+            return <Tag ref={ref} className={`reveal ${className}`}>{children}</Tag>;
+        };
+
         const App = () => {
             const [scrolled, setScrolled] = useState(false);
-            const [lang, setLang] = useState(() => {
-                try { return localStorage.getItem('lang') || 'vi'; } catch (e) { return 'vi'; }
-            });
+            const [lang, setLang] = useState(() => { try { return localStorage.getItem('lang') || 'vi'; } catch (e) { return 'vi'; } });
             const t = STR[lang];
 
+            // Nav background toggle via IntersectionObserver sentinel (no scroll listener; see skill 5.D)
+            const sentinelRef = useRef(null);
             useEffect(() => {
-                const handleScroll = () => setScrolled(window.scrollY > 20);
-                window.addEventListener('scroll', handleScroll);
-                return () => window.removeEventListener('scroll', handleScroll);
+                const el = sentinelRef.current; if (!el) return;
+                const io = new IntersectionObserver(([e]) => setScrolled(!e.isIntersecting), { threshold: 1 });
+                io.observe(el);
+                return () => io.disconnect();
             }, []);
-
-            useEffect(() => {
-                try { localStorage.setItem('lang', lang); } catch (e) { }
-                document.documentElement.lang = lang;
-            }, [lang]);
+            useEffect(() => { try { localStorage.setItem('lang', lang); } catch (e) {} document.documentElement.lang = lang; }, [lang]);
 
             const projects = PROJECT_ORDER.map(id => ({ id, ...PROJECT_META[id], ...t.projects[id] }));
-            const s = t.hero.summaryParts;
 
             return (
                 <div className="min-h-screen relative">
-                    <div className="fixed inset-0 z-[-1] bg-surface-900 pointer-events-none">
-                        <div className="absolute inset-0 bg-hero-pattern bg-cover bg-center opacity-[0.03] scale-110"></div>
-                        <div className="hero-gradient absolute inset-0"></div>
-                    </div>
+                    <div ref={sentinelRef} className="absolute top-0 left-0 h-4 w-px pointer-events-none"></div>
+                    {/* Background: subtle off-black field, single accent glow kept very low */}
+                    <div className="fixed inset-0 z-[-1] pointer-events-none" style={{ background: 'radial-gradient(60% 50% at 75% 0%, rgba(16,185,129,0.06), transparent 70%)' }}></div>
 
-                    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 h-20 flex items-center ${scrolled ? 'glass-card h-16 border-b' : ''}`}>
-                        <div className="container mx-auto px-6 lg:px-12 flex justify-between items-center">
-                            <div className="flex items-center gap-2">
-                                <div className="w-8 h-8 bg-brand-600 rounded-lg flex items-center justify-center font-bold text-white shadow-lg shadow-brand-600/30">H</div>
-                                <span className="text-lg font-black tracking-tighter font-display text-white">CONG HUNG</span>
-                            </div>
-                            <div className="flex items-center gap-6 md:gap-10">
-                                <div className="hidden md:flex gap-10 text-xs font-bold uppercase tracking-widest text-slate-400">
-                                    <a href="#services" className="hover:text-brand-400 transition-colors">{t.nav.services}</a>
-                                    <a href="#process" className="hover:text-brand-400 transition-colors">{t.nav.process}</a>
-                                    <a href="#work" className="hover:text-brand-400 transition-colors">{t.nav.work}</a>
-                                    <a href="#skills" className="hover:text-brand-400 transition-colors">{t.nav.skills}</a>
+                    {/* Nav (single line, <=72px) */}
+                    <nav className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${scrolled ? 'panel backdrop-blur-md h-14' : 'h-[72px]'} flex items-center`}>
+                        <div className="container mx-auto max-w-6xl px-5 lg:px-8 flex items-center justify-between">
+                            <a href="#top" className="flex items-center gap-2.5">
+                                <span className="w-8 h-8 rounded-lg bg-accent-500 text-zinc-950 font-display font-extrabold flex items-center justify-center">H</span>
+                                <span className="font-display font-bold tracking-tight text-white">Cong Hung</span>
+                            </a>
+                            <div className="flex items-center gap-5 lg:gap-8">
+                                <div className="hidden md:flex items-center gap-7 text-sm text-zinc-400 font-medium">
+                                    <a href="#services" className="hover:text-white transition-colors">{t.nav.services}</a>
+                                    <a href="#process" className="hover:text-white transition-colors">{t.nav.process}</a>
+                                    <a href="#work" className="hover:text-white transition-colors">{t.nav.work}</a>
                                 </div>
-                                <div className="flex items-center gap-1 text-[11px] font-black uppercase tracking-widest">
-                                    <button onClick={() => setLang('vi')} className={`px-2 py-1 rounded transition-colors ${lang === 'vi' ? 'text-brand-400' : 'text-slate-500 hover:text-slate-300'}`}>VI</button>
-                                    <span className="text-slate-600">/</span>
-                                    <button onClick={() => setLang('en')} className={`px-2 py-1 rounded transition-colors ${lang === 'en' ? 'text-brand-400' : 'text-slate-500 hover:text-slate-300'}`}>EN</button>
+                                <div className="flex items-center gap-1 text-xs font-semibold">
+                                    <button onClick={() => setLang('vi')} className={`px-1.5 py-1 transition-colors ${lang === 'vi' ? 'text-accent-400' : 'text-zinc-500 hover:text-zinc-300'}`}>VI</button>
+                                    <span className="text-zinc-700">/</span>
+                                    <button onClick={() => setLang('en')} className={`px-1.5 py-1 transition-colors ${lang === 'en' ? 'text-accent-400' : 'text-zinc-500 hover:text-zinc-300'}`}>EN</button>
                                 </div>
-                                <a href="#contact" className="hidden md:inline-block bg-brand-600 text-white px-5 py-2 rounded-full hover:bg-brand-500 transition-all shadow-lg shadow-brand-600/20 text-xs font-bold uppercase tracking-widest">{t.nav.talk}</a>
+                                <a href="#contact" className="press hidden sm:inline-flex items-center gap-1.5 bg-white text-zinc-950 hover:bg-accent-400 transition-colors text-sm font-semibold px-4 py-2 rounded-full">{t.nav.contact}</a>
                             </div>
                         </div>
                     </nav>
 
-                    {/* Hero */}
-                    <section className="pt-40 pb-32 px-6 lg:px-12 relative overflow-hidden">
-                        <div className="container mx-auto max-w-6xl">
-                            <div className="relative z-10 flex flex-col md:flex-row items-end justify-between gap-12">
-                                <div className="max-w-3xl">
-                                    <div className="flex items-center gap-3 mb-6 animate-pulse">
-                                        <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]"></div>
-                                        <span className="text-emerald-500 text-[10px] font-black uppercase tracking-[0.2em]">{t.hero.status}</span>
+                    <main id="top">
+                        {/* Hero: asymmetric split, type-led left, identity card right */}
+                        <section className="px-5 lg:px-8 pt-28 md:pt-32 pb-16">
+                            <div className="container mx-auto max-w-6xl grid lg:grid-cols-[1.4fr_1fr] gap-12 lg:gap-16 items-center">
+                                <div>
+                                    <div className="inline-flex items-center gap-2 mb-7 text-xs font-medium text-accent-300">
+                                        <span className="avail-dot w-2 h-2 rounded-full bg-accent-400"></span>{t.hero.avail}
                                     </div>
-                                    <h1 className="text-6xl md:text-8xl font-black font-display text-white leading-[0.9] mb-8 tracking-tighter">
-                                        {t.hero.titleA}<br />
-                                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-emerald-400">{t.hero.titleB}</span>
+                                    <h1 className="font-display font-extrabold text-white tracking-tight leading-[0.98] text-5xl md:text-6xl lg:text-7xl">
+                                        {t.hero.h1}<br /><span className="text-accent-400">{t.hero.h2}</span>
                                     </h1>
-                                    <p className="text-lg md:text-xl text-slate-400 max-w-xl leading-relaxed mb-10 font-normal">
-                                        <span className="text-slate-100 font-bold">{t.hero.roleStrong}</span>. {s[0]}
-                                        <span className="text-slate-100 font-bold">{s[1]}</span>{s[2]}
-                                        <span className="text-slate-100 font-bold">{s[3]}</span>{s[4]}
-                                    </p>
-                                    <div className="flex flex-wrap items-center gap-4">
-                                        <a href="#work" className="group flex items-center gap-3 bg-brand-600 hover:bg-brand-500 text-white font-black py-4 px-8 rounded-2xl transition-all duration-300 shadow-xl shadow-brand-600/20 text-sm">
-                                            {t.hero.ctaPrimary}<LucideIcon name="zap" className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                                    <p className="text-zinc-400 text-lg leading-relaxed mt-7 max-w-[48ch]">{t.hero.sub}</p>
+                                    <div className="flex flex-wrap items-center gap-3 mt-9">
+                                        <a href="#contact" className="press inline-flex items-center gap-2 bg-accent-500 hover:bg-accent-400 text-zinc-950 font-semibold text-sm px-6 py-3.5 rounded-full transition-colors">
+                                            {t.hero.ctaPrimary}<Icon name="arrow-right" />
                                         </a>
-                                        <a href="#services" className="glass-card text-white font-black py-4 px-8 rounded-2xl border-white/10 hover:bg-white/5 transition-all text-sm">{t.hero.ctaServices}</a>
-                                        <div className="flex items-center gap-4 border-l border-white/10 pl-6 py-2">
-                                            <div className="flex flex-col">
-                                                <span className="text-xl font-bold text-white leading-none">5+</span>
-                                                <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-1">{t.hero.statYears}</span>
-                                            </div>
-                                            <div className="flex flex-col">
-                                                <span className="text-xl font-bold text-white leading-none">20+</span>
-                                                <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-1">{t.hero.statProjects}</span>
-                                            </div>
-                                        </div>
+                                        <a href="#work" className="press inline-flex items-center gap-2 border border-white/15 hover:border-white/30 hover:bg-white/5 text-zinc-100 font-semibold text-sm px-6 py-3.5 rounded-full transition-colors">{t.hero.ctaSecondary}</a>
                                     </div>
                                 </div>
-                                <div className="hidden lg:block w-72 h-72 relative">
-                                    <div className="absolute inset-0 bg-brand-500/10 rounded-full blur-3xl"></div>
-                                    <div className="glass-card absolute inset-0 rounded-3xl p-8 flex flex-col justify-center animate-subtle border border-brand-500/20 shadow-2xl shadow-brand-500/5">
-                                        <LucideIcon name="shield" className="w-12 h-12 text-brand-400 mb-6" />
-                                        <h4 className="text-lg font-black font-display text-white mb-2 tracking-tight">{t.hero.cardTitle}</h4>
-                                        <p className="text-xs text-slate-400 leading-relaxed font-medium">{t.hero.cardDesc}</p>
+                                {/* Identity object (real content presented as the hero visual) */}
+                                <div className="panel rounded-2xl p-7 lg:p-8 relative overflow-hidden">
+                                    {/* TODO (optional upgrade): drop a real portrait or a Check Toa product screenshot here for extra impact. */}
+                                    <div className="flex items-center justify-between mb-8">
+                                        <span className="w-12 h-12 rounded-xl bg-accent-500 text-zinc-950 font-display font-extrabold text-xl flex items-center justify-center">H</span>
+                                        <Icon name="scales" className="text-accent-400/40 text-4xl" />
+                                    </div>
+                                    <p className="font-display font-bold text-2xl text-white">Nguyen Cong Hung</p>
+                                    <p className="text-accent-400 text-sm font-medium mt-1">{t.hero.cardRole}</p>
+                                    <p className="text-zinc-500 text-sm mt-1">{t.hero.cardLoc}</p>
+                                    <div className="h-px bg-white/8 my-6"></div>
+                                    <div className="grid grid-cols-2 gap-5">
+                                        <div><p className="font-mono text-3xl font-medium text-white">5+</p><p className="text-zinc-500 text-xs mt-1">{t.trust.years}</p></div>
+                                        <div><p className="font-mono text-3xl font-medium text-white">20+</p><p className="text-zinc-500 text-xs mt-1">{t.trust.projects}</p></div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </section>
+                        </section>
 
-                    {/* Services (freelance) */}
-                    <section id="services" className="py-24 px-6 lg:px-12 bg-brand-600/5">
-                        <div className="container mx-auto max-w-6xl">
-                            <div className="text-center mb-16">
-                                <span className="text-brand-500 text-[10px] font-black uppercase tracking-[0.3em] mb-4 block">{t.services.eyebrow}</span>
-                                <h2 className="text-5xl md:text-6xl font-black font-display text-white tracking-tighter mb-4">{t.services.heading}</h2>
-                                <p className="text-slate-400 text-sm max-w-xl mx-auto leading-relaxed font-medium">{t.services.sub}</p>
-                            </div>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                {t.services.items.map((it, i) => (
-                                    <div key={i} className="glass-card p-8 rounded-2xl border-white/5 group hover:border-brand-500/30 hover:bg-brand-600/10 transition-all duration-300 flex gap-5">
-                                        <div className="w-12 h-12 shrink-0 bg-brand-500/10 rounded-xl flex items-center justify-center text-brand-400 group-hover:scale-110 transition-transform">
-                                            <LucideIcon name={it.icon} className="w-6 h-6" />
-                                        </div>
-                                        <div>
-                                            <h3 className="text-white font-bold text-lg mb-2 font-display">{it.title}</h3>
-                                            <p className="text-slate-400 text-sm leading-relaxed">{it.desc}</p>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    </section>
-
-                    {/* Process (how I work) */}
-                    <section id="process" className="py-24 px-6 lg:px-12">
-                        <div className="container mx-auto max-w-6xl">
-                            <div className="text-center mb-16">
-                                <span className="text-brand-500 text-[10px] font-black uppercase tracking-[0.3em] mb-4 block">{t.process.eyebrow}</span>
-                                <h2 className="text-5xl md:text-6xl font-black font-display text-white tracking-tighter mb-4">{t.process.heading}</h2>
-                                <p className="text-slate-400 text-sm max-w-xl mx-auto leading-relaxed font-medium">{t.process.sub}</p>
-                            </div>
-                            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-                                {t.process.steps.map((st, i) => (
-                                    <div key={i} className="glass-card p-7 rounded-2xl border-white/5 group hover:border-brand-500/30 transition-all duration-300">
-                                        <span className="text-brand-500/40 text-3xl font-black font-display block mb-4 group-hover:text-brand-400 transition-colors">{st.n}</span>
-                                        <h3 className="text-white font-bold text-base mb-2 font-display">{st.title}</h3>
-                                        <p className="text-slate-400 text-xs leading-relaxed">{st.desc}</p>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    </section>
-
-                    {/* Work */}
-                    <section id="work" className="py-24 px-6 lg:px-12 bg-surface-800/30">
-                        <div className="container mx-auto max-w-6xl">
-                            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-20">
-                                <div>
-                                    <span className="text-brand-500 text-[10px] font-black uppercase tracking-[0.3em] mb-4 block">{t.work.eyebrow}</span>
-                                    <h2 className="text-5xl md:text-6xl font-black font-display text-white tracking-tighter">{t.work.heading}</h2>
-                                </div>
-                                <p className="text-slate-400 text-sm max-w-xs leading-relaxed font-medium">{t.work.sub}</p>
-                            </div>
-                            <div className="space-y-16">
-                                {projects.map((p, i) => (<ProjectCard key={p.id} project={p} index={i} t={t} />))}
-                            </div>
-                        </div>
-                    </section>
-
-                    {/* Journey */}
-                    <section className="py-24 px-6 lg:px-12">
-                        <div className="container mx-auto max-w-6xl text-center">
-                            <h2 className="text-4xl font-extrabold text-white mb-16 font-display">{t.journey.heading}</h2>
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                                {t.otherProjects.map((op, i) => (
-                                    <div key={i} className="glass-card p-8 rounded-2xl border-white/5 text-left group hover:border-brand-500/30 transition-all duration-300">
-                                        <span className="text-brand-500 text-[10px] font-black tracking-widest uppercase mb-4 block">{op.period}</span>
-                                        <h3 className="text-xl font-bold text-white mb-2">{op.title}</h3>
-                                        <p className="text-brand-400 text-xs font-bold mb-2 uppercase tracking-tighter">{op.role} @ {op.company}</p>
-                                        <p className="text-slate-400 text-xs leading-relaxed mb-4">{op.desc}</p>
-                                        <p className="text-slate-500 text-[9px] font-semibold uppercase tracking-wider">{op.tech}</p>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    </section>
-
-                    {/* Recognition */}
-                    <section className="py-24 px-6 lg:px-12 bg-emerald-500/5">
-                        <div className="container mx-auto max-w-6xl">
-                            <h2 className="text-3xl font-black font-display text-white mb-12 text-center">{t.recognition.heading}</h2>
-                            <div className="flex flex-wrap justify-center gap-8">
-                                {t.achievements.map((a, i) => (
-                                    <div key={i} className="glass-card p-6 rounded-2xl border-emerald-500/20 flex flex-col items-center text-center max-w-xs">
-                                        <div className="w-12 h-12 bg-emerald-500/10 rounded-full flex items-center justify-center text-emerald-400 mb-4"><LucideIcon name="shield" /></div>
-                                        <h4 className="text-white font-bold mb-1">{a.title}</h4>
-                                        <p className="text-slate-400 text-xs font-medium">{a.giver}</p>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    </section>
-
-                    {/* Skills */}
-                    <section id="skills" className="py-24 px-6 lg:px-12 bg-brand-600/5">
-                        <div className="container mx-auto max-w-6xl">
-                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
-                                <div>
-                                    <h2 className="text-5xl font-black font-display text-white tracking-tighter mb-8 leading-[1.1]">{t.skills.heading}</h2>
-                                    <p className="text-slate-400 text-sm leading-relaxed mb-10 font-medium">{t.skills.sub}</p>
-                                    <div className="space-y-6">
-                                        {t.skills.bars.map((sk, i) => (
-                                            <div key={i} className="space-y-2">
-                                                <div className="flex justify-between text-xs font-bold uppercase tracking-widest">
-                                                    <span className="text-slate-200">{sk.name}</span>
-                                                    <span className="text-brand-400">{sk.val}%</span>
-                                                </div>
-                                                <div className="h-1 w-full bg-surface-600 rounded-full overflow-hidden">
-                                                    <div className="h-full bg-brand-500 rounded-full" style={{ width: `${sk.val}%` }}></div>
-                                                </div>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
-                                <div className="grid grid-cols-2 gap-4">
-                                    {t.skills.cards.map((sk, i) => (
-                                        <div key={i} className="glass-card p-6 rounded-2xl border-white/5 group hover:bg-brand-600/10 transition-colors">
-                                            <div className="w-10 h-10 bg-brand-500/10 rounded-xl flex items-center justify-center text-brand-400 mb-4 group-hover:scale-110 transition-transform"><LucideIcon name={sk.icon} /></div>
-                                            <h4 className="text-white font-bold text-sm mb-1">{sk.n}</h4>
-                                            <p className="text-slate-500 text-[10px] font-medium leading-relaxed">{sk.d}</p>
-                                        </div>
+                        {/* Services: divided list (distinct layout family) */}
+                        <section id="services" className="px-5 lg:px-8 py-20 border-t border-white/5">
+                            <div className="container mx-auto max-w-6xl">
+                                <Reveal as="h2" className="font-display font-bold text-white tracking-tight text-3xl md:text-5xl mb-12">{t.services.h}</Reveal>
+                                <div className="divide-y divide-white/8">
+                                    {t.services.items.map((it, i) => (
+                                        <Reveal key={i} className="grid md:grid-cols-[auto_1fr_1.4fr] gap-4 md:gap-8 items-start py-7 group">
+                                            <span className="w-11 h-11 rounded-xl bg-accent-500/10 text-accent-400 flex items-center justify-center text-xl shrink-0"><Icon name={it.icon} /></span>
+                                            <h3 className="font-display font-semibold text-white text-xl">{it.title}</h3>
+                                            <p className="text-zinc-400 text-sm leading-relaxed max-w-[55ch]">{it.desc}</p>
+                                        </Reveal>
                                     ))}
                                 </div>
                             </div>
-                        </div>
-                    </section>
+                        </section>
 
-                    {/* Contact */}
-                    <section id="contact" className="py-24 px-6 lg:px-12 bg-surface-800/30">
-                        <div className="container mx-auto max-w-4xl">
-                            <div className="text-center mb-12">
-                                <span className="text-brand-500 text-[10px] font-black uppercase tracking-[0.3em] mb-4 block">{t.contact.eyebrow}</span>
-                                <h2 className="text-5xl md:text-6xl font-black font-display text-white tracking-tighter mb-4">{t.contact.heading}</h2>
-                                <p className="text-slate-400 text-sm max-w-xl mx-auto leading-relaxed font-medium">{t.contact.sub}</p>
-                            </div>
-                            {CONTACT.calendly && (
-                                <div className="text-center mb-8">
-                                    <a href={CONTACT.calendly} target="_blank" className="inline-flex items-center gap-3 bg-white text-black font-black py-4 px-8 rounded-2xl hover:bg-slate-200 transition-all text-sm shadow-xl shadow-white/5">
-                                        {t.contact.book}<LucideIcon name="zap" className="w-4 h-4" />
-                                    </a>
-                                    <p className="text-slate-500 text-xs font-medium uppercase tracking-widest mt-4">{t.contact.or}</p>
+                        {/* Process: 4-step flow (distinct family) */}
+                        <section id="process" className="px-5 lg:px-8 py-20 border-t border-white/5">
+                            <div className="container mx-auto max-w-6xl">
+                                <Reveal className="max-w-2xl mb-12">
+                                    <h2 className="font-display font-bold text-white tracking-tight text-3xl md:text-5xl">{t.process.h}</h2>
+                                    <p className="text-zinc-400 mt-3">{t.process.sub}</p>
+                                </Reveal>
+                                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                                    {t.process.steps.map((s, i) => (
+                                        <Reveal key={i} className="panel lift rounded-xl p-6" >
+                                            <div className="flex items-center justify-between mb-5">
+                                                <span className="w-10 h-10 rounded-lg bg-zinc-900 text-accent-400 flex items-center justify-center text-lg"><Icon name={s.icon} /></span>
+                                                <span className="font-mono text-xs text-zinc-600">0{i + 1}</span>
+                                            </div>
+                                            <h3 className="font-display font-semibold text-white">{s.title}</h3>
+                                            <p className="text-zinc-400 text-sm leading-relaxed mt-2">{s.desc}</p>
+                                        </Reveal>
+                                    ))}
                                 </div>
-                            )}
-                            <ContactForm t={t} />
-                            <div className="flex flex-wrap justify-center gap-6 mt-8 text-sm">
-                                <a href={`mailto:${CONTACT.email}`} className="text-slate-400 hover:text-brand-400 transition-colors font-medium">{CONTACT.email}</a>
-                                <a href={CONTACT.phoneHref} className="text-slate-400 hover:text-brand-400 transition-colors font-medium">{CONTACT.phone}</a>
                             </div>
-                        </div>
-                    </section>
+                        </section>
 
-                    {/* Footer */}
-                    <footer className="py-20 px-6 lg:px-12 border-t border-white/5">
-                        <div className="container mx-auto max-w-6xl">
-                            <div className="flex flex-col md:flex-row justify-between items-center gap-10">
+                        {/* Work: card grid with featured span (distinct family) */}
+                        <section id="work" className="px-5 lg:px-8 py-20 border-t border-white/5">
+                            <div className="container mx-auto max-w-6xl">
+                                <Reveal as="h2" className="font-display font-bold text-white tracking-tight text-3xl md:text-5xl mb-12">{t.work.h}</Reveal>
+                                <div className="grid md:grid-cols-2 gap-5">
+                                    {projects.map(p => <Reveal key={p.id} className={p.featured ? 'md:col-span-2' : ''}><ProjectCard p={p} t={t} featured={p.featured} /></Reveal>)}
+                                </div>
+                            </div>
+                        </section>
+
+                        {/* Experience: compact timeline (distinct family) */}
+                        <section className="px-5 lg:px-8 py-20 border-t border-white/5">
+                            <div className="container mx-auto max-w-6xl grid lg:grid-cols-[1fr_1.6fr] gap-12">
+                                <Reveal>
+                                    <h2 className="font-display font-bold text-white tracking-tight text-3xl md:text-5xl">{t.exp.h}</h2>
+                                    <p className="text-zinc-500 text-sm mt-5 flex items-start gap-2 max-w-xs"><Icon name="star" className="text-accent-400 mt-0.5" />{t.exp.awards}</p>
+                                </Reveal>
                                 <div>
-                                    <h3 className="text-4xl font-black font-display text-white tracking-tighter mb-2">{t.footer.cta}</h3>
-                                    <p className="text-slate-500 text-xs font-medium uppercase tracking-widest">{t.footer.availability}</p>
-                                </div>
-                                <div className="flex flex-wrap gap-4">
-                                    <a href="mailto:business.nc.hung@gmail.com" className="bg-white text-black font-black px-8 py-4 rounded-2xl hover:bg-slate-200 transition-all text-sm shadow-xl shadow-white/5">business.nc.hung@gmail.com</a>
-                                    <a href="tel:0981815237" className="glass-card text-white font-black px-8 py-4 rounded-2xl border-white/10 hover:bg-white/5 transition-all text-sm">+84 981 815 237</a>
+                                    {t.otherProjects.map((op, i) => (
+                                        <Reveal key={i} className="flex gap-5 py-5 border-b border-white/8 last:border-0">
+                                            <span className="font-mono text-xs text-zinc-500 w-24 shrink-0 pt-1">{op.period}</span>
+                                            <div>
+                                                <h3 className="font-display font-semibold text-white">{op.title}</h3>
+                                                <p className="text-accent-400 text-xs font-medium mt-0.5">{op.role} · {op.company}</p>
+                                                <p className="text-zinc-400 text-sm leading-relaxed mt-2 max-w-[55ch]">{op.desc}</p>
+                                            </div>
+                                        </Reveal>
+                                    ))}
                                 </div>
                             </div>
-                            <div className="mt-20 pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6 text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em]">
-                                <p>&copy; 2025 {t.footer.rights}</p>
-                                <div className="flex gap-8">
-                                    <a href="https://github.com/nc-hung" target="_blank" className="hover:text-white transition-colors">GitHub</a>
-                                    <a href="assets/cv.pdf" target="_blank" className="hover:text-white transition-colors">{t.footer.resume}</a>
+                        </section>
+
+                        {/* Skills: bars + tech pills (distinct family) */}
+                        <section className="px-5 lg:px-8 py-20 border-t border-white/5">
+                            <div className="container mx-auto max-w-6xl grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+                                <Reveal>
+                                    <h2 className="font-display font-bold text-white tracking-tight text-3xl md:text-5xl mb-9">{t.skills.h}</h2>
+                                    <div className="space-y-5">
+                                        {t.skills.bars.map((s, i) => (
+                                            <div key={i}>
+                                                <div className="flex justify-between text-sm mb-2"><span className="text-zinc-200 font-medium">{s.name}</span><span className="font-mono text-accent-400 text-xs">{s.val}</span></div>
+                                                <div className="h-1.5 w-full bg-zinc-800 rounded-full overflow-hidden"><div className="h-full bg-accent-500 rounded-full" style={{ width: `${s.val}%` }}></div></div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </Reveal>
+                                <Reveal className="flex flex-wrap gap-2.5 content-start">
+                                    {t.skills.groups.map((g, i) => <span key={i} className="font-mono text-sm text-zinc-300 panel px-3.5 py-2 rounded-lg">{g}</span>)}
+                                </Reveal>
+                            </div>
+                        </section>
+
+                        {/* Contact: centered form (distinct family) */}
+                        <section id="contact" className="px-5 lg:px-8 py-20 border-t border-white/5">
+                            <div className="container mx-auto max-w-2xl">
+                                <Reveal className="text-center mb-10">
+                                    <h2 className="font-display font-bold text-white tracking-tight text-3xl md:text-5xl">{t.contact.h}</h2>
+                                    <p className="text-zinc-400 mt-3 max-w-xl mx-auto">{t.contact.sub}</p>
+                                </Reveal>
+                                {CONTACT.calendly && (
+                                    <div className="text-center mb-7">
+                                        <a href={CONTACT.calendly} target="_blank" rel="noopener" className="press inline-flex items-center gap-2 bg-white text-zinc-950 hover:bg-accent-400 transition-colors font-semibold text-sm px-6 py-3.5 rounded-full">{t.contact.book}<Icon name="arrow-right" /></a>
+                                        <p className="text-zinc-500 text-xs mt-4">{t.contact.or}</p>
+                                    </div>
+                                )}
+                                <ContactForm t={t} />
+                                <div className="flex flex-wrap justify-center gap-6 mt-7 text-sm">
+                                    <a href={`mailto:${CONTACT.email}`} className="text-zinc-400 hover:text-accent-400 transition-colors inline-flex items-center gap-2"><Icon name="envelope-simple" />{CONTACT.email}</a>
+                                    <a href={CONTACT.phoneHref} className="text-zinc-400 hover:text-accent-400 transition-colors inline-flex items-center gap-2"><Icon name="phone" />{CONTACT.phone}</a>
                                 </div>
+                            </div>
+                        </section>
+                    </main>
+
+                    <footer className="px-5 lg:px-8 py-12 border-t border-white/5">
+                        <div className="container mx-auto max-w-6xl flex flex-col sm:flex-row items-center justify-between gap-5 text-sm">
+                            <p className="text-zinc-500">{t.footer.availability}</p>
+                            <div className="flex items-center gap-6 text-zinc-400">
+                                <a href={CONTACT.github} target="_blank" rel="noopener" className="hover:text-white transition-colors">GitHub</a>
+                                <a href="cv/" target="_blank" className="hover:text-white transition-colors">{t.footer.resume}</a>
+                                <span className="text-zinc-600 font-mono text-xs">© 2025 {t.footer.rights}</span>
                             </div>
                         </div>
                     </footer>
