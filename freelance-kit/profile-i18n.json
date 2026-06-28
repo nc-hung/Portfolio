@@ -1,0 +1,96 @@
+{
+  "_note": "Bilingual content source. docs/index.html embeds its own copy (for file:// use). Edit both, or wire the site to fetch this when served over HTTP.",
+  "defaultLang": "vi",
+  "vi": {
+    "nav": { "services": "Dịch vụ", "process": "Quy trình", "work": "Dự án", "skills": "Kỹ năng", "talk": "Thuê tôi" },
+    "hero": {
+      "status": "Nhận dự án freelance · Hệ thống đơn–hoá đơn–công nợ & tự động hoá AI",
+      "titleA": "Kiến tạo",
+      "titleB": "Giá trị Tối ưu.",
+      "role": "Senior Software Engineer | Full-stack & Mobile",
+      "summary": "Tôi xây hệ thống vận hành nội bộ cho doanh nghiệp — quản lý đơn, hoá đơn, công nợ, dashboard quản trị và tự động hoá bằng AI — và làm ĐÚNG phần khó nhất: tính tiền, audit, và deploy thật.",
+      "ctaPrimary": "Xem dự án",
+      "ctaServices": "Dịch vụ freelance",
+      "statYears": "Năm KN", "statProjects": "Dự án",
+      "cardTitle": "Toàn vẹn dữ liệu",
+      "cardDesc": "Bảo vệ dữ liệu bằng validation chặt và audit log bất biến."
+    },
+    "services": {
+      "eyebrow": "Nhận freelance",
+      "heading": "Tôi giúp bạn được gì.",
+      "sub": "Hai ngách tôi chuyên sâu và có bằng chứng thật — không phải full-stack chung chung.",
+      "items": [
+        { "icon": "database", "title": "Hệ thống Hoá đơn – Công nợ – Sổ cái", "desc": "Đơn hàng, hoá đơn, đối soát thanh toán FIFO, bảng kê NCC, số học tiền chính xác (không float)." },
+        { "icon": "zap", "title": "Tự động hoá & Internal Tools bằng AI", "desc": "Chatbot, tích hợp POS/ERP, báo cáo do AI tạo, QR thanh toán, nhắc nợ tự động." },
+        { "icon": "layout", "title": "Dashboard quản trị & công cụ nội bộ", "desc": "React + MUI sạch, nhanh, phân quyền, audit log — đội ngũ dùng được ngay." },
+        { "icon": "shield", "title": "Cứu & ổn định hệ thống cũ", "desc": "Đọc codebase lạ nhanh, vá lỗi/tăng tốc/hoàn thiện mà không cần viết lại." }
+      ]
+    },
+    "work": { "eyebrow": "Kinh nghiệm thực chiến", "heading": "Dự án tiêu biểu.", "sub": "Tuyển chọn các dự án thể hiện độ phức tạp kiến trúc và chất lượng.", "showArch": "Xem thiết kế hệ thống", "hideArch": "Ẩn phân tích", "blueprint": "Sơ đồ kiến trúc", "archHint": "Bấm nút trên để xem trực quan kiến trúc hệ thống." },
+    "journey": { "heading": "Hành trình nghề nghiệp" },
+    "recognition": { "heading": "Ghi nhận chuyên môn" },
+    "skills": {
+      "heading": "Bộ kỹ năng.",
+      "sub": "Tôi không chỉ viết code; tôi thiết kế hệ sinh thái phần mềm bền vững theo chuẩn ngành.",
+      "bars": [
+        { "name": "Clean Architecture & Offline-First", "val": 96 },
+        { "name": "Backend (Node.js / PostgreSQL)", "val": 92 },
+        { "name": "Hệ thống tài chính & đối soát", "val": 93 },
+        { "name": "Tích hợp & Tự động hoá AI", "val": 92 }
+      ],
+      "cards": [
+        { "icon": "database", "n": "Backend", "d": "Node.js, Express, NestJS, Prisma, PostgreSQL, SQLite" },
+        { "icon": "architecture", "n": "Kiến trúc", "d": "Offline-first, Clean Architecture, Event-driven, RBAC + Audit" },
+        { "icon": "zap", "n": "AI & Hiệu quả", "d": "Tích hợp AI, tối ưu chi phí vận hành, tự động hoá" },
+        { "icon": "shield", "n": "DevOps & Chất lượng", "d": "Docker, CI/CD, Jest, kiểm thử bằng lần chạy thật" }
+      ]
+    },
+    "footer": { "cta": "Bạn có một dự án?", "availability": "Nhận dự án freelance chọn lọc & hợp tác dài hạn.", "rights": "Nguyen Cong Hung. Kiến tạo tương lai." }
+  },
+  "en": {
+    "nav": { "services": "Services", "process": "Process", "work": "Work", "skills": "Skills", "talk": "Hire Me" },
+    "hero": {
+      "status": "Available for freelance · Invoicing, debt & AI-automation builds",
+      "titleA": "Engineering",
+      "titleB": "Optimal Value.",
+      "role": "Senior Software Engineer | Full-stack & Mobile",
+      "summary": "I build the internal systems that run a business — order/invoice/debt management, admin dashboards, and AI automation — and I get the hard parts right: money math, audit trails, and a real deployment.",
+      "ctaPrimary": "Explore Work",
+      "ctaServices": "Freelance Services",
+      "statYears": "Years Exp.", "statProjects": "Projects",
+      "cardTitle": "System Integrity",
+      "cardDesc": "Protecting data through strict validation and immutable audit trails."
+    },
+    "services": {
+      "eyebrow": "Available for hire",
+      "heading": "How I help.",
+      "sub": "Two niches I specialize in with real proof — not generic full-stack.",
+      "items": [
+        { "icon": "database", "title": "Invoicing, Billing & Ledger Systems", "desc": "Orders, invoices, FIFO payment reconciliation, supplier statements, exact decimal money (never floats)." },
+        { "icon": "zap", "title": "AI Automation & Internal Tools", "desc": "Chatbots, POS/ERP integrations, AI-generated reports, QR payments, automated reminders." },
+        { "icon": "layout", "title": "Admin Dashboards & Internal Tools", "desc": "Clean, fast React + MUI with roles and audit logs — usable by your team on day one." },
+        { "icon": "shield", "title": "Rescue & Stabilize Legacy Systems", "desc": "Read unfamiliar codebases fast; fix, speed up, and finish without a rewrite." }
+      ]
+    },
+    "work": { "eyebrow": "Proven Experience", "heading": "Selected Work.", "sub": "A curated selection demonstrating architectural complexity and quality.", "showArch": "Show System Design", "hideArch": "Hide Analysis", "blueprint": "Architectural Blueprint", "archHint": "Click the button above to review the system architecture." },
+    "journey": { "heading": "Professional Journey" },
+    "recognition": { "heading": "Industry Recognition" },
+    "skills": {
+      "heading": "Tech Stack.",
+      "sub": "I don't just write code; I design sustainable software ecosystems using modern standards.",
+      "bars": [
+        { "name": "Clean Architecture & Offline-First", "val": 96 },
+        { "name": "Backend (Node.js / PostgreSQL)", "val": 92 },
+        { "name": "Financial & Reconciliation Systems", "val": 93 },
+        { "name": "AI Integration & Automation", "val": 92 }
+      ],
+      "cards": [
+        { "icon": "database", "n": "Backend", "d": "Node.js, Express, NestJS, Prisma, PostgreSQL, SQLite" },
+        { "icon": "architecture", "n": "Architecture", "d": "Offline-first, Clean Architecture, Event-driven, RBAC + Audit" },
+        { "icon": "zap", "n": "AI & Efficiency", "d": "AI Integration, Operational Cost Optimization, Automation" },
+        { "icon": "shield", "n": "DevOps & Quality", "d": "Docker, CI/CD, Jest, verify-by-real-run" }
+      ]
+    },
+    "footer": { "cta": "Have a project in mind?", "availability": "Available for selective freelance projects & long-term work.", "rights": "Nguyen Cong Hung. Architecting the future." }
+  }
+}
