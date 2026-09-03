@@ -20,15 +20,20 @@
 ## Tech stack
 TypeScript, Node.js, NestJS, Express, React, React Native, Next.js, PostgreSQL, Prisma, Redis, Docker; AI integration (Claude, Gemini, GPT).
 
+## Infrastructure & cost optimization
+- Vietnamese domestic infrastructure (Viettel IDC, Zalo) and deep knowledge of Zalo-ecosystem policies (ZNS, OA, Mini App) to optimize operating cost.
+- Google Cloud ecosystem (Google Maps API, Cloud Storage, AI Studio API); Railway, Docker. Chooses right-fit infrastructure per problem.
+
 ## Selected work
 - Order & debt platform for a wholesale distributor (FIFO reconciliation, supplier statements, print/QR invoices).
-- Zalo Mini App commerce platform with a NestJS BFF (Clean Architecture) and resilient Pancake POS sync.
-- Warehouse & sales operations bot (Pancake POS + Zalo OA + AI analysis + payment reminders).
-- Hann Nong San high-performance Next.js e-commerce storefront.
+- Zalo Mini App commerce platform with a NestJS BFF (Clean Architecture) that integrates with the business's existing sales system.
+- Warehouse & sales operations bot that connects to existing operational/sales systems (AI analysis + automated payment reminders).
+- Order, customer & debt management system for a small business (Node.js, Express, TypeScript, Prisma, PostgreSQL, React + MUI, backup/restore).
 
 ## Experience
-- Senior Mobile Developer, N.A.M Tech (2024-present).
-- Technical Lead, ERP/WMS/CRM, Thiso Retail / Emart (2022-2024).
+- Full-stack Developer, OX Multimedia (2026-present): warehouse-operations & debt platform (Next.js/Express/PostgreSQL, Gemini AI, Zalo OA reminders) and a Zalo Mini App sales platform (NestJS BFF, Redis).
+- Mobile Developer, N.A.M Tech (2024-present): Scrum process.
+- ERP/WMS/CRM Developer, Thiso Retail / Emart (2022-2024): operated, released and fixed the Emart mall app.
 
 ## Availability
 Available for freelance web and app development worldwide, including Europe and Germany. Remote, English-speaking. Replies within 24 hours.

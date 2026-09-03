@@ -74,7 +74,7 @@
         { "@type": "Question", "name": "What does Nguyen Cong Hung do?", "acceptedAnswer": { "@type": "Answer", "text": "He is a freelance full-stack software engineer who builds web and mobile apps: order, invoice and customer-debt systems, admin dashboards, and AI automation, using Node.js, React, NestJS and React Native." } },
         { "@type": "Question", "name": "Is he available for remote and international projects?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. He works remotely with clients worldwide, including Europe and Germany, communicating in English." } },
         { "@type": "Question", "name": "What is his tech stack?", "acceptedAnswer": { "@type": "Answer", "text": "TypeScript, Node.js, NestJS, Express, React, React Native, Next.js, PostgreSQL, Prisma, Redis and Docker, plus AI integration with Claude, Gemini and GPT." } },
-        { "@type": "Question", "name": "What kind of projects has he built?", "acceptedAnswer": { "@type": "Answer", "text": "A Zalo Mini App commerce platform with a resilient Pancake POS sync, an order and debt reconciliation system with FIFO payment allocation, AI sales and operations bots, and ERP/WMS apps used on the Emart supermarket floor." } },
+        { "@type": "Question", "name": "What kind of projects has he built?", "acceptedAnswer": { "@type": "Answer", "text": "A Zalo Mini App commerce platform that integrates with a business's existing operational systems, an order and debt reconciliation system with FIFO payment allocation, AI sales and operations bots, and ERP/WMS apps used on the Emart supermarket floor." } },
         { "@type": "Question", "name": "How can I hire him?", "acceptedAnswer": { "@type": "Answer", "text": "Email business.nc.hung@gmail.com or use the contact form on this site. He replies with an approach and quote within 24 hours." } }
       ]
     }
@@ -93,7 +93,6 @@
     <script src="https://cdn.jsdelivr.net/npm/react-dom@18.2.0/umd/react-dom.production.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@babel/standalone@7.20.15/babel.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
 
     <script>
         tailwind.config = {
@@ -114,22 +113,95 @@
         }
     </script>
     <style type="text/tailwindcss">
-        body { background-color: #09090b; } /* zinc-950, off-black (never pure #000) */
-        .panel { background: rgba(24,24,27,0.6); border: 1px solid rgba(255,255,255,0.06); }
         .reveal { opacity: 0; transform: translateY(18px); transition: opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1); }
         .reveal.is-in { opacity: 1; transform: none; }
-        .lift { transition: transform .3s cubic-bezier(.16,1,.3,1), border-color .3s ease, background-color .3s ease; }
-        .lift:hover { transform: translateY(-4px); }
+        .lift { transition: transform .3s cubic-bezier(.16,1,.3,1), box-shadow .3s ease, background-color .3s ease; }
         .press:active { transform: translateY(1px); }
-        .avail-dot { box-shadow: 0 0 0 0 rgba(52,211,153,.6); animation: avail 2.4s infinite; }
+        .avail-dot { box-shadow: 0 0 0 0 rgba(16,185,129,.5); animation: avail 2.4s infinite; }
         @keyframes avail { 0%{box-shadow:0 0 0 0 rgba(52,211,153,.5)} 70%{box-shadow:0 0 0 8px rgba(52,211,153,0)} 100%{box-shadow:0 0 0 0 rgba(52,211,153,0)} }
-        .mermaid { background: #fafafa !important; padding: 18px; border-radius: 12px; margin-top: 16px; }
         @media (prefers-reduced-motion: reduce) {
             .reveal { opacity: 1; transform: none; transition: none; }
             .lift { transition: none; }
             .avail-dot { animation: none; }
             html { scroll-behavior: auto; }
         }
+    </style>
+
+    <!-- ===== Neumorphism light theme (soft UI) ===== -->
+    <style>
+        :root {
+            --neu-bg: #e9edf4;
+            /* soft cool light base */
+            --neu-dark: #c6ccd8;
+            /* bottom-right shadow */
+            --neu-light: #ffffff;
+            /* top-left highlight */
+            --neu-text: #2b3444;
+            --neu-sub: #5a6478;
+            --neu-muted: #828c9e;
+        }
+
+        html,
+        body {
+            background: linear-gradient(160deg, #eef1f7 0%, #e5e9f1 100%) fixed !important;
+            color: var(--neu-text);
+        }
+
+        /* --- text colour remap (dark theme -> slate on light) --- */
+        .text-white { color: #1e2430 !important; }
+        .text-zinc-100 { color: var(--neu-text) !important; }
+        .text-zinc-200 { color: #2b3444 !important; }
+        .text-zinc-300 { color: #3f4859 !important; }
+        .text-zinc-400 { color: var(--neu-sub) !important; }
+        .text-zinc-500 { color: var(--neu-muted) !important; }
+        .text-zinc-600 { color: #949dae !important; }
+        .text-zinc-700 { color: #aab2c2 !important; }
+        .text-accent-400 { color: #059669 !important; }
+        .text-accent-300 { color: #047857 !important; }
+
+        /* --- raised surfaces (cards, nav, hero) --- */
+        .panel {
+            background: var(--neu-bg) !important;
+            border: none !important;
+            box-shadow: 7px 7px 16px var(--neu-dark), -7px -7px 16px var(--neu-light) !important;
+        }
+        .lift:hover {
+            transform: translateY(-4px);
+            box-shadow: 11px 11px 24px var(--neu-dark), -11px -11px 24px var(--neu-light) !important;
+        }
+        /* scrolled nav: translucent, floats above content */
+        nav.panel {
+            background: rgba(233, 237, 244, 0.82) !important;
+            box-shadow: 0 8px 24px rgba(150, 160, 185, 0.35) !important;
+        }
+
+        /* --- borders & subtle overlays --- */
+        [class*="border-white/"] { border-color: rgba(150, 162, 185, 0.22) !important; }
+        [class*="bg-white/"] { background-color: rgba(120, 132, 155, 0.08) !important; }
+        .hover\:bg-white\/5:hover,
+        .hover\:bg-white\/8:hover,
+        .hover\:bg-white\/10:hover { background-color: rgba(120, 132, 155, 0.14) !important; }
+
+        /* --- white pill (nav contact) -> raised soft pill --- */
+        .bg-white {
+            background: #ffffff !important;
+            box-shadow: 4px 4px 10px var(--neu-dark), -4px -4px 10px var(--neu-light) !important;
+        }
+
+        /* --- accent buttons -> raised --- */
+        .bg-accent-500,
+        .bg-accent-600 {
+            box-shadow: 4px 4px 10px var(--neu-dark), -4px -4px 10px var(--neu-light) !important;
+        }
+
+        /* --- form fields -> inset (pressed) --- */
+        .bg-zinc-900,
+        .bg-zinc-800 {
+            background: var(--neu-bg) !important;
+            border-color: transparent !important;
+            box-shadow: inset 3px 3px 7px var(--neu-dark), inset -3px -3px 7px var(--neu-light) !important;
+        }
+        .placeholder-zinc-500::placeholder { color: var(--neu-muted) !important; }
     </style>
 </head>
 
@@ -146,18 +218,20 @@
                 <li>AI automation and internal tools (chatbots, POS/ERP integrations, reporting, payment reminders).</li>
                 <li>Admin dashboards and internal tools (roles, audit logs).</li>
                 <li>Rescue and stabilize existing systems.</li>
+                <li>Infrastructure and cost optimization: Vietnamese domestic infrastructure (Viettel IDC), the Zalo ecosystem (ZNS, OA, Mini App) and Google Cloud (Maps API, Cloud Storage, AI Studio API).</li>
             </ul>
             <h2>Selected work</h2>
             <ul>
                 <li>Order &amp; debt platform for a wholesale distributor: automatic FIFO payment reconciliation, supplier statements, print/QR invoices (Node.js, Express, Prisma, PostgreSQL, React).</li>
-                <li>Zalo Mini App commerce platform: built from scratch with a NestJS BFF (Clean Architecture) and a resilient Pancake POS sync so orders are never lost on supplier errors.</li>
-                <li>Warehouse &amp; sales operations bot: Pancake POS + Zalo OA integration, AI (Gemini) analysis, Recharts dashboards, automated payment reminders.</li>
-                <li>Hann Nong San: a high-performance Next.js e-commerce storefront (Lighthouse near 100).</li>
+                <li>Zalo Mini App commerce platform: built from scratch with a NestJS BFF (Clean Architecture) and a resilient sync to the business's existing sales system so orders are never lost on source-data errors.</li>
+                <li>Warehouse &amp; sales operations bot: integrates with the operational and sales systems a business already uses, AI analysis, reporting dashboards, automated payment reminders.</li>
+                <li>Order, customer &amp; debt management system for a small business: Node.js, Express, TypeScript, Prisma, PostgreSQL, React + MUI, with backup/restore.</li>
             </ul>
             <h2>Experience</h2>
             <ul>
-                <li>Senior Mobile Developer at N.A.M Tech (2024-present): offline-first apps, native iOS/Android, App Store and Google Play releases.</li>
-                <li>Technical Lead, ERP/WMS/CRM at Thiso Retail / Emart (2022-2024): operational apps used on the supermarket floor; Outstanding Performance and Staff of the Year awards.</li>
+                <li>Full-stack Developer at OX Multimedia (2026-present): built a warehouse-operations &amp; debt platform (Next.js/Express/PostgreSQL, Gemini AI, Zalo OA reminders) and a Zalo Mini App sales platform (NestJS BFF, Redis), integrating with the operational systems the business already runs.</li>
+                <li>Mobile Developer at N.A.M Tech (2024-present): offline-first apps, native iOS/Android, App Store and Google Play releases, Scrum process.</li>
+                <li>ERP/WMS/CRM Developer at Thiso Retail / Emart (2022-2024): operational apps used on the supermarket floor; operated, released and fixed the Emart mall app; Outstanding Performance and Staff of the Year awards.</li>
             </ul>
             <h2>Availability</h2>
             <p>Available for freelance web and app development worldwide, including Europe and Germany. Works remotely; communicates in English and Vietnamese.</p>
@@ -182,50 +256,31 @@
 
         const Icon = ({ name, className = "" }) => <i className={`ph-bold ph-${name} ${className}`} aria-hidden="true"></i>;
 
-        // ---- Language-neutral project metadata (tech + architecture diagrams) ----
-        const PROJECT_ORDER = ["ledger-system", "zalo-commerce", "warehouse-bot", "ecommerce"];
+        // ---- Language-neutral project metadata (tech stack + live links) ----
         const PROJECT_META = {
-            "ledger-system": {
+            "toa-management": {
                 featured: true,
-                tech: ["Node.js", "Express", "Prisma", "PostgreSQL", "React", "Docker"],
-                architecture: `graph TD
-    Client([Web Client]) --> API[Express API]
-    API --> Guard[Auth + Zod]
-    Guard --> Svc[Order + Debt Logic]
-    Svc --> FIFO[FIFO Reconciliation]
-    Svc --> Stmt[Statements + Invoices]
-    FIFO --> ORM[Prisma]
-    Stmt --> ORM
-    ORM --> DB[(PostgreSQL)]`
+                tech: ["Node.js", "Express", "TypeScript", "Prisma", "PostgreSQL", "React", "MUI"]
             },
             "zalo-commerce": {
-                tech: ["Zalo Mini App", "NestJS", "Pancake POS", "Zalo OA", "Redis", "PostgreSQL"],
-                architecture: `graph TD
-    Mini[Zalo Mini App zmp-ui] --> BFF[NestJS BFF - Clean Arch]
-    BFF --> Sync[Stock-Consistency Sync]
-    Sync --> POS[Pancake POS Open API]
-    BFF --> OA[Zalo OA notify + tracking]
-    BFF --> Cache[(Redis)]
-    BFF --> DB[(PostgreSQL)]`
+                tech: ["Zalo Mini App", "NestJS", "BFF", "POS/ERP API", "Redis", "PostgreSQL"],
+                liveUrl: "https://zalo.me/s/4316200907390639897/"
             },
             "warehouse-bot": {
-                tech: ["Node.js", "React", "Pancake POS", "Zalo OA", "Gemini", "node-cron"],
-                architecture: `graph LR
-    POS[Pancake POS] --> Bot[Ops Bot]
-    Bot --> AI[Gemini Analysis]
-    Bot --> Dash[Recharts Reports]
-    Bot --> Remind[Payment Reminders]
-    Remind --> OA[Zalo OA + VietQR]`
+                tech: ["Next.js", "React", "Node.js", "PostgreSQL", "POS/ERP API", "Zalo OA", "AI (Gemini)", "node-cron"]
             },
-            "ecommerce": {
-                tech: ["Next.js", "App Router", "Tailwind", "TypeScript"],
-                architecture: `graph LR
-    User --> Edge[Edge Network]
-    Edge --> ISR[Static Regeneration]
-    ISR --> RSC[Server Components]
-    RSC --> Client[Hydration]`
+            "ledger-system": {
+                tech: ["Node.js", "Express", "Prisma", "PostgreSQL", "React", "Docker"]
             }
         };
+
+        // ---- Work grouped by year. The current year expands by default; ----
+        // ---- earlier years render collapsed and expand on click.          ----
+        const CURRENT_YEAR = "2026";
+        const WORK_TIMELINE = [
+            { year: "2026", ids: ["toa-management", "zalo-commerce", "warehouse-bot"] },
+            { year: "2025", ids: ["ledger-system"] },
+        ];
 
         const STR = {
             vi: {
@@ -245,6 +300,7 @@
                         { icon: "robot", title: "Tự động hoá & internal tool bằng AI", desc: "Chatbot, tích hợp POS/ERP, báo cáo do AI tạo, QR thanh toán, nhắc nợ tự động." },
                         { icon: "squares-four", title: "Dashboard quản trị", desc: "React + MUI sạch, nhanh, phân quyền, audit log. Đội ngũ dùng được ngay từ ngày đầu." },
                         { icon: "wrench", title: "Cứu & ổn định hệ thống cũ", desc: "Đọc codebase lạ nhanh, vá lỗi, tăng tốc, hoàn thiện mà không cần viết lại." },
+                        { icon: "cloud", title: "Chọn hạ tầng & tối ưu chi phí", desc: "Hạ tầng trong nước (Viettel IDC), hệ sinh thái Zalo (ZNS/OA/Mini App) và Google Cloud — chọn đúng nền tảng để tối ưu chi phí vận hành." },
                     ]
                 },
                 process: {
@@ -258,9 +314,12 @@
                     ]
                 },
                 work: {
-                    h: "Dự án tiêu biểu",
-                    showArch: "Xem kiến trúc", hideArch: "Ẩn kiến trúc",
+                    h: "Dự án theo năm",
+                    sub: "Năm hiện tại tự mở sẵn các dự án đang làm. Bấm vào từng năm trước để xem dự án của năm đó.",
+                    openApp: "Mở Mini App",
                     featuredTag: "Dự án chủ lực",
+                    currentTag: "Hiện tại",
+                    projectsLabel: "dự án",
                 },
                 exp: {
                     h: "Kinh nghiệm",
@@ -274,7 +333,7 @@
                         { name: "Tích hợp & tự động hoá AI", val: 90 },
                         { name: "Frontend (React, MUI, offline-first)", val: 90 },
                     ],
-                    groups: ["Node.js", "TypeScript", "React", "React Native", "NestJS", "Zalo Mini App", "Prisma", "PostgreSQL", "Docker", "CI/CD", "Tích hợp AI"],
+                    groups: ["Node.js", "TypeScript", "React", "React Native", "NestJS", "Zalo Mini App", "Prisma", "PostgreSQL", "Docker", "CI/CD", "Tích hợp AI", "Viettel IDC", "Zalo (ZNS/OA)", "Google Cloud", "Railway"],
                 },
                 contact: {
                     h: "Bắt đầu dự án",
@@ -286,22 +345,35 @@
                 },
                 footer: { availability: "Nhận dự án freelance chọn lọc và hợp tác dài hạn.", rights: "Nguyen Cong Hung", resume: "CV" },
                 projects: {
-                    "ledger-system": { title: "Quản lý đơn & công nợ cho vựa sỉ", type: "Full-stack", role: "Fullstack Developer (AI-assisted)",
+                    "toa-management": { title: "Hệ thống quản lý đơn hàng & công nợ", type: "Kiến trúc Full-stack", role: "Fullstack Developer (AI-assisted)",
+                        desc: "Hệ thống quản lý đơn hàng, khách hàng và công nợ cho hộ kinh doanh: tách lớp rõ ràng (API — nghiệp vụ — dữ liệu) để số học tiền luôn chính xác và dễ mở rộng.",
+                        details: [
+                            "Kinh nghiệm: kiến trúc phân lớp Node.js/Express/TypeScript + Prisma trên PostgreSQL — áp dụng vì tách nghiệp vụ khỏi hạ tầng, kiểu dữ liệu chặt, giảm lỗi khi thay đổi.",
+                            "Kinh nghiệm: chiến lược sao lưu & khôi phục chủ động (backup định kỳ, phục hồi từ file) — áp dụng để bảo vệ dữ liệu tài chính và phục hồi nhanh khi sự cố.",
+                            "Kinh nghiệm: đóng gói chạy đa nền tảng, triển khai gọn nhẹ — áp dụng để vận hành trên hạ tầng sẵn có với chi phí thấp."
+                        ] },
+                    "zalo-commerce": { title: "Nền tảng bán hàng trên Zalo Mini App", type: "Zalo Mini App + BFF", role: "Fullstack Developer (AI-assisted)",
+                        desc: "Nền tảng bán hàng trên Zalo Mini App xây từ đầu, kết nối và tích hợp với hệ thống vận hành sẵn có của doanh nghiệp thay vì thay thế — để không làm gián đoạn quy trình quen thuộc.",
+                        details: [
+                            "Kinh nghiệm: kiến trúc BFF (NestJS, Clean Architecture) — áp dụng để tách giao diện khỏi nghiệp vụ, gia cố bảo mật (hardened auth) và dễ mở rộng sang web/mobile.",
+                            "Kinh nghiệm: lớp đồng bộ bền vững tới hệ thống bán hàng sẵn có (idempotent, đối soát tồn kho) — áp dụng để đơn không bị hụt khi dữ liệu nguồn sai, giữ nguyên hệ thống vận hành cũ.",
+                            "Kinh nghiệm: tích hợp thay vì thay thế — áp dụng để tăng tốc chuyển đổi số bằng giải pháp phù hợp, giảm rủi ro cho vận hành."
+                        ] },
+                    "warehouse-bot": { title: "Bot tự động hoá vận hành kho & bán hàng", type: "Tự động hoá + AI", role: "Fullstack Developer (AI-assisted)",
+                        desc: "Bot kết nối tới hệ thống vận hành, bán hàng sẵn có của doanh nghiệp để tổng hợp dữ liệu, phân tích bằng AI và tự động nhắc việc — số hoá các thao tác thủ công.",
+                        details: [
+                            "Kinh nghiệm: lớp tích hợp tới hệ thống sẵn có + đồng bộ theo lịch (node-cron) — áp dụng để tự động hoá báo cáo/nhắc nợ mà không đụng vào hệ thống lõi.",
+                            "Kinh nghiệm: phân tích bằng AI + dashboard báo cáo — áp dụng để biến dữ liệu thô thành thông tin ra quyết định nhanh.",
+                            "Kinh nghiệm: nhắc thanh toán tự động qua kênh Zalo OA kèm mã VietQR — áp dụng để giảm việc thủ công, thu hồi công nợ nhanh hơn."
+                        ] },
+                    "ledger-system": { title: "Hệ thống đối soát công nợ cho vựa sỉ", type: "Full-stack", role: "Fullstack Developer (AI-assisted)",
                         desc: "Hệ thống đơn hàng và công nợ với đối soát thanh toán FIFO, bảng kê nhà cung cấp, hoá đơn in/QR và nhập Excel. Số học tiền chính xác để số dư không bao giờ lệch.",
                         details: ["Đối soát FIFO tự động, số học Decimal chính xác.", "Bảng kê NCC + hoá đơn in/QR một chạm.", "Phân tích nghiệp vụ và phát triển cùng AI; chạy production cho vựa thật."] },
-                    "zalo-commerce": { title: "Bán hàng trên Zalo Mini App (Ivy)", type: "Zalo Mini App + BFF", role: "Fullstack Developer (AI-assisted)",
-                        desc: "Nền tảng bán hàng Zalo Mini App xây từ đầu: lên kế hoạch theo Scrum, design chuẩn đủ màn hình & state, kiến trúc đồng bộ Pancake POS chống hụt đơn do lỗi nhà cung cấp.",
-                        details: ["Phân tích điểm nghẽn + đồng bộ tồn kho (ADR), đơn không bị hụt.", "BFF NestJS Clean Architecture + Pancake POS Open API + Zalo OA.", "Kế hoạch mở rộng sang web & mobile để tăng kênh bán."] },
-                    "warehouse-bot": { title: "Bot vận hành kho & bán hàng (Pancake POS + Zalo OA)", type: "AI Automation", role: "Fullstack Developer (AI-assisted)",
-                        desc: "Bot tích hợp Pancake POS và Zalo OA kéo dữ liệu kho và bán hàng, phân tích bằng AI, hiển thị báo cáo và nhắc thanh toán tự động.",
-                        details: ["AI (Gemini) phân tích + chat assistant tóm tắt doanh số/tồn kho.", "Dashboard báo cáo (Recharts) doanh thu & kho.", "Nhắc thanh toán tự động qua Zalo OA + VietQR (node-cron)."] },
-                    "ecommerce": { title: "Hann Nông Sản (TMĐT hiệu năng cao)", type: "Web", role: "Tech Lead (AI-assisted)",
-                        desc: "Sàn nông sản Next.js xây từ thiết kế tới triển khai; script Python tích hợp AI tự kiểm UI, test luồng và tối ưu SEO, giảm QA thủ công.",
-                        details: ["Tối ưu tốc độ & SEO, Lighthouse gần 100.", "Script Python + AI API kiểm UI/SEO tự động.", "Phân tích Google Analytics để cải thiện tính năng."] },
                 },
                 otherProjects: [
-                    { title: "Senior Mobile Developer (Ticking App, AVB)", company: "N.A.M Tech", role: "Senior Mobile Developer", period: "2024 đến nay", desc: "Dẫn dắt phát triển mobile, offline-first + background sync, native bridge iOS/Android, sở hữu release App Store / Google Play. Bàn giao tài liệu kỹ thuật cho khách." },
-                    { title: "SmartOffice (ERP / WMS / CRM)", company: "Thiso Retail (Emart)", role: "Technical Lead, ERP/WMS/CRM", period: "2022 - 2024", desc: "Xây app hỗ trợ vận hành dùng thật tại sàn Emart (tồn kho, hạn dùng, báo cáo, xếp lượt, màn hình TV báo lượt tài xế). 2 giải thưởng tại Emart." },
+                    { title: "Nền tảng vận hành kho & Zalo Mini App bán hàng", company: "OX Multimedia", role: "Lập trình viên Full-stack", period: "06/2026 - nay", desc: "Xây 2 hệ thống cho một doanh nghiệp: (1) nền tảng vận hành kho & công nợ trên Next.js/Express/PostgreSQL — AI (Gemini) quét hoá đơn, nhắc thanh toán tự động qua Zalo OA, cron; (2) nền tảng bán hàng Zalo Mini App với NestJS BFF (Clean Architecture) + Redis. Cả hai tích hợp vào hệ thống vận hành sẵn có của doanh nghiệp thay vì thay thế." },
+                    { title: "Mobile Developer (Ticking App, AVB)", company: "N.A.M Tech", role: "Mobile Developer", period: "2024 đến nay", desc: "Phát triển mobile, offline-first + background sync, native bridge iOS/Android, sở hữu release App Store / Google Play. Làm việc theo quy trình Scrum. Bàn giao tài liệu kỹ thuật cho khách." },
+                    { title: "SmartOffice (ERP / WMS / CRM)", company: "Thiso Retail (Emart)", role: "Lập trình viên ERP/WMS/CRM", period: "2022 - 2024", desc: "Xây app hỗ trợ vận hành dùng thật tại sàn Emart (tồn kho, hạn dùng, báo cáo, xếp lượt, màn hình TV báo lượt tài xế). Vận hành, cập nhật release và fix lỗi cho app Emart mall. 2 giải thưởng tại Emart." },
                     { title: "Ứng dụng bảo hiểm & điện lực", company: "Intellin Tech", role: "Frontend Developer", period: "2021 - 2022", desc: "Phát triển tính năng UI trên Android/iOS theo quy trình Agile." },
                 ],
             },
@@ -322,6 +394,7 @@
                         { icon: "robot", title: "AI automation & internal tools", desc: "Chatbots, POS/ERP integrations, AI-generated reports, QR payments, automated reminders." },
                         { icon: "squares-four", title: "Admin dashboards", desc: "Clean, fast React + MUI with roles and audit logs. Usable by your team on day one." },
                         { icon: "wrench", title: "Rescue & stabilize legacy systems", desc: "Read unfamiliar codebases fast, fix, speed up and finish without a rewrite." },
+                        { icon: "cloud", title: "Infrastructure & cost optimization", desc: "Vietnamese domestic infrastructure (Viettel IDC), the Zalo ecosystem (ZNS/OA/Mini App) and Google Cloud — right-fit platforms that cut running cost." },
                     ]
                 },
                 process: {
@@ -334,7 +407,7 @@
                         { icon: "rocket-launch", title: "Deliver", desc: "Real deployment, ops docs, and post-handover bug fixes." },
                     ]
                 },
-                work: { h: "Selected work", showArch: "Show architecture", hideArch: "Hide architecture", featuredTag: "Flagship" },
+                work: { h: "Work by year", sub: "The current year opens automatically with what I'm building now. Click an earlier year to reveal its projects.", openApp: "Open Mini App", featuredTag: "Flagship", currentTag: "Current", projectsLabel: "projects" },
                 exp: { h: "Experience", awards: "Two awards at Thiso Retail (Emart): Outstanding Performance, Staff of the Year." },
                 skills: {
                     h: "Stack",
@@ -344,7 +417,7 @@
                         { name: "AI integration & automation", val: 90 },
                         { name: "Frontend (React, MUI, offline-first)", val: 90 },
                     ],
-                    groups: ["Node.js", "TypeScript", "React", "React Native", "NestJS", "Zalo Mini App", "Prisma", "PostgreSQL", "Docker", "CI/CD", "AI integration"],
+                    groups: ["Node.js", "TypeScript", "React", "React Native", "NestJS", "Zalo Mini App", "Prisma", "PostgreSQL", "Docker", "CI/CD", "AI integration", "Viettel IDC", "Zalo (ZNS/OA)", "Google Cloud", "Railway"],
                 },
                 contact: {
                     h: "Start a project",
@@ -356,22 +429,35 @@
                 },
                 footer: { availability: "Available for selective freelance projects and long-term work.", rights: "Nguyen Cong Hung", resume: "Resume" },
                 projects: {
-                    "ledger-system": { title: "Order & debt platform for a wholesale distributor", type: "Full-stack", role: "Fullstack Developer (AI-assisted)",
+                    "toa-management": { title: "Order & debt management system", type: "Full-stack architecture", role: "Fullstack Developer (AI-assisted)",
+                        desc: "An order, customer and debt management system for a small business: cleanly layered (API — domain — data) so money math stays exact and the system is easy to extend.",
+                        details: [
+                            "Experience: layered Node.js/Express/TypeScript + Prisma on PostgreSQL — chosen to separate domain from infrastructure, keep types strict and reduce change-time bugs.",
+                            "Experience: a proactive backup & restore strategy (scheduled backups, restore from file) — chosen to protect financial data and recover fast from incidents.",
+                            "Experience: packaged to run cross-platform with a lightweight deploy — chosen to run on existing, low-cost infrastructure."
+                        ] },
+                    "zalo-commerce": { title: "Zalo Mini App sales platform", type: "Zalo Mini App + BFF", role: "Fullstack Developer (AI-assisted)",
+                        desc: "A Zalo Mini App sales platform built from scratch that connects to and integrates with the operational systems the business already runs — rather than replacing them — so familiar workflows are never disrupted.",
+                        details: [
+                            "Experience: a BFF architecture (NestJS, Clean Architecture) — chosen to separate the UI from the domain, harden auth, and keep expansion to web/mobile easy.",
+                            "Experience: a resilient sync layer to the existing sales system (idempotent, stock reconciliation) — chosen so orders are never shorted when source data is wrong, while the existing operation stays intact.",
+                            "Experience: integrate rather than replace — chosen to accelerate digital transformation with the right-fit solution and lower operational risk."
+                        ] },
+                    "warehouse-bot": { title: "Warehouse & sales automation bot", type: "Automation + AI", role: "Fullstack Developer (AI-assisted)",
+                        desc: "A bot that connects to the operational and sales systems the business already uses to aggregate data, analyze it with AI, and automate reminders — digitizing manual steps.",
+                        details: [
+                            "Experience: an integration layer to existing systems + scheduled sync (node-cron) — chosen to automate reporting/reminders without touching the core system.",
+                            "Experience: AI analysis + reporting dashboards — chosen to turn raw data into fast decision-making information.",
+                            "Experience: automated payment reminders over the Zalo OA channel with VietQR codes — chosen to cut manual work and collect debt faster."
+                        ] },
+                    "ledger-system": { title: "Debt-reconciliation platform for a wholesaler", type: "Full-stack", role: "Fullstack Developer (AI-assisted)",
                         desc: "Orders and debt with automatic FIFO payment reconciliation, supplier statements, print/QR invoices and Excel import. Exact decimal math so balances never drift.",
                         details: ["Automatic FIFO reconciliation, exact decimal math.", "Supplier statements + print/QR invoices in one click.", "Business analysis and AI-assisted development; runs in production for a real business."] },
-                    "zalo-commerce": { title: "Zalo Mini App commerce (Ivy)", type: "Zalo Mini App + BFF", role: "Fullstack Developer (AI-assisted)",
-                        desc: "A Zalo Mini App sales platform built from scratch: Scrum-style planning, a complete design (all screens and states), and a resilient Pancake POS sync that keeps orders from being lost on supplier errors.",
-                        details: ["Analyzed bottlenecks + stock-consistency (ADRs); orders never shorted.", "NestJS BFF (Clean Architecture) + Pancake POS Open API + Zalo OA.", "Planned expansion to web and mobile to grow sales channels."] },
-                    "warehouse-bot": { title: "Warehouse & sales ops bot (Pancake POS + Zalo OA)", type: "AI Automation", role: "Fullstack Developer (AI-assisted)",
-                        desc: "A bot integrating Pancake POS and Zalo OA to pull warehouse and sales data, analyze it with AI, surface reports and send automated payment reminders.",
-                        details: ["AI (Gemini) analysis + chat assistant for sales and inventory.", "Recharts dashboards for revenue and warehouse reporting.", "Automated payment reminders over Zalo OA + VietQR (node-cron)."] },
-                    "ecommerce": { title: "Hann Nong San (high-performance e-commerce)", type: "Web", role: "Tech Lead (AI-assisted)",
-                        desc: "A Next.js agricultural marketplace from design to deployment; Python + AI scripts auto-check UI, test flows and optimize SEO, cutting manual QA.",
-                        details: ["Optimized speed & SEO, Lighthouse near 100.", "Python scripts with AI APIs for automated UI/SEO checks.", "Used Google Analytics to guide feature improvements."] },
                 },
                 otherProjects: [
-                    { title: "Senior Mobile Developer (Ticking App, AVB)", company: "N.A.M Tech", role: "Senior Mobile Developer", period: "2024 to now", desc: "Led mobile development, offline-first + background sync, native iOS/Android bridges, and owned App Store / Google Play releases. Handed over technical documentation to the client." },
-                    { title: "SmartOffice (ERP / WMS / CRM)", company: "Thiso Retail (Emart)", role: "Technical Lead, ERP/WMS/CRM", period: "2022 - 2024", desc: "Built operational-support apps used on the Emart floor (inventory, expiry, reporting, queue, a TV driver-queue display). Two awards at Emart." },
+                    { title: "Warehouse ops platform & Zalo Mini App commerce", company: "OX Multimedia", role: "Full-stack Developer", period: "Jun 2026 - now", desc: "Built two systems for a business: (1) a warehouse-operations & debt platform on Next.js/Express/PostgreSQL — Gemini AI invoice scanning, automated payment reminders over Zalo OA, cron; (2) a Zalo Mini App sales platform with a NestJS BFF (Clean Architecture) + Redis. Both integrate with the operational systems the business already runs rather than replacing them." },
+                    { title: "Mobile Developer (Ticking App, AVB)", company: "N.A.M Tech", role: "Mobile Developer", period: "2024 to now", desc: "Developed mobile apps, offline-first + background sync, native iOS/Android bridges, and owned App Store / Google Play releases. Worked in a Scrum process. Handed over technical documentation to the client." },
+                    { title: "SmartOffice (ERP / WMS / CRM)", company: "Thiso Retail (Emart)", role: "ERP/WMS/CRM Developer", period: "2022 - 2024", desc: "Built operational-support apps used on the Emart floor (inventory, expiry, reporting, queue, a TV driver-queue display). Operated, shipped release updates and fixed bugs for the Emart mall app. Two awards at Emart." },
                     { title: "Insurance & electricity apps", company: "Intellin Tech", role: "Frontend Developer", period: "2021 - 2022", desc: "Built UI features across Android/iOS in an Agile workflow." },
                 ],
             }
@@ -431,8 +517,6 @@
         };
 
         const ProjectCard = ({ p, t, featured }) => {
-            const [open, setOpen] = useState(false);
-            useEffect(() => { if (open) mermaid.init(undefined, `.mermaid-${p.id}`); }, [open]);
             return (
                 <div className={`panel lift rounded-xl p-7 flex flex-col ${featured ? 'md:col-span-2' : ''}`}>
                     <div className="flex items-center justify-between gap-3 mb-4">
@@ -451,10 +535,35 @@
                     <div className="flex flex-wrap gap-2 mb-5 mt-auto">
                         {p.tech.map((tc, i) => <span key={i} className="font-mono text-[10px] text-zinc-400 bg-white/5 border border-white/5 px-2 py-1 rounded">{tc}</span>)}
                     </div>
-                    <button onClick={() => setOpen(!open)} className="press self-start inline-flex items-center gap-2 text-xs font-medium text-zinc-300 hover:text-accent-400 transition-colors">
-                        <Icon name="tree-structure" />{open ? t.work.hideArch : t.work.showArch}
+                    {p.liveUrl && (
+                        <a href={p.liveUrl} target="_blank" rel="noopener noreferrer" className="press self-start inline-flex items-center gap-2 text-xs font-medium text-accent-400 hover:text-accent-300 transition-colors">
+                            <Icon name="arrow-square-out" />{t.work.openApp}
+                        </a>
+                    )}
+                </div>
+            );
+        };
+
+        // Year group: a clickable header that expands to reveal that year's project cards.
+        const YearGroup = ({ year, projects, t, defaultOpen }) => {
+            const [open, setOpen] = useState(defaultOpen);
+            return (
+                <div className="panel rounded-2xl overflow-hidden">
+                    <button onClick={() => setOpen(!open)} aria-expanded={open} className="press w-full flex items-center justify-between gap-4 px-6 py-5 text-left hover:bg-white/[0.02] transition-colors">
+                        <span className="flex items-baseline gap-3 flex-wrap">
+                            <span className="font-display font-bold text-white text-2xl md:text-3xl">{year}</span>
+                            {defaultOpen && <span className="text-[10px] font-semibold uppercase tracking-wider text-zinc-950 bg-accent-400 px-2 py-0.5 rounded-full">{t.work.currentTag}</span>}
+                            <span className="text-zinc-500 text-sm">{projects.length} {projects.length === 1 ? t.work.projectsLabel.replace(/s$/, '') : t.work.projectsLabel}</span>
+                        </span>
+                        <Icon name={open ? "caret-up" : "caret-down"} className="text-zinc-400 shrink-0" />
                     </button>
-                    {open && <div className={`mermaid mermaid-${p.id}`}>{p.architecture}</div>}
+                    {open && (
+                        <div className="px-4 pb-5 sm:px-6 sm:pb-6">
+                            <div className="grid md:grid-cols-2 gap-5">
+                                {projects.map(p => <ProjectCard key={p.id} p={p} t={t} featured={p.featured} />)}
+                            </div>
+                        </div>
+                    )}
                 </div>
             );
         };
@@ -488,7 +597,11 @@
             }, []);
             useEffect(() => { try { localStorage.setItem('lang', lang); } catch (e) {} document.documentElement.lang = lang; }, [lang]);
 
-            const projects = PROJECT_ORDER.map(id => ({ id, ...PROJECT_META[id], ...t.projects[id] }));
+            const workGroups = WORK_TIMELINE.map(g => ({
+                year: g.year,
+                defaultOpen: g.year === CURRENT_YEAR,
+                projects: g.ids.map(id => ({ id, ...PROJECT_META[id], ...t.projects[id] })),
+            }));
 
             return (
                 <div className="min-h-screen relative">
@@ -598,9 +711,10 @@
                         {/* Work: card grid with featured span (distinct family) */}
                         <section id="work" className="px-5 lg:px-8 py-20 border-t border-white/5">
                             <div className="container mx-auto max-w-6xl">
-                                <Reveal as="h2" className="font-display font-bold text-white tracking-tight text-3xl md:text-5xl mb-12">{t.work.h}</Reveal>
-                                <div className="grid md:grid-cols-2 gap-5">
-                                    {projects.map(p => <Reveal key={p.id} className={p.featured ? 'md:col-span-2' : ''}><ProjectCard p={p} t={t} featured={p.featured} /></Reveal>)}
+                                <Reveal as="h2" className="font-display font-bold text-white tracking-tight text-3xl md:text-5xl mb-4">{t.work.h}</Reveal>
+                                <Reveal as="p" className="text-zinc-500 text-sm mb-10 max-w-2xl">{t.work.sub}</Reveal>
+                                <div className="space-y-4">
+                                    {workGroups.map(g => <Reveal key={g.year}><YearGroup year={g.year} projects={g.projects} t={t} defaultOpen={g.defaultOpen} /></Reveal>)}
                                 </div>
                             </div>
                         </section>

@@ -97,10 +97,10 @@ const CV = {
   vi: {
     ui: { print: `In / Lưu PDF`, hint: `Mở file này rồi bấm nút (hoặc Ctrl/Cmd + P) để xuất PDF chuẩn A4.` },
     name: `NGUYỄN CÔNG HƯNG`,
-    subtitle: `Senior Mobile Developer | Mobile Tech Lead | Kỹ sư phần mềm Full-stack`,
+    subtitle: `Lập trình viên Mobile | Kỹ sư phần mềm`,
     contact: CONTACT_VI,
     summaryTitle: `Tóm tắt năng lực`,
-    summary: `Lập trình viên Mobile cấp cao với hơn 5 năm kinh nghiệm xây dựng hệ thống mobile và full-stack cho bán lẻ, thương mại điện tử, vận hành kho và chuyển đổi số. Mạnh nhất ở React Native / Flutter, kiến trúc offline-first, tích hợp native iOS/Android, luồng push notification thời gian thực và làm chủ phát hành App Store / Google Play. Có thế mạnh chuyển bài toán vận hành doanh nghiệp thành phần mềm tin cậy, đào tạo người dùng cuối, viết SOP và bàn giao hệ thống chạy thật trên môi trường ERP/WMS/CRM. Ngày càng phát triển tính năng full-stack qua phân tích và lập trình cùng AI, kết hợp hiểu biết sản phẩm và vận hành với công cụ AI hiện đại.`,
+    summary: `Lập trình viên Mobile với hơn 5 năm kinh nghiệm xây dựng hệ thống mobile cho bán lẻ, thương mại điện tử, vận hành kho và chuyển đổi số. Mạnh nhất ở React Native / Flutter, kiến trúc offline-first, tích hợp native iOS/Android, luồng push notification thời gian thực và phát hành App Store / Google Play. Có thế mạnh chuyển bài toán vận hành doanh nghiệp thành phần mềm tin cậy, đào tạo người dùng cuối, viết SOP và bàn giao hệ thống chạy thật trên môi trường ERP/WMS/CRM. Ngày càng phát triển thêm tính năng qua phân tích và lập trình cùng AI, kết hợp hiểu biết sản phẩm và vận hành với công cụ AI hiện đại. Với sự phát triển nhanh chóng của CNTT, tôi có thể cung cấp các giải pháp giúp doanh nghiệp chuyển đổi số, áp dụng chuyển đổi số cho doanh nghiệp theo hình thức ngắn hạn hoặc dài hạn.`,
     strengthsTitle: `Năng lực cốt lõi`,
     strengths: [
       { label: `Kỹ thuật Mobile:`, text: `React Native, Flutter, Native Modules, background sync, offline-first, map caching` },
@@ -109,12 +109,18 @@ const CV = {
       { label: `Vận hành bán lẻ / ERP:`, text: `ERP/WMS/CRM, kiểm kho, quản lý hạn dùng, báo cáo doanh thu, vận hành xếp lượt` },
       { label: `Phát triển cùng AI:`, text: `Phân tích và lập trình full-stack cùng AI, AI-assisted QA, tự động hoá Python, AI streaming thời gian thực, tối ưu token/chi phí, phòng chống prompt-injection` },
       { label: `Backend &amp; Dữ liệu (cùng AI):`, text: `Node.js, Express, PostgreSQL, Prisma ORM, REST API, CI/CD, backup &amp; phục hồi` },
+      { label: `Hạ tầng &amp; Tối ưu chi phí:`, text: `Am hiểu hạ tầng trong nước Việt Nam (Viettel IDC, Zalo) và chính sách hệ sinh thái Zalo (ZNS, OA, Mini App) để tối ưu chi phí vận hành; áp dụng Google Cloud (Google Maps API, Cloud Storage, AI Studio API) — chọn hạ tầng phù hợp theo bài toán` },
       { label: `Dẫn dắt bàn giao:`, text: `Làm chủ SDLC, quản lý phát hành, Jira, Confluence, Figma, phối hợp liên phòng ban` },
     ],
     expTitle: `Kinh nghiệm làm việc`,
     experience: [
-      { role: `Senior Mobile Developer | N.A.M Tech`, meta: `10/2024 - Hiện tại &nbsp;&middot;&nbsp; TP. Hồ Chí Minh`, bullets: [
-        `Dẫn dắt phát triển mobile cho dự án Ticking App và AVB, làm chủ toàn trình từ làm rõ yêu cầu đến phát hành App Store và Google Play.`,
+      { role: `Lập trình viên Full-stack | OX Multimedia`, meta: `06/2026 - Hiện tại &nbsp;&middot;&nbsp; TP. Hồ Chí Minh`, bullets: [
+        `Nền tảng bán hàng Zalo Mini App: xây từ đầu theo quy trình Scrum, backend NestJS BFF (Clean Architecture) + Redis kết nối tới hệ thống vận hành sẵn có của doanh nghiệp và kênh Zalo OA; lớp đồng bộ bền vững (idempotent, đối soát tồn kho) để đơn hàng không bị hụt khi dữ liệu nguồn sai — tích hợp thay vì thay thế, ghi lại bằng ADR. Ứng dụng chạy thật: <a href="https://zalo.me/s/4316200907390639897/">Zalo Mini App</a>.`,
+        `Nền tảng vận hành kho & công nợ (Next.js/Express/PostgreSQL): AI (Gemini) quét hoá đơn + dashboard báo cáo bán hàng/kho; tự động nhắc thanh toán theo lịch qua Zalo OA kèm mã VietQR (node-cron) — tự động hoá mà không đụng vào hệ thống lõi.`,
+        `Deploy trên Railway với backup cloud tự động; giữ nguyên các luồng API, webhook, cron và link token công khai hiện có của hệ thống.`,
+      ]},
+      { role: `Mobile Developer | N.A.M Tech`, meta: `10/2024 - Hiện tại &nbsp;&middot;&nbsp; TP. Hồ Chí Minh`, bullets: [
+        `Phát triển mobile cho dự án Ticking App và AVB theo quy trình Scrum, tham gia toàn trình từ làm rõ yêu cầu đến phát hành App Store và Google Play.`,
         `Làm chủ quy trình phát hành đầu-cuối cho iOS (App Store) và Android (Google Play): ký số, store listing, tuân thủ review và rollout theo giai đoạn.`,
         `Thiết kế kiến trúc offline-first với background sync tự động để người dùng hiện trường vẫn làm việc khi mạng yếu hoặc mất kết nối.`,
         `Triển khai map caching để giảm tải lại bản đồ lặp lại và cải thiện tốc độ trong các luồng vận hành nặng.`,
@@ -127,8 +133,9 @@ const CV = {
         `Triển khai AI response streaming thời gian thực bằng component và hook có sẵn của Shopify Minis cho luồng mua sắm hội thoại mượt hơn.`,
         `Tích hợp Shopify Store API cho catalog, đơn hàng và ngữ cảnh khách; dùng Shopify CLI để phát triển, test và deploy cục bộ.`,
       ]},
-      { role: `Technical Lead - Hệ thống ERP / WMS / CRM | Thiso Retail (Thaco Vietnam)`, meta: `01/2022 - 10/2024 &nbsp;&middot;&nbsp; TP. Hồ Chí Minh`, bullets: [
-        `Dẫn dắt phát triển frontend/mobile cho SmartOffice, nền tảng ERP/WMS phục vụ vận hành siêu thị và chuyển đổi số nội bộ.`,
+      { role: `Lập trình viên ERP / WMS / CRM | Thiso Retail (Thaco Vietnam)`, meta: `01/2022 - 10/2024 &nbsp;&middot;&nbsp; TP. Hồ Chí Minh`, bullets: [
+        `Phát triển frontend/mobile cho SmartOffice, nền tảng ERP/WMS phục vụ vận hành siêu thị và chuyển đổi số nội bộ.`,
+        `Vận hành, cập nhật release và fix lỗi cho app Emart mall trên App Store / Google Play.`,
         `Xây và triển khai các app hỗ trợ vận hành dùng thật tại sàn siêu thị Emart (kiểm kho, quản lý hạn dùng, báo cáo doanh thu, xếp lượt), cải thiện vận hành cửa hàng hằng ngày.`,
         `Tối ưu render danh sách/bảng quy mô lớn cho dữ liệu kho và sàn bán lẻ khối lượng cao, tăng khả dụng cho vận hành hằng ngày.`,
         `Tích hợp push alert thời gian thực cho thay đổi hạn dùng hàng hoá và ùn ứ hàng đợi giao để giảm theo dõi thủ công.`,
@@ -141,22 +148,13 @@ const CV = {
     ],
     addlTitle: `Dự án khác`,
     projects: [
-      { title: `Lập trình Full-stack (cùng AI) - Bán hàng Zalo Mini App | Sản phẩm cá nhân`, bullets: [
-        `Xây nền tảng bán hàng Zalo Mini App từ đầu: dẫn dắt lên kế hoạch và đặt chỉ tiêu theo quy trình Scrum, hoàn thiện design đầy đủ màn hình và state trước khi phát triển.`,
-        `Phân tích điểm nghẽn và các edge case về nhất quán tồn kho, rồi thiết kế kiến trúc đồng bộ bền vững giữa Mini App và Pancake POS (POSCake) để đơn hàng không bị hụt khi dữ liệu tồn kho của nhà cung cấp sai (ghi lại bằng ADR).`,
-        `Xây backend dạng NestJS BFF (Clean Architecture) tích hợp Pancake POS Open API và Zalo OA, hardened auth; lên kế hoạch mở rộng sang web và mobile để tăng doanh thu.`,
-      ]},
-      { title: `Tech Lead &amp; Quản lý vận hành - TMĐT | Hann Nông Sản`, bullets: [
-        `Thiết kế và xây dựng (phát triển cùng AI) sàn TMĐT Next.js cho nông sản, từ thiết kế, phát triển, phân tích đến triển khai production.`,
-        `Viết script Python tích hợp AI API để phát hiện lỗi UI, test luồng người dùng và ưu tiên sửa SEO (giảm QA thủ công), dùng Google Analytics để định hướng cải thiện.`,
-      ]},
       { title: `Lập trình Full-stack (cùng AI) - Quản lý đơn &amp; công nợ | Sản phẩm cá nhân`, bullets: [
         `Dẫn dắt phân tích nghiệp vụ và, bằng phát triển cùng AI, xây hệ thống Node.js + PostgreSQL cho quản lý đơn, hoá đơn và theo dõi công nợ khách/nhà cung cấp với đối soát thanh toán FIFO.`,
         `Thiết kế mô hình dữ liệu và logic đối soát cùng công cụ AI; đóng gói Docker, thiết lập CI/CD và backup; chạy production cho một vựa sỉ thật.`,
       ]},
-      { title: `Bot vận hành kho &amp; bán hàng (cùng AI) - Pancake POS + Zalo OA | Sản phẩm cá nhân`, bullets: [
-        `Xây (phát triển cùng AI) bot vận hành tích hợp Pancake POS (POScake) và Zalo OA, phân tích bằng AI (Gemini) và dashboard Recharts cho báo cáo bán hàng và kho.`,
-        `Tự động nhắc thanh toán theo lịch qua Zalo OA kèm mã VietQR (node-cron); deploy trên Railway với backup cloud tự động.`,
+      { title: `Lập trình Full-stack (cùng AI) - Quản lý đơn hàng &amp; công nợ | Sản phẩm cá nhân`, bullets: [
+        `Xây hệ thống quản lý đơn hàng, khách hàng và công nợ cho hộ kinh doanh với kiến trúc phân lớp (API — nghiệp vụ — dữ liệu): backend Node.js/Express/TypeScript + Prisma trên PostgreSQL, frontend React + MUI với React Query và form validate bằng Zod.`,
+        `Áp dụng chiến lược sao lưu/khôi phục chủ động (backup định kỳ, phục hồi từ file) để bảo vệ dữ liệu tài chính; tối ưu chạy đa nền tảng Windows/Mac/Linux; deploy gọn nhẹ trên hạ tầng sẵn có.`,
       ]},
     ],
     achTitle: `Thành tích tiêu biểu`,
@@ -176,7 +174,8 @@ const CV = {
       { label: `Kiến trúc:`, value: `Offline-first, Background Sync, Map Caching, CI/CD, Disaster Recovery` },
       { label: `AI / Công cụ:`, value: `Phát triển cùng AI (Claude, Gemini, GPT), tự động hoá theo prompt, tối ưu token/chi phí, phòng chống prompt-injection &amp; AI safety` },
       { label: `Công cụ:`, value: `Git, GitHub Actions, Jira, Confluence, Figma, Shopify CLI, App Store Connect, Google Play Console, Google Analytics` },
-      { label: `Tích hợp:`, value: `Zalo OA, Pancake POS (POScake), VietQR, FCM, REST API / webhook` },
+      { label: `Tích hợp:`, value: `Zalo OA, tích hợp hệ thống POS/ERP vận hành sẵn có, VietQR, FCM, REST API / webhook` },
+      { label: `Hạ tầng / Cloud:`, value: `Hạ tầng trong nước Việt Nam (Viettel IDC), hệ sinh thái Zalo (ZNS, OA, Mini App); Google Cloud (Google Maps API, Cloud Storage, AI Studio API); Railway, Docker` },
       { label: `Ngoại ngữ:`, value: `Tiếng Việt (bản ngữ), Tiếng Anh (giao tiếp công việc thành thạo)` },
     ],
     eduTitle: `Học vấn`,
@@ -188,10 +187,10 @@ const CV = {
   en: {
     ui: { print: `Print / Save PDF`, hint: `Open this file and click the button (or Ctrl/Cmd + P) to export an A4 PDF.` },
     name: `NGUYEN CONG HUNG`,
-    subtitle: `Senior Mobile Developer | Mobile Tech Lead | Full-stack Software Engineer`,
+    subtitle: `Mobile Developer | Software Engineer`,
     contact: CONTACT_EN,
     summaryTitle: `Professional Summary`,
-    summary: `Senior Mobile Developer with 5+ years of experience building mobile and full-stack systems for retail, e-commerce, warehouse operations, and digital transformation. Strongest in React Native / Flutter, offline-first architecture, native iOS/Android integrations, real-time push notification flows, and App Store / Google Play release ownership. Known for translating business operations into reliable software, training end users, writing SOPs, and delivering production systems across ERP/WMS/CRM environments. Increasingly ships full-stack features through AI-assisted analysis and development, pairing strong product and operations understanding with modern AI tooling.`,
+    summary: `Mobile Developer with 5+ years of experience building mobile systems for retail, e-commerce, warehouse operations, and digital transformation. Strongest in React Native / Flutter, offline-first architecture, native iOS/Android integrations, real-time push notification flows, and App Store / Google Play releases. Known for translating business operations into reliable software, training end users, writing SOPs, and delivering production systems across ERP/WMS/CRM environments. Increasingly ships additional features through AI-assisted analysis and development, pairing strong product and operations understanding with modern AI tooling. With the rapid growth of IT, I can provide solutions that help businesses go digital — delivering digital transformation on either a short-term or long-term basis.`,
     strengthsTitle: `Core Strengths`,
     strengths: [
       { label: `Mobile Engineering:`, text: `React Native, Flutter, Native Modules, background sync, offline-first, map caching` },
@@ -200,12 +199,18 @@ const CV = {
       { label: `Retail / ERP Operations:`, text: `ERP/WMS/CRM, inventory checks, expiration-date workflows, revenue reporting, queue operations` },
       { label: `AI-Assisted Development:`, text: `AI-paired analysis and full-stack development, AI-assisted QA, Python automation, real-time AI streaming, token/cost optimization, prompt-injection mitigation` },
       { label: `Backend &amp; Data (AI-assisted):`, text: `Node.js, Express, PostgreSQL, Prisma ORM, REST APIs, CI/CD, backup &amp; recovery` },
+      { label: `Infrastructure &amp; Cost Optimization:`, text: `Fluent in Vietnamese domestic infrastructure (Viettel IDC, Zalo) and Zalo-ecosystem policies (ZNS, OA, Mini App) to optimize operating cost; Google Cloud (Google Maps API, Cloud Storage, AI Studio API) — right-fit infrastructure per problem` },
       { label: `Delivery Leadership:`, text: `SDLC ownership, release management, Jira, Confluence, Figma, cross-department coordination` },
     ],
     expTitle: `Professional Experience`,
     experience: [
-      { role: `Senior Mobile Developer | N.A.M Tech`, meta: `Oct 2024 - Present &nbsp;&middot;&nbsp; Ho Chi Minh City`, bullets: [
-        `Lead mobile development for the Ticking App and AVB projects, owning delivery from requirement clarification through to App Store and Google Play releases.`,
+      { role: `Full-stack Developer | OX Multimedia`, meta: `Jun 2026 - Present &nbsp;&middot;&nbsp; Ho Chi Minh City`, bullets: [
+        `Zalo Mini App sales platform: built from scratch in a Scrum process, with a NestJS BFF (Clean Architecture) + Redis connecting to the operational systems the business already runs and the Zalo OA channel; a resilient sync layer (idempotent, stock reconciliation) so orders are never shorted on bad source data — integrating rather than replacing, documented via ADRs. Live app: <a href="https://zalo.me/s/4316200907390639897/">Zalo Mini App</a>.`,
+        `Warehouse-operations & debt platform (Next.js/Express/PostgreSQL): Gemini AI invoice scanning + sales/warehouse reporting dashboards; scheduled automated payment reminders over Zalo OA with VietQR codes (node-cron) — automation without touching the core system.`,
+        `Deployed on Railway with automated cloud backups; preserved the system's existing API, webhook, cron, and public link-token flows.`,
+      ]},
+      { role: `Mobile Developer | N.A.M Tech`, meta: `Oct 2024 - Present &nbsp;&middot;&nbsp; Ho Chi Minh City`, bullets: [
+        `Develop mobile apps for the Ticking App and AVB projects in a Scrum process, contributing across delivery from requirement clarification through to App Store and Google Play releases.`,
         `Own the end-to-end release process for iOS (App Store) and Android (Google Play): code signing, store listings, review compliance, and phased rollouts.`,
         `Designed an offline-first architecture with automatic background sync so field users keep working during weak or unavailable connectivity.`,
         `Implemented map caching to reduce repeated map downloads and improve loading in operation-heavy workflows.`,
@@ -218,8 +223,9 @@ const CV = {
         `Implemented real-time AI response streaming using Shopify Minis built-in components and hooks for a smoother conversational shopping flow.`,
         `Integrated the Shopify Store API for catalog, order, and customer context; used Shopify CLI for local development, testing, and deployment.`,
       ]},
-      { role: `Technical Lead - ERP / WMS / CRM Systems | Thiso Retail (Thaco Vietnam)`, meta: `Jan 2022 - Oct 2024 &nbsp;&middot;&nbsp; Ho Chi Minh City`, bullets: [
-        `Led frontend/mobile development for SmartOffice, an ERP/WMS platform supporting supermarket operations and internal digital transformation.`,
+      { role: `ERP / WMS / CRM Developer | Thiso Retail (Thaco Vietnam)`, meta: `Jan 2022 - Oct 2024 &nbsp;&middot;&nbsp; Ho Chi Minh City`, bullets: [
+        `Developed frontend/mobile for SmartOffice, an ERP/WMS platform supporting supermarket operations and internal digital transformation.`,
+        `Operated, shipped release updates and fixed bugs for the Emart mall app on the App Store / Google Play.`,
         `Built and deployed operational-support apps used on the Emart supermarket floor (inventory checks, expiration-date management, revenue reporting, queue management), improving real day-to-day store operations.`,
         `Optimized large-scale list/table rendering for high-volume warehouse and retail-floor data, improving usability for daily operations.`,
         `Integrated real-time push alerts for commodity expiration changes and delivery-queue congestion to reduce manual follow-up.`,
@@ -232,22 +238,13 @@ const CV = {
     ],
     addlTitle: `Additional Project Experience`,
     projects: [
-      { title: `Full-stack Developer (AI-Assisted) - Zalo Mini App Commerce | Personal Product`, bullets: [
-        `Built a Zalo Mini App sales platform from scratch: led the planning and target-setting in a Scrum-style workflow, and produced a complete UI design (all screens and states) before development.`,
-        `Analyzed bottlenecks and stock-consistency edge cases, then designed a resilient sync architecture between the Mini App and Pancake POS (POSCake) so orders are not lost or shorted when supplier inventory data is wrong (documented as ADRs).`,
-        `Built the backend as a NestJS BFF (Clean Architecture) integrating Pancake POS Open API and Zalo OA, with hardened auth; planned expansion to web and mobile to grow revenue.`,
-      ]},
-      { title: `Tech Lead &amp; Operations Manager - E-commerce | Hann Nong San`, bullets: [
-        `Designed and built, with AI-assisted development, a Next.js e-commerce platform for agricultural retail, covering design, development, analytics, and production deployment.`,
-        `Built Python automation scripts with AI APIs to detect UI issues, test user flows and prioritize SEO fixes (cutting manual QA), and used Google Analytics to guide improvements.`,
-      ]},
       { title: `Full-stack Developer (AI-Assisted) - Order &amp; Debt Management | Personal Product`, bullets: [
         `Led the business analysis and, using AI-assisted development, built a Node.js + PostgreSQL system for order management, invoicing, and customer/supplier debt tracking with FIFO payment reconciliation.`,
         `Designed the data model and reconciliation logic with AI tools; containerized with Docker, set up CI/CD and backups; runs in production for a real wholesale business.`,
       ]},
-      { title: `Warehouse &amp; Sales Operations Bot (AI-Assisted) - Pancake POS + Zalo OA | Personal Product`, bullets: [
-        `Built, with AI-assisted development, an operations bot integrating Pancake POS (POScake) and Zalo OA, with AI (Gemini) analysis and Recharts dashboards for sales and warehouse reporting.`,
-        `Automated scheduled payment reminders over Zalo OA with VietQR codes (node-cron); deployed on Railway with automated cloud backups.`,
+      { title: `Full-stack Developer (AI-Assisted) - Order &amp; Debt Management | Personal Product`, bullets: [
+        `Built an order, customer and debt management system for a small business with a layered architecture (API — domain — data): Node.js/Express/TypeScript + Prisma on PostgreSQL, with a React + MUI frontend using React Query and Zod-validated forms.`,
+        `Applied a proactive backup/restore strategy (scheduled backups, restore from file) to protect financial data; optimized for cross-platform use on Windows/Mac/Linux; lightweight deploy on existing infrastructure.`,
       ]},
     ],
     achTitle: `Selected Achievements`,
@@ -267,7 +264,8 @@ const CV = {
       { label: `Architecture:`, value: `Offline-first, Background Sync, Map Caching, CI/CD, Disaster Recovery` },
       { label: `AI / Tooling:`, value: `AI-assisted development (Claude, Gemini, GPT), prompt-driven automation, token/cost optimization, prompt-injection mitigation &amp; AI safety` },
       { label: `Tools:`, value: `Git, GitHub Actions, Jira, Confluence, Figma, Shopify CLI, App Store Connect, Google Play Console, Google Analytics` },
-      { label: `Integrations:`, value: `Zalo OA, Pancake POS (POScake), VietQR, FCM, REST APIs / webhooks` },
+      { label: `Integrations:`, value: `Zalo OA, integration with existing POS/ERP operational systems, VietQR, FCM, REST APIs / webhooks` },
+      { label: `Infrastructure / Cloud:`, value: `Vietnamese domestic infrastructure (Viettel IDC), Zalo ecosystem (ZNS, OA, Mini App); Google Cloud (Google Maps API, Cloud Storage, AI Studio API); Railway, Docker` },
       { label: `Languages Spoken:`, value: `Vietnamese (Native), English (Professional Working Proficiency)` },
     ],
     eduTitle: `Education`,
