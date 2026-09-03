@@ -26,7 +26,7 @@ TypeScript, Node.js, NestJS, Express, React, React Native, Next.js, PostgreSQL, 
 
 ## Selected work
 - Order & debt platform for a wholesale distributor (FIFO reconciliation, supplier statements, print/QR invoices).
-- Zalo Mini App commerce platform with a NestJS BFF (Clean Architecture) that integrates with the business's existing sales system.
+- Zalo Mini App commerce platform with a NestJS BFF (Clean Architecture) that integrates with the business's existing sales system; SEPAY payment gateway (VietQR webhook) for automatic bank-transfer confirmation and real-time order reconciliation.
 - Warehouse & sales operations bot that connects to existing operational/sales systems (AI analysis + automated payment reminders).
 - Order, customer & debt management system for a small business (Node.js, Express, TypeScript, Prisma, PostgreSQL, React + MUI, backup/restore).
 

@@ -115,7 +115,7 @@ const CV = {
     expTitle: `Kinh nghiệm làm việc`,
     experience: [
       { role: `Lập trình viên Full-stack | OX Multimedia`, meta: `06/2026 - Hiện tại &nbsp;&middot;&nbsp; TP. Hồ Chí Minh`, bullets: [
-        `Nền tảng bán hàng Zalo Mini App: xây từ đầu theo quy trình Scrum, backend NestJS BFF (Clean Architecture) + Redis kết nối tới hệ thống vận hành sẵn có của doanh nghiệp và kênh Zalo OA; lớp đồng bộ bền vững (idempotent, đối soát tồn kho) để đơn hàng không bị hụt khi dữ liệu nguồn sai — tích hợp thay vì thay thế, ghi lại bằng ADR. Ứng dụng chạy thật: <a href="https://zalo.me/s/4316200907390639897/">Zalo Mini App</a>.`,
+        `Nền tảng bán hàng Zalo Mini App: xây từ đầu theo quy trình Scrum, backend NestJS BFF (Clean Architecture) + Redis kết nối tới hệ thống vận hành sẵn có của doanh nghiệp và kênh Zalo OA; tích hợp cổng thanh toán SEPAY (webhook VietQR) để tự động xác nhận chuyển khoản và đối soát đơn theo thời gian thực; lớp đồng bộ bền vững (idempotent, đối soát tồn kho) để đơn hàng không bị hụt khi dữ liệu nguồn sai — tích hợp thay vì thay thế, ghi lại bằng ADR. Ứng dụng chạy thật: <a href="https://zalo.me/s/4316200907390639897/">Zalo Mini App</a>.`,
         `Nền tảng vận hành kho & công nợ (Next.js/Express/PostgreSQL): AI (Gemini) quét hoá đơn + dashboard báo cáo bán hàng/kho; tự động nhắc thanh toán theo lịch qua Zalo OA kèm mã VietQR (node-cron) — tự động hoá mà không đụng vào hệ thống lõi.`,
         `Deploy trên Railway với backup cloud tự động; giữ nguyên các luồng API, webhook, cron và link token công khai hiện có của hệ thống.`,
       ]},
@@ -174,7 +174,7 @@ const CV = {
       { label: `Kiến trúc:`, value: `Offline-first, Background Sync, Map Caching, CI/CD, Disaster Recovery` },
       { label: `AI / Công cụ:`, value: `Phát triển cùng AI (Claude, Gemini, GPT), tự động hoá theo prompt, tối ưu token/chi phí, phòng chống prompt-injection &amp; AI safety` },
       { label: `Công cụ:`, value: `Git, GitHub Actions, Jira, Confluence, Figma, Shopify CLI, App Store Connect, Google Play Console, Google Analytics` },
-      { label: `Tích hợp:`, value: `Zalo OA, tích hợp hệ thống POS/ERP vận hành sẵn có, VietQR, FCM, REST API / webhook` },
+      { label: `Tích hợp:`, value: `Zalo OA, tích hợp hệ thống POS/ERP vận hành sẵn có, cổng thanh toán SEPAY (webhook VietQR), VietQR, FCM, REST API / webhook` },
       { label: `Hạ tầng / Cloud:`, value: `Hạ tầng trong nước Việt Nam (Viettel IDC), hệ sinh thái Zalo (ZNS, OA, Mini App); Google Cloud (Google Maps API, Cloud Storage, AI Studio API); Railway, Docker` },
       { label: `Ngoại ngữ:`, value: `Tiếng Việt (bản ngữ), Tiếng Anh (giao tiếp công việc thành thạo)` },
     ],
@@ -205,7 +205,7 @@ const CV = {
     expTitle: `Professional Experience`,
     experience: [
       { role: `Full-stack Developer | OX Multimedia`, meta: `Jun 2026 - Present &nbsp;&middot;&nbsp; Ho Chi Minh City`, bullets: [
-        `Zalo Mini App sales platform: built from scratch in a Scrum process, with a NestJS BFF (Clean Architecture) + Redis connecting to the operational systems the business already runs and the Zalo OA channel; a resilient sync layer (idempotent, stock reconciliation) so orders are never shorted on bad source data — integrating rather than replacing, documented via ADRs. Live app: <a href="https://zalo.me/s/4316200907390639897/">Zalo Mini App</a>.`,
+        `Zalo Mini App sales platform: built from scratch in a Scrum process, with a NestJS BFF (Clean Architecture) + Redis connecting to the operational systems the business already runs and the Zalo OA channel; integrated the SEPAY payment gateway (VietQR webhook) to auto-confirm bank transfers and reconcile orders in real time; a resilient sync layer (idempotent, stock reconciliation) so orders are never shorted on bad source data — integrating rather than replacing, documented via ADRs. Live app: <a href="https://zalo.me/s/4316200907390639897/">Zalo Mini App</a>.`,
         `Warehouse-operations & debt platform (Next.js/Express/PostgreSQL): Gemini AI invoice scanning + sales/warehouse reporting dashboards; scheduled automated payment reminders over Zalo OA with VietQR codes (node-cron) — automation without touching the core system.`,
         `Deployed on Railway with automated cloud backups; preserved the system's existing API, webhook, cron, and public link-token flows.`,
       ]},
@@ -264,7 +264,7 @@ const CV = {
       { label: `Architecture:`, value: `Offline-first, Background Sync, Map Caching, CI/CD, Disaster Recovery` },
       { label: `AI / Tooling:`, value: `AI-assisted development (Claude, Gemini, GPT), prompt-driven automation, token/cost optimization, prompt-injection mitigation &amp; AI safety` },
       { label: `Tools:`, value: `Git, GitHub Actions, Jira, Confluence, Figma, Shopify CLI, App Store Connect, Google Play Console, Google Analytics` },
-      { label: `Integrations:`, value: `Zalo OA, integration with existing POS/ERP operational systems, VietQR, FCM, REST APIs / webhooks` },
+      { label: `Integrations:`, value: `Zalo OA, integration with existing POS/ERP operational systems, SEPAY payment gateway (VietQR webhook), VietQR, FCM, REST APIs / webhooks` },
       { label: `Infrastructure / Cloud:`, value: `Vietnamese domestic infrastructure (Viettel IDC), Zalo ecosystem (ZNS, OA, Mini App); Google Cloud (Google Maps API, Cloud Storage, AI Studio API); Railway, Docker` },
       { label: `Languages Spoken:`, value: `Vietnamese (Native), English (Professional Working Proficiency)` },
     ],

@@ -263,7 +263,7 @@
                 tech: ["Node.js", "Express", "TypeScript", "Prisma", "PostgreSQL", "React", "MUI"]
             },
             "zalo-commerce": {
-                tech: ["Zalo Mini App", "NestJS", "BFF", "POS/ERP API", "Redis", "PostgreSQL"],
+                tech: ["Zalo Mini App", "NestJS", "BFF", "POS/ERP API", "SEPAY (VietQR)", "Redis", "PostgreSQL"],
                 liveUrl: "https://zalo.me/s/4316200907390639897/"
             },
             "warehouse-bot": {
@@ -357,6 +357,7 @@
                         details: [
                             "Kinh nghiệm: kiến trúc BFF (NestJS, Clean Architecture) — áp dụng để tách giao diện khỏi nghiệp vụ, gia cố bảo mật (hardened auth) và dễ mở rộng sang web/mobile.",
                             "Kinh nghiệm: lớp đồng bộ bền vững tới hệ thống bán hàng sẵn có (idempotent, đối soát tồn kho) — áp dụng để đơn không bị hụt khi dữ liệu nguồn sai, giữ nguyên hệ thống vận hành cũ.",
+                            "Kinh nghiệm: tích hợp cổng thanh toán SEPAY (webhook VietQR) — áp dụng để tự động xác nhận chuyển khoản ngân hàng và đối soát đơn hàng theo thời gian thực, giảm xác nhận thủ công.",
                             "Kinh nghiệm: tích hợp thay vì thay thế — áp dụng để tăng tốc chuyển đổi số bằng giải pháp phù hợp, giảm rủi ro cho vận hành."
                         ] },
                     "warehouse-bot": { title: "Bot tự động hoá vận hành kho & bán hàng", type: "Tự động hoá + AI", role: "Fullstack Developer (AI-assisted)",
@@ -441,6 +442,7 @@
                         details: [
                             "Experience: a BFF architecture (NestJS, Clean Architecture) — chosen to separate the UI from the domain, harden auth, and keep expansion to web/mobile easy.",
                             "Experience: a resilient sync layer to the existing sales system (idempotent, stock reconciliation) — chosen so orders are never shorted when source data is wrong, while the existing operation stays intact.",
+                            "Experience: integrated the SEPAY payment gateway (VietQR webhook) — chosen to auto-confirm bank transfers and reconcile orders in real time, cutting manual confirmation.",
                             "Experience: integrate rather than replace — chosen to accelerate digital transformation with the right-fit solution and lower operational risk."
                         ] },
                     "warehouse-bot": { title: "Warehouse & sales automation bot", type: "Automation + AI", role: "Fullstack Developer (AI-assisted)",
