@@ -62,7 +62,8 @@ with PostgreSQL/Prisma and Docker, plus AI integration (Claude, Gemini, GPT).
 I also handle the parts many freelancers skip: clear technical documentation,
 handover, and App Store / Google Play releases.
 
-Recent work: a Zalo Mini App commerce platform with a resilient POS sync
+Recent work: a Zalo Mini App commerce platform with a resilient POS sync and
+SEPAY (VietQR webhook) payment integration for auto bank-transfer confirmation
 (NestJS BFF), an order & debt reconciliation system with FIFO payment
 allocation, AI sales/ops bots, and a high-performance Next.js storefront.
 

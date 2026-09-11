@@ -45,8 +45,9 @@ parts that break in production - money-accurate logic, audit trails, offline
 sync, and clean releases.
 
 Recent work: a Zalo Mini App commerce platform (NestJS BFF + resilient POS
-sync), an order & debt reconciliation system with FIFO payment allocation,
-AI sales/ops bots, and ERP/WMS apps used on a supermarket floor.
+sync + SEPAY/VietQR payment integration), an order & debt reconciliation
+system with FIFO payment allocation, AI sales/ops bots, and ERP/WMS apps used
+on a supermarket floor.
 
 Remote, English-speaking; my afternoon (ICT) overlaps European mornings.
 ```
