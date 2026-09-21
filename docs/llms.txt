@@ -25,13 +25,14 @@ TypeScript, Node.js, NestJS, Express, React, React Native, Next.js, PostgreSQL, 
 - Google Cloud ecosystem (Google Maps API, Cloud Storage, AI Studio API); Railway, Docker. Chooses right-fit infrastructure per problem.
 
 ## Selected work
+- "90-Day Challenge" learning platform (IVY Kể Chuyện × OX Multimedia): a Turborepo/pnpm monorepo of two independently-deployed Next.js 14 apps (student + admin) sharing one PostgreSQL/Prisma database. Zalo Login v4 with VN phone normalization and day-1 auto-enroll; AI proof-image verification (Vertex Gemini + Vision OCR) per task type; RBAC admin console with per-action guards, audit log, staged xlsx roster import, "who hasn't submitted today" + streak/make-up logic; images on Google Cloud Storage (private bucket, signed URLs); JSON logging with trace context + PII redaction; GitHub Actions CI/CD to Railway. Live: https://oxstudent.oxmultimedia.vn/today
 - Order & debt platform for a wholesale distributor (FIFO reconciliation, supplier statements, print/QR invoices).
 - Zalo Mini App commerce platform with a NestJS BFF (Clean Architecture) that integrates with the business's existing sales system; SEPAY payment gateway (VietQR webhook) for automatic bank-transfer confirmation and real-time order reconciliation.
 - Warehouse & sales operations bot that connects to existing operational/sales systems (AI analysis + automated payment reminders).
 - Order, customer & debt management system for a small business (Node.js, Express, TypeScript, Prisma, PostgreSQL, React + MUI, backup/restore).
 
 ## Experience
-- Full-stack Developer, OX Multimedia (2026-present): warehouse-operations & debt platform (Next.js/Express/PostgreSQL, Gemini AI, Zalo OA reminders) and a Zalo Mini App sales platform (NestJS BFF, Redis).
+- Full-stack Developer, OX Multimedia (2026-present): warehouse-operations & debt platform (Next.js/Express/PostgreSQL, Gemini AI, Zalo OA reminders), a Zalo Mini App sales platform (NestJS BFF, Redis), and a "90-Day Challenge" learning platform (Turborepo monorepo of two Next.js apps, Zalo Login, AI proof-image verification, RBAC admin console).
 - Mobile Developer, N.A.M Tech (2024-present): Scrum process.
 - ERP/WMS/CRM Developer, Thiso Retail / Emart (2022-2024): operated, released and fixed the Emart mall app.
 

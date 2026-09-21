@@ -5,8 +5,8 @@
     "nav": { "services": "Dịch vụ", "process": "Quy trình", "work": "Dự án", "skills": "Kỹ năng", "talk": "Thuê tôi" },
     "hero": {
       "status": "Nhận dự án freelance · Hệ thống đơn–hoá đơn–công nợ & tự động hoá AI",
-      "titleA": "Kiến tạo",
-      "titleB": "Giá trị Tối ưu.",
+      "titleA": "Phần mềm",
+      "titleB": "doanh nghiệp chạy thật.",
       "role": "Senior Software Engineer | Full-stack & Mobile",
       "summary": "Tôi xây hệ thống vận hành nội bộ cho doanh nghiệp — quản lý đơn, hoá đơn, công nợ, dashboard quản trị và tự động hoá bằng AI — và làm ĐÚNG phần khó nhất: tính tiền, audit, và deploy thật.",
       "ctaPrimary": "Xem dự án",
@@ -26,12 +26,12 @@
         { "icon": "shield", "title": "Cứu & ổn định hệ thống cũ", "desc": "Đọc codebase lạ nhanh, vá lỗi/tăng tốc/hoàn thiện mà không cần viết lại." }
       ]
     },
-    "work": { "eyebrow": "Kinh nghiệm thực chiến", "heading": "Dự án tiêu biểu.", "sub": "Tuyển chọn các dự án thể hiện độ phức tạp kiến trúc và chất lượng.", "showArch": "Xem thiết kế hệ thống", "hideArch": "Ẩn phân tích", "blueprint": "Sơ đồ kiến trúc", "archHint": "Bấm nút trên để xem trực quan kiến trúc hệ thống." },
+    "work": { "eyebrow": "Kinh nghiệm thực chiến", "heading": "Dự án tiêu biểu.", "sub": "Vài dự án tiêu biểu — bấm để xem kiến trúc và cách tôi giải bài toán.", "showArch": "Xem thiết kế hệ thống", "hideArch": "Ẩn phân tích", "blueprint": "Sơ đồ kiến trúc", "archHint": "Bấm nút trên để xem trực quan kiến trúc hệ thống." },
     "journey": { "heading": "Hành trình nghề nghiệp" },
     "recognition": { "heading": "Ghi nhận chuyên môn" },
     "skills": {
       "heading": "Bộ kỹ năng.",
-      "sub": "Tôi không chỉ viết code; tôi thiết kế hệ sinh thái phần mềm bền vững theo chuẩn ngành.",
+      "sub": "Những thứ tôi dùng hằng ngày để hệ thống chạy đúng và bảo trì được.",
       "bars": [
         { "name": "Clean Architecture & Offline-First", "val": 96 },
         { "name": "Backend (Node.js / PostgreSQL)", "val": 92 },
@@ -45,14 +45,14 @@
         { "icon": "shield", "n": "DevOps & Chất lượng", "d": "Docker, CI/CD, Jest, kiểm thử bằng lần chạy thật" }
       ]
     },
-    "footer": { "cta": "Bạn có một dự án?", "availability": "Nhận dự án freelance chọn lọc & hợp tác dài hạn.", "rights": "Nguyen Cong Hung. Kiến tạo tương lai." }
+    "footer": { "cta": "Bạn có một dự án?", "availability": "Nhận dự án freelance chọn lọc & hợp tác dài hạn.", "rights": "Nguyen Cong Hung" }
   },
   "en": {
     "nav": { "services": "Services", "process": "Process", "work": "Work", "skills": "Skills", "talk": "Hire Me" },
     "hero": {
       "status": "Available for freelance · Invoicing, debt & AI-automation builds",
-      "titleA": "Engineering",
-      "titleB": "Optimal Value.",
+      "titleA": "Software",
+      "titleB": "businesses run on.",
       "role": "Senior Software Engineer | Full-stack & Mobile",
       "summary": "I build the internal systems that run a business — order/invoice/debt management, admin dashboards, and AI automation — and I get the hard parts right: money math, audit trails, and a real deployment.",
       "ctaPrimary": "Explore Work",
@@ -72,12 +72,12 @@
         { "icon": "shield", "title": "Rescue & Stabilize Legacy Systems", "desc": "Read unfamiliar codebases fast; fix, speed up, and finish without a rewrite." }
       ]
     },
-    "work": { "eyebrow": "Proven Experience", "heading": "Selected Work.", "sub": "A curated selection demonstrating architectural complexity and quality.", "showArch": "Show System Design", "hideArch": "Hide Analysis", "blueprint": "Architectural Blueprint", "archHint": "Click the button above to review the system architecture." },
+    "work": { "eyebrow": "Proven Experience", "heading": "Selected Work.", "sub": "A few representative builds — click one to see its architecture and how I solved it.", "showArch": "Show System Design", "hideArch": "Hide Analysis", "blueprint": "Architectural Blueprint", "archHint": "Click the button above to review the system architecture." },
     "journey": { "heading": "Professional Journey" },
     "recognition": { "heading": "Industry Recognition" },
     "skills": {
       "heading": "Tech Stack.",
-      "sub": "I don't just write code; I design sustainable software ecosystems using modern standards.",
+      "sub": "The tools I reach for daily to keep systems correct and maintainable.",
       "bars": [
         { "name": "Clean Architecture & Offline-First", "val": 96 },
         { "name": "Backend (Node.js / PostgreSQL)", "val": 92 },
@@ -91,6 +91,6 @@
         { "icon": "shield", "n": "DevOps & Quality", "d": "Docker, CI/CD, Jest, verify-by-real-run" }
       ]
     },
-    "footer": { "cta": "Have a project in mind?", "availability": "Available for selective freelance projects & long-term work.", "rights": "Nguyen Cong Hung. Architecting the future." }
+    "footer": { "cta": "Have a project in mind?", "availability": "Available for selective freelance projects & long-term work.", "rights": "Nguyen Cong Hung" }
   }
 }

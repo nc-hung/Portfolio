@@ -266,6 +266,12 @@
                 tech: ["Zalo Mini App", "NestJS", "BFF", "POS/ERP API", "SEPAY (VietQR)", "Redis", "PostgreSQL"],
                 liveUrl: "https://zalo.me/s/4316200907390639897/"
             },
+            "ivy-ox-challenge": {
+                featured: true,
+                tech: ["Next.js 14", "TypeScript", "Turborepo", "pnpm", "Prisma", "PostgreSQL", "Zalo Login", "Google Cloud Storage", "Vertex Gemini + Vision", "Railway"],
+                liveUrl: "https://oxstudent.oxmultimedia.vn/today",
+                liveLabel: "openLive"
+            },
             "warehouse-bot": {
                 tech: ["Next.js", "React", "Node.js", "PostgreSQL", "POS/ERP API", "Zalo OA", "AI (Gemini)", "node-cron"]
             },
@@ -278,7 +284,7 @@
         // ---- earlier years render collapsed and expand on click.          ----
         const CURRENT_YEAR = "2026";
         const WORK_TIMELINE = [
-            { year: "2026", ids: ["toa-management", "zalo-commerce", "warehouse-bot"] },
+            { year: "2026", ids: ["ivy-ox-challenge", "toa-management", "zalo-commerce", "warehouse-bot"] },
             { year: "2025", ids: ["ledger-system"] },
         ];
 
@@ -317,6 +323,7 @@
                     h: "Dự án theo năm",
                     sub: "Năm hiện tại tự mở sẵn các dự án đang làm. Bấm vào từng năm trước để xem dự án của năm đó.",
                     openApp: "Mở Mini App",
+                    openLive: "Xem app học viên",
                     featuredTag: "Dự án chủ lực",
                     currentTag: "Hiện tại",
                     projectsLabel: "dự án",
@@ -345,6 +352,15 @@
                 },
                 footer: { availability: "Nhận dự án freelance chọn lọc và hợp tác dài hạn.", rights: "Nguyen Cong Hung", resume: "CV" },
                 projects: {
+                    "ivy-ox-challenge": { title: "Nền tảng \"Thử thách 90 ngày\" (IVY Kể Chuyện × OX Multimedia)", type: "Monorepo · 2 app Next.js", role: "Fullstack Developer (AI-assisted)",
+                        desc: "Nền tảng học tập theo thử thách 90 ngày: học viên nộp bài mỗi ngày trên app mobile-first, còn admin/trợ giảng theo dõi tiến độ, chấm check giải, import roster và quản lý sự kiện. Hai app deploy độc lập nhưng dùng chung một database.",
+                        details: [
+                            "Kinh nghiệm: monorepo Turborepo + pnpm với 2 app Next.js 14 (student/admin) dùng chung Postgres/Prisma và các package nội bộ — áp dụng để deploy độc lập mà không lặp code.",
+                            "Kinh nghiệm: đăng nhập học viên bằng Zalo Login v4, chuẩn hoá số điện thoại VN, tự ghi danh ngày 1, chống mạo danh — áp dụng để vào bằng tài khoản Zalo sẵn có, không cần mật khẩu.",
+                            "Kinh nghiệm: AI (Vertex Gemini + Vision OCR) xác thực ảnh minh chứng (Strava/Zoom) theo từng loại task — áp dụng để chấm bài tự động và giảm gian lận.",
+                            "Kinh nghiệm: console admin phân quyền theo hành động (RBAC + audit log), import xlsx theo giai đoạn, logic 'ai chưa nộp hôm nay' + streak/nộp bù — áp dụng để vận hành khoá học quy mô lớn.",
+                            "Kinh nghiệm: ảnh lưu trên Google Cloud Storage (bucket riêng tư, Signed URL v4), log JSON có trace context + che PII, CI/CD GitHub Actions → Railway auto-deploy — áp dụng để chạy production an toàn với chi phí thấp."
+                        ] },
                     "toa-management": { title: "Hệ thống quản lý đơn hàng & công nợ", type: "Kiến trúc Full-stack", role: "Fullstack Developer (AI-assisted)",
                         desc: "Hệ thống quản lý đơn hàng, khách hàng và công nợ cho hộ kinh doanh: tách lớp rõ ràng (API — nghiệp vụ — dữ liệu) để số học tiền luôn chính xác và dễ mở rộng.",
                         details: [
@@ -372,7 +388,7 @@
                         details: ["Đối soát FIFO tự động, số học Decimal chính xác.", "Bảng kê NCC + hoá đơn in/QR một chạm.", "Phân tích nghiệp vụ và phát triển cùng AI; chạy production cho vựa thật."] },
                 },
                 otherProjects: [
-                    { title: "Nền tảng vận hành kho & Zalo Mini App bán hàng", company: "OX Multimedia", role: "Lập trình viên Full-stack", period: "06/2026 - nay", desc: "Xây 2 hệ thống cho một doanh nghiệp: (1) nền tảng vận hành kho & công nợ trên Next.js/Express/PostgreSQL — AI (Gemini) quét hoá đơn, nhắc thanh toán tự động qua Zalo OA, cron; (2) nền tảng bán hàng Zalo Mini App với NestJS BFF (Clean Architecture) + Redis. Cả hai tích hợp vào hệ thống vận hành sẵn có của doanh nghiệp thay vì thay thế." },
+                    { title: "Nền tảng vận hành kho, Zalo Mini App bán hàng & IVY 90 ngày", company: "OX Multimedia", role: "Lập trình viên Full-stack", period: "06/2026 - nay", desc: "Xây 3 hệ thống cho doanh nghiệp: (1) nền tảng vận hành kho & công nợ trên Next.js/Express/PostgreSQL — AI (Gemini) quét hoá đơn, nhắc thanh toán tự động qua Zalo OA, cron; (2) nền tảng bán hàng Zalo Mini App với NestJS BFF (Clean Architecture) + Redis; (3) nền tảng học tập \"Thử thách 90 ngày\" (IVY Kể Chuyện × OX Multimedia) — monorepo Turborepo với 2 app Next.js (student/admin), Zalo Login, AI xác thực ảnh minh chứng, RBAC admin console. Cả ba tích hợp vào hệ thống vận hành sẵn có của doanh nghiệp thay vì thay thế." },
                     { title: "Mobile Developer (Ticking App, AVB)", company: "N.A.M Tech", role: "Mobile Developer", period: "2024 đến nay", desc: "Phát triển mobile, offline-first + background sync, native bridge iOS/Android, sở hữu release App Store / Google Play. Làm việc theo quy trình Scrum. Bàn giao tài liệu kỹ thuật cho khách." },
                     { title: "SmartOffice (ERP / WMS / CRM)", company: "Thiso Retail (Emart)", role: "Lập trình viên ERP/WMS/CRM", period: "2022 - 2024", desc: "Xây app hỗ trợ vận hành dùng thật tại sàn Emart (tồn kho, hạn dùng, báo cáo, xếp lượt, màn hình TV báo lượt tài xế). Vận hành, cập nhật release và fix lỗi cho app Emart mall. 2 giải thưởng tại Emart." },
                     { title: "Ứng dụng bảo hiểm & điện lực", company: "Intellin Tech", role: "Frontend Developer", period: "2021 - 2022", desc: "Phát triển tính năng UI trên Android/iOS theo quy trình Agile." },
@@ -408,7 +424,7 @@
                         { icon: "rocket-launch", title: "Deliver", desc: "Real deployment, ops docs, and post-handover bug fixes." },
                     ]
                 },
-                work: { h: "Work by year", sub: "The current year opens automatically with what I'm building now. Click an earlier year to reveal its projects.", openApp: "Open Mini App", featuredTag: "Flagship", currentTag: "Current", projectsLabel: "projects" },
+                work: { h: "Work by year", sub: "The current year opens automatically with what I'm building now. Click an earlier year to reveal its projects.", openApp: "Open Mini App", openLive: "Open student app", featuredTag: "Flagship", currentTag: "Current", projectsLabel: "projects" },
                 exp: { h: "Experience", awards: "Two awards at Thiso Retail (Emart): Outstanding Performance, Staff of the Year." },
                 skills: {
                     h: "Stack",
@@ -430,6 +446,15 @@
                 },
                 footer: { availability: "Available for selective freelance projects and long-term work.", rights: "Nguyen Cong Hung", resume: "Resume" },
                 projects: {
+                    "ivy-ox-challenge": { title: "\"90-Day Challenge\" learning platform (IVY Kể Chuyện × OX Multimedia)", type: "Monorepo · 2 Next.js apps", role: "Fullstack Developer (AI-assisted)",
+                        desc: "A 90-day challenge platform: students submit proof daily on a mobile-first app while admins track progress, verify prize eligibility, import rosters and run events. Two independently deployed apps share one database.",
+                        details: [
+                            "Experience: a Turborepo + pnpm monorepo with two Next.js 14 apps (student/admin) sharing one Postgres/Prisma schema and internal packages — used to deploy each app independently without duplicating code.",
+                            "Experience: student sign-in via Zalo Login v4 with VN phone-number normalization, day-1 auto-enrollment and anti-impersonation — used so students log in with their existing Zalo account, no passwords.",
+                            "Experience: AI (Vertex Gemini + Vision OCR) verifies proof images (Strava/Zoom) per task type — used to auto-grade submissions and cut cheating.",
+                            "Experience: an RBAC admin console (per-action guards + audit log), staged xlsx roster import, and 'who hasn't submitted today' with streak/make-up logic — used to run a large cohort.",
+                            "Experience: images on Google Cloud Storage (private bucket, signed URLs), JSON logs with trace context + PII redaction, GitHub Actions CI/CD → Railway auto-deploy — used to run production safely at low cost."
+                        ] },
                     "toa-management": { title: "Order & debt management system", type: "Full-stack architecture", role: "Fullstack Developer (AI-assisted)",
                         desc: "An order, customer and debt management system for a small business: cleanly layered (API — domain — data) so money math stays exact and the system is easy to extend.",
                         details: [
@@ -457,7 +482,7 @@
                         details: ["Automatic FIFO reconciliation, exact decimal math.", "Supplier statements + print/QR invoices in one click.", "Business analysis and AI-assisted development; runs in production for a real business."] },
                 },
                 otherProjects: [
-                    { title: "Warehouse ops platform & Zalo Mini App commerce", company: "OX Multimedia", role: "Full-stack Developer", period: "Jun 2026 - now", desc: "Built two systems for a business: (1) a warehouse-operations & debt platform on Next.js/Express/PostgreSQL — Gemini AI invoice scanning, automated payment reminders over Zalo OA, cron; (2) a Zalo Mini App sales platform with a NestJS BFF (Clean Architecture) + Redis. Both integrate with the operational systems the business already runs rather than replacing them." },
+                    { title: "Warehouse ops platform, Zalo Mini App commerce & the IVY 90-Day platform", company: "OX Multimedia", role: "Full-stack Developer", period: "Jun 2026 - now", desc: "Built three systems for a business: (1) a warehouse-operations & debt platform on Next.js/Express/PostgreSQL — Gemini AI invoice scanning, automated payment reminders over Zalo OA, cron; (2) a Zalo Mini App sales platform with a NestJS BFF (Clean Architecture) + Redis; (3) the \"90-Day Challenge\" learning platform (IVY Kể Chuyện × OX Multimedia) — a Turborepo monorepo of two Next.js apps (student/admin), Zalo Login, AI proof-image verification, an RBAC admin console. All three integrate with the operational systems the business already runs rather than replacing them." },
                     { title: "Mobile Developer (Ticking App, AVB)", company: "N.A.M Tech", role: "Mobile Developer", period: "2024 to now", desc: "Developed mobile apps, offline-first + background sync, native iOS/Android bridges, and owned App Store / Google Play releases. Worked in a Scrum process. Handed over technical documentation to the client." },
                     { title: "SmartOffice (ERP / WMS / CRM)", company: "Thiso Retail (Emart)", role: "ERP/WMS/CRM Developer", period: "2022 - 2024", desc: "Built operational-support apps used on the Emart floor (inventory, expiry, reporting, queue, a TV driver-queue display). Operated, shipped release updates and fixed bugs for the Emart mall app. Two awards at Emart." },
                     { title: "Insurance & electricity apps", company: "Intellin Tech", role: "Frontend Developer", period: "2021 - 2022", desc: "Built UI features across Android/iOS in an Agile workflow." },
@@ -537,10 +562,19 @@
                     <div className="flex flex-wrap gap-2 mb-5 mt-auto">
                         {p.tech.map((tc, i) => <span key={i} className="font-mono text-[10px] text-zinc-400 bg-white/5 border border-white/5 px-2 py-1 rounded">{tc}</span>)}
                     </div>
-                    {p.liveUrl && (
-                        <a href={p.liveUrl} target="_blank" rel="noopener noreferrer" className="press self-start inline-flex items-center gap-2 text-xs font-medium text-accent-400 hover:text-accent-300 transition-colors">
-                            <Icon name="arrow-square-out" />{t.work.openApp}
-                        </a>
+                    {(p.liveUrl || p.altUrl) && (
+                        <div className="flex flex-wrap gap-x-5 gap-y-2">
+                            {p.liveUrl && (
+                                <a href={p.liveUrl} target="_blank" rel="noopener noreferrer" className="press self-start inline-flex items-center gap-2 text-xs font-medium text-accent-400 hover:text-accent-300 transition-colors">
+                                    <Icon name="arrow-square-out" />{p.liveLabel ? t.work[p.liveLabel] : t.work.openApp}
+                                </a>
+                            )}
+                            {p.altUrl && (
+                                <a href={p.altUrl} target="_blank" rel="noopener noreferrer" className="press self-start inline-flex items-center gap-2 text-xs font-medium text-accent-400 hover:text-accent-300 transition-colors">
+                                    <Icon name="arrow-square-out" />{p.altLabel ? t.work[p.altLabel] : t.work.openApp}
+                                </a>
+                            )}
+                        </div>
                     )}
                 </div>
             );
