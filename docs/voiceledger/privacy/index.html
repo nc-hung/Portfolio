@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chính sách quyền riêng tư - VoiceLedger (Sổ Chi Tiêu)</title>
+  <meta name="description" content="Chính sách quyền riêng tư của ứng dụng VoiceLedger - Sổ Chi Tiêu: ứng dụng ghi chép thu chi bằng giọng nói, hoạt động hoàn toàn ngoại tuyến, dữ liệu lưu trên thiết bị của bạn.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://nguyenconghung.up.railway.app/voiceledger/privacy/">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;800&family=Geist:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --ink: #16202b;
+      --muted: #55636f;
+      --rule: #e3e8ec;
+      --paper: #ffffff;
+      --bg: #f4f6f8;
+      --accent: #059669;
+      --accent-soft: #ecfdf5;
+      --accent-border: #a7f3d0;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: 'Geist', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.65;
+      font-size: 16px;
+    }
+
+    h1, h2, .brand {
+      font-family: 'Outfit', system-ui, sans-serif;
+    }
+
+    a { color: var(--accent); }
+
+    .wrap {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 0 20px 80px;
+    }
+
+    header.top {
+      background: var(--paper);
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .top-inner {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 28px 20px 24px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      font-size: 20px;
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .brand .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: var(--accent);
+      flex: none;
+    }
+
+    h1 {
+      font-size: 28px;
+      font-weight: 800;
+      margin: 18px 0 6px;
+      letter-spacing: -0.01em;
+    }
+
+    .meta {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .tldr {
+      margin-top: 40px;
+      background: var(--accent-soft);
+      border: 1px solid var(--accent-border);
+      border-radius: 14px;
+      padding: 20px 22px;
+    }
+
+    .tldr h2 {
+      margin: 0 0 8px;
+      font-size: 15px;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      color: var(--accent);
+    }
+
+    .tldr p { margin: 0; color: #0f2a20; }
+
+    section {
+      margin-top: 40px;
+    }
+
+    h2.sec {
+      font-size: 20px;
+      font-weight: 700;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    h3 {
+      font-size: 16px;
+      font-weight: 600;
+      margin: 20px 0 8px;
+    }
+
+    p { margin: 10px 0; }
+
+    ul, ol { padding-left: 22px; }
+    li { margin: 6px 0; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 14px 0;
+      font-size: 14.5px;
+    }
+
+    th, td {
+      text-align: left;
+      padding: 10px 12px;
+      border: 1px solid var(--rule);
+      vertical-align: top;
+    }
+
+    th {
+      background: #f8fafb;
+      font-weight: 600;
+    }
+
+    .badge-no {
+      display: inline-block;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: #047857;
+      background: #ecfdf5;
+      border: 1px solid #a7f3d0;
+      border-radius: 999px;
+      padding: 2px 10px;
+    }
+
+    .toc {
+      margin-top: 28px;
+      background: var(--paper);
+      border: 1px solid var(--rule);
+      border-radius: 14px;
+      padding: 18px 22px;
+    }
+
+    .toc h2 {
+      margin: 0 0 10px;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      color: var(--muted);
+    }
+
+    .toc ol {
+      columns: 2;
+      -webkit-columns: 2;
+      column-gap: 24px;
+      padding-left: 18px;
+      margin: 0;
+      font-size: 14.5px;
+    }
+
+    .toc li { break-inside: avoid; }
+
+    footer {
+      margin-top: 56px;
+      padding-top: 20px;
+      border-top: 1px solid var(--rule);
+      color: var(--muted);
+      font-size: 13.5px;
+    }
+
+    .contact-box {
+      background: var(--paper);
+      border: 1px solid var(--rule);
+      border-radius: 14px;
+      padding: 20px 22px;
+    }
+
+    code {
+      background: #eef1f3;
+      padding: 1px 6px;
+      border-radius: 6px;
+      font-size: 0.92em;
+    }
+
+    @media (max-width: 560px) {
+      .toc ol { columns: 1; }
+      h1 { font-size: 24px; }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="top">
+    <div class="top-inner">
+      <a class="brand" href="https://nguyenconghung.up.railway.app/">
+        <span class="dot"></span>
+        Nguyễn Công Hùng
+      </a>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <h1>Chính sách quyền riêng tư<br>VoiceLedger – Sổ Chi Tiêu</h1>
+    <p class="meta">
+      Ngày có hiệu lực: <strong>24/09/2026</strong> ·
+      Áp dụng cho ứng dụng Android <strong>VoiceLedger – Sổ Chi Tiêu</strong> (mã gói:
+      <code>com.voiceledger.money</code>)
+    </p>
+
+    <div class="tldr">
+      <h2>Tóm tắt nhanh</h2>
+      <p>
+        VoiceLedger hoạt động <strong>hoàn toàn ngoại tuyến</strong>. Ứng dụng không có máy chủ, không kết nối
+        Internet, không tạo tài khoản. Toàn bộ dữ liệu thu chi, ảnh hoá đơn và bản ghi giọng nói của bạn chỉ được
+        xử lý và lưu trữ <strong>ngay trên thiết bị của bạn</strong>. Chúng tôi không thu thập, không chia sẻ,
+        không bán và không chuyển dữ liệu cá nhân của bạn cho bất kỳ bên thứ ba nào.
+      </p>
+    </div>
+
+    <nav class="toc">
+      <h2>Mục lục</h2>
+      <ol>
+        <li><a href="#gioi-thieu">Giới thiệu &amp; phạm vi</a></li>
+        <li><a href="#pham-vi-app">Phạm vi &amp; chức năng của ứng dụng</a></li>
+        <li><a href="#du-lieu-thu-thap">Dữ liệu &amp; quyền truy cập thiết bị</a></li>
+        <li><a href="#khong-thu-thap">Những gì chúng tôi KHÔNG làm</a></li>
+        <li><a href="#luu-tru">Lưu trữ &amp; bảo mật dữ liệu</a></li>
+        <li><a href="#chia-se">Chia sẻ dữ liệu với bên thứ ba</a></li>
+        <li><a href="#sao-luu">Sao lưu, xuất &amp; nhập dữ liệu</a></li>
+        <li><a href="#quyen-nguoi-dung">Quyền của bạn đối với dữ liệu cá nhân</a></li>
+        <li><a href="#thoi-gian-luu">Thời gian lưu trữ &amp; xoá dữ liệu</a></li>
+        <li><a href="#tre-em">Chính sách với trẻ em</a></li>
+        <li><a href="#thay-doi">Thay đổi chính sách</a></li>
+        <li><a href="#co-so-phap-ly">Cơ sở pháp lý áp dụng</a></li>
+        <li><a href="#lien-he">Liên hệ</a></li>
+      </ol>
+    </nav>
+
+    <section id="gioi-thieu">
+      <h2 class="sec">1. Giới thiệu &amp; phạm vi</h2>
+      <p>
+        Chính sách quyền riêng tư này giải thích cách ứng dụng <strong>VoiceLedger – Sổ Chi Tiêu</strong>
+        ("Ứng dụng", "chúng tôi") xử lý dữ liệu khi bạn cài đặt và sử dụng Ứng dụng trên thiết bị Android của mình.
+        Chính sách áp dụng cho mọi phiên bản của Ứng dụng được phân phối qua Google Play tại thị trường Việt Nam
+        và quốc tế.
+      </p>
+      <p>
+        Ứng dụng do <strong>Nguyễn Công Hùng</strong>, nhà phát triển phần mềm độc lập tại Việt Nam, xây dựng và
+        phát hành. Bằng việc tải xuống, cài đặt hoặc sử dụng Ứng dụng, bạn xác nhận đã đọc và hiểu chính sách này.
+      </p>
+    </section>
+
+    <section id="pham-vi-app">
+      <h2 class="sec">2. Phạm vi &amp; chức năng của ứng dụng</h2>
+      <p>VoiceLedger là ứng dụng <strong>sổ chi tiêu cá nhân</strong> giúp bạn:</p>
+      <ul>
+        <li>Ghi lại giao dịch thu/chi bằng cách <strong>nói</strong> (ví dụ: "ăn trưa 50 nghìn") thay vì gõ tay;</li>
+        <li>Chụp ảnh hoá đơn/biên lai để đính kèm vào giao dịch;</li>
+        <li>Phân loại giao dịch theo danh mục, đặt ngân sách (hạn mức chi tiêu) theo tháng;</li>
+        <li>Xem thống kê, biểu đồ chi tiêu theo thời gian;</li>
+        <li>Khoá ứng dụng bằng vân tay/khuôn mặt (sinh trắc học) để bảo vệ quyền riêng tư;</li>
+        <li>Nhận thông báo nhắc nhở ghi chép chi tiêu hằng ngày;</li>
+        <li>Tự sao lưu (xuất) và khôi phục (nhập) dữ liệu dưới dạng tệp ZIP/CSV/JSON theo yêu cầu của chính bạn.</li>
+      </ul>
+      <p>
+        Đây là một công cụ quản lý tài chính cá nhân đơn giản, <strong>không</strong> phải là ứng dụng ngân hàng,
+        ví điện tử, tổ chức tín dụng hay trung gian thanh toán; Ứng dụng không thực hiện, không kết nối và không
+        có khả năng truy cập vào bất kỳ giao dịch ngân hàng, thẻ hay tài khoản thanh toán nào của bạn.
+      </p>
+    </section>
+
+    <section id="du-lieu-thu-thap">
+      <h2 class="sec">3. Dữ liệu &amp; quyền truy cập thiết bị</h2>
+      <p>
+        Ứng dụng yêu cầu một số quyền truy cập thiết bị để hoạt động. Bảng dưới đây liệt kê đầy đủ, chính xác
+        từng quyền, mục đích sử dụng, và xác nhận rằng dữ liệu <strong>không rời khỏi thiết bị của bạn</strong>.
+      </p>
+      <table>
+        <thead>
+          <tr>
+            <th>Quyền / dữ liệu</th>
+            <th>Mục đích sử dụng</th>
+            <th>Có gửi ra ngoài thiết bị?</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Micro (<code>RECORD_AUDIO</code>)</td>
+            <td>
+              Chuyển giọng nói thành văn bản để bạn nhập giao dịch nhanh. Ứng dụng gọi dịch vụ nhận dạng giọng
+              nói có sẵn của hệ điều hành Android (<code>SpeechRecognizer</code>) — do thiết bị hoặc nhà cung
+              cấp dịch vụ nhận dạng giọng nói mặc định trên máy bạn xử lý.
+            </td>
+            <td><span class="badge-no">Không</span> — Ứng dụng không ghi âm, không lưu file âm thanh, không có
+              máy chủ riêng để nhận âm thanh.</td>
+          </tr>
+          <tr>
+            <td>Máy ảnh (<code>CAMERA</code>)</td>
+            <td>Chụp ảnh hoá đơn/biên lai để đính kèm giao dịch.</td>
+            <td><span class="badge-no">Không</span> — Ảnh lưu trong bộ nhớ riêng của Ứng dụng trên thiết bị.</td>
+          </tr>
+          <tr>
+            <td>Thông báo (<code>POST_NOTIFICATIONS</code>)</td>
+            <td>Hiển thị thông báo nhắc nhở ghi chép chi tiêu hằng ngày.</td>
+            <td><span class="badge-no">Không</span> — Thông báo được lên lịch cục bộ, không qua máy chủ đẩy nào.</td>
+          </tr>
+          <tr>
+            <td><code>RECEIVE_BOOT_COMPLETED</code>, <code>SCHEDULE_EXACT_ALARM</code></td>
+            <td>Khôi phục lịch nhắc nhở hằng ngày sau khi bạn khởi động lại điện thoại.</td>
+            <td><span class="badge-no">Không</span></td>
+          </tr>
+          <tr>
+            <td>Sinh trắc học (vân tay/khuôn mặt)</td>
+            <td>
+              Khoá ứng dụng để chỉ bạn mới mở được Ứng dụng, thông qua khung bảo mật sinh trắc học chuẩn của
+              Android (Biometric/Android Keystore).
+            </td>
+            <td><span class="badge-no">Không</span> — Dữ liệu sinh trắc học do hệ điều hành xử lý và lưu trữ;
+              Ứng dụng không bao giờ nhìn thấy, không thu thập, không lưu trữ dữ liệu sinh trắc học thô.</td>
+          </tr>
+          <tr>
+            <td>Dữ liệu giao dịch (số tiền, danh mục, ghi chú, ngày, ảnh biên lai)</td>
+            <td>Lưu trữ sổ chi tiêu của bạn để hiển thị lại, thống kê, lập ngân sách.</td>
+            <td><span class="badge-no">Không</span> — Lưu trong cơ sở dữ liệu cục bộ (SQLite) trên thiết bị,
+              không đồng bộ lên đám mây.</td>
+          </tr>
+          <tr>
+            <td>Tệp sao lưu (ZIP/CSV/JSON)</td>
+            <td>Cho phép bạn tự xuất/nhập dữ liệu khi đổi máy hoặc muốn lưu trữ riêng.</td>
+            <td>Chỉ khi <strong>chính bạn</strong> chủ động chọn chia sẻ tệp đó qua ứng dụng khác (email, Drive,
+              Zalo…). Ứng dụng không tự động tải tệp lên bất kỳ đâu.</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        Ứng dụng <strong>không yêu cầu quyền truy cập Internet</strong> và không kết nối tới bất kỳ máy chủ, API
+        hay dịch vụ đám mây nào do chúng tôi vận hành, vì bản thân Ứng dụng không có máy chủ.
+      </p>
+    </section>
+
+    <section id="khong-thu-thap">
+      <h2 class="sec">4. Những gì chúng tôi KHÔNG làm</h2>
+      <ul>
+        <li>Không yêu cầu đăng ký tài khoản, không thu thập email, số điện thoại hay bất kỳ định danh cá nhân nào để sử dụng Ứng dụng;</li>
+        <li>Không thu thập vị trí (GPS), danh bạ, lịch, hay dữ liệu từ ứng dụng khác trên máy bạn;</li>
+        <li>Không tích hợp SDK quảng cáo, SDK phân tích hành vi (analytics) hay công cụ theo dõi của bên thứ ba nào;</li>
+        <li>Không bán, cho thuê, trao đổi hay chia sẻ dữ liệu cá nhân của bạn với bất kỳ ai vì mục đích thương mại;</li>
+        <li>Không lưu trữ bản sao dữ liệu của bạn trên máy chủ, đám mây hay bất kỳ hạ tầng nào do chúng tôi kiểm soát — đơn giản vì hạ tầng đó không tồn tại.</li>
+      </ul>
+    </section>
+
+    <section id="luu-tru">
+      <h2 class="sec">5. Lưu trữ &amp; bảo mật dữ liệu</h2>
+      <p>
+        Toàn bộ dữ liệu (giao dịch, ảnh hoá đơn, danh mục, ngân sách, cài đặt) được lưu trong vùng nhớ riêng
+        ("private storage") của Ứng dụng trên thiết bị Android của bạn, được hệ điều hành cách ly khỏi các ứng
+        dụng khác (app sandbox). Bạn có thể bật khoá sinh trắc học trong Ứng dụng để tăng thêm một lớp bảo vệ khi
+        mở Ứng dụng.
+      </p>
+      <p>
+        Vì dữ liệu không rời khỏi thiết bị, mức độ an toàn của dữ liệu phụ thuộc phần lớn vào việc bạn bảo vệ
+        chính thiết bị của mình (mã khoá màn hình, cập nhật hệ điều hành, tránh cài ứng dụng lạ) và bảo quản các
+        tệp sao lưu mà bạn tự xuất ra.
+      </p>
+    </section>
+
+    <section id="chia-se">
+      <h2 class="sec">6. Chia sẻ dữ liệu với bên thứ ba</h2>
+      <p>
+        Chúng tôi <strong>không chia sẻ</strong> dữ liệu cá nhân của bạn với bất kỳ bên thứ ba nào, vì chúng tôi
+        không thu thập hay tiếp nhận dữ liệu đó ở phía chúng tôi. Trường hợp duy nhất dữ liệu "rời khỏi" Ứng dụng
+        là khi <strong>chính bạn</strong> chủ động dùng tính năng xuất/chia sẻ của Ứng dụng để gửi tệp sao lưu, ảnh
+        hoặc báo cáo tới một ứng dụng khác bạn tự chọn trên máy (ví dụ Gmail, Google Drive, Zalo, Messenger…). Khi
+        đó, việc xử lý dữ liệu tại ứng dụng nhận thuộc trách nhiệm và chính sách riêng tư của ứng dụng đó.
+      </p>
+      <p>
+        Việc nhận dạng giọng nói (mục 3) được thực hiện bởi dịch vụ nhận dạng giọng nói mặc định do hệ điều hành
+        Android/nhà sản xuất thiết bị của bạn cung cấp (ví dụ dịch vụ của Google trên phần lớn thiết bị Android).
+        Việc xử lý đó tuân theo chính sách quyền riêng tư của nhà cung cấp dịch vụ đó, nằm ngoài phạm vi kiểm soát
+        của chúng tôi; chúng tôi khuyến khích bạn tham khảo thêm chính sách của nhà sản xuất thiết bị nếu quan tâm.
+      </p>
+    </section>
+
+    <section id="sao-luu">
+      <h2 class="sec">7. Sao lưu, xuất &amp; nhập dữ liệu</h2>
+      <p>
+        Ứng dụng cho phép bạn chủ động xuất toàn bộ sổ chi tiêu (kèm ảnh hoá đơn) thành một tệp ZIP, hoặc xuất báo
+        cáo dạng CSV/JSON, lưu vào bộ nhớ thiết bị hoặc chia sẻ qua ứng dụng bạn chọn. Bạn cũng có thể nhập lại
+        (khôi phục) từ một tệp sao lưu trước đó. Toàn bộ quá trình này diễn ra cục bộ trên thiết bị và do bạn chủ
+        động thực hiện từng bước; chúng tôi không có quyền truy cập vào các tệp này.
+      </p>
+    </section>
+
+    <section id="quyen-nguoi-dung">
+      <h2 class="sec">8. Quyền của bạn đối với dữ liệu cá nhân</h2>
+      <p>
+        Theo Nghị định 13/2023/NĐ-CP về Bảo vệ dữ liệu cá nhân, bạn có các quyền sau đối với dữ liệu cá nhân của
+        mình, và vì dữ liệu chỉ tồn tại trên thiết bị của bạn, bạn có <strong>toàn quyền kiểm soát trực tiếp</strong>
+        mà không cần yêu cầu chúng tôi:
+      </p>
+      <ul>
+        <li><strong>Quyền được biết</strong> — chính sách này mô tả đầy đủ dữ liệu và cách xử lý;</li>
+        <li><strong>Quyền truy cập, chỉnh sửa</strong> — bạn xem và sửa mọi giao dịch, ảnh, ngân sách ngay trong Ứng dụng;</li>
+        <li><strong>Quyền xoá dữ liệu</strong> — bạn có thể xoá từng giao dịch, xoá toàn bộ dữ liệu trong phần Cài đặt, hoặc gỡ cài đặt Ứng dụng để xoá vĩnh viễn toàn bộ dữ liệu khỏi thiết bị;</li>
+        <li><strong>Quyền rút lại sự đồng ý</strong> — bạn có thể thu hồi quyền Micro/Máy ảnh/Thông báo bất kỳ lúc nào trong Cài đặt hệ thống Android, Ứng dụng vẫn hoạt động với các tính năng không cần quyền đó;</li>
+        <li><strong>Quyền hạn chế xử lý, quyền phản đối</strong> — vì không có xử lý nào diễn ra ngoài thiết bị của bạn, việc hạn chế này nằm hoàn toàn trong tay bạn;</li>
+        <li><strong>Quyền khiếu nại, tố cáo, khởi kiện, yêu cầu bồi thường thiệt hại</strong> theo quy định pháp luật nếu phát hiện hành vi vi phạm;</li>
+        <li><strong>Quyền liên hệ</strong> với chúng tôi qua email ở mục 13 nếu bạn có câu hỏi hoặc yêu cầu liên quan đến chính sách này.</li>
+      </ul>
+    </section>
+
+    <section id="thoi-gian-luu">
+      <h2 class="sec">9. Thời gian lưu trữ &amp; xoá dữ liệu</h2>
+      <p>
+        Dữ liệu được lưu trên thiết bị cho đến khi bạn xoá thủ công trong Ứng dụng, xoá dữ liệu ứng dụng qua Cài
+        đặt Android, hoặc gỡ cài đặt Ứng dụng — khi đó toàn bộ dữ liệu (giao dịch, ảnh, cài đặt) sẽ bị xoá vĩnh
+        viễn khỏi thiết bị. Vì không có bản sao nào được lưu ở nơi khác do chúng tôi kiểm soát, việc xoá này là
+        tức thời và không thể khôi phục trừ khi bạn tự giữ một tệp sao lưu đã xuất trước đó (mục 7).
+      </p>
+    </section>
+
+    <section id="tre-em">
+      <h2 class="sec">10. Chính sách với trẻ em</h2>
+      <p>
+        Ứng dụng không hướng đến và không cố ý thu thập dữ liệu cá nhân từ trẻ em dưới 13 tuổi. Vì Ứng dụng không
+        thu thập bất kỳ dữ liệu cá nhân nào ở phía chúng tôi, rủi ro với trẻ em không cao hơn mức rủi ro chung của
+        việc sử dụng thiết bị. Nếu bạn là phụ huynh/người giám hộ và cho rằng con em mình đã cung cấp thông tin cá
+        nhân theo cách bạn không mong muốn, vui lòng liên hệ chúng tôi theo mục 13.
+      </p>
+    </section>
+
+    <section id="thay-doi">
+      <h2 class="sec">11. Thay đổi chính sách</h2>
+      <p>
+        Chúng tôi có thể cập nhật chính sách này khi Ứng dụng bổ sung tính năng mới hoặc khi quy định pháp luật
+        thay đổi. Phiên bản cập nhật sẽ được đăng tại chính địa chỉ này với ngày hiệu lực mới. Việc bạn tiếp tục
+        sử dụng Ứng dụng sau khi chính sách được cập nhật đồng nghĩa bạn chấp nhận các thay đổi đó. Với thay đổi
+        quan trọng (ví dụ: bắt đầu thu thập dữ liệu mới), chúng tôi sẽ cố gắng thông báo rõ ràng hơn trong Ứng
+        dụng.
+      </p>
+    </section>
+
+    <section id="co-so-phap-ly">
+      <h2 class="sec">12. Cơ sở pháp lý áp dụng</h2>
+      <p>Chính sách này được xây dựng và tuân thủ theo pháp luật Việt Nam hiện hành, bao gồm nhưng không giới hạn ở:</p>
+      <ul>
+        <li>Nghị định số 13/2023/NĐ-CP ngày 17/4/2023 của Chính phủ về Bảo vệ dữ liệu cá nhân;</li>
+        <li>Luật An toàn thông tin mạng số 86/2015/QH13;</li>
+        <li>Luật An ninh mạng số 24/2018/QH14 và Nghị định số 53/2022/NĐ-CP hướng dẫn thi hành;</li>
+        <li>Bộ luật Dân sự số 91/2015/QH13 (Điều 38 về quyền về đời sống riêng tư, bí mật cá nhân, bí mật gia đình);</li>
+        <li>Luật Bảo vệ quyền lợi người tiêu dùng số 19/2023/QH15;</li>
+        <li>Chính sách dữ liệu người dùng (User Data Policy) của Google Play.</li>
+      </ul>
+    </section>
+
+    <section id="lien-he">
+      <h2 class="sec">13. Liên hệ</h2>
+      <div class="contact-box">
+        <p style="margin-top:0">
+          Nếu bạn có câu hỏi, góp ý, hoặc muốn thực hiện bất kỳ quyền nào nêu tại mục 8, vui lòng liên hệ:
+        </p>
+        <p>
+          <strong>Nhà phát triển:</strong> Nguyễn Công Hùng<br>
+          <strong>Email:</strong> <a href="mailto:hungedu237@gmail.com">hungedu237@gmail.com</a><br>
+          <strong>Ứng dụng:</strong> VoiceLedger – Sổ Chi Tiêu (<code>com.voiceledger.money</code>)<br>
+          <strong>Quốc gia:</strong> Việt Nam
+        </p>
+        <p style="margin-bottom:0">Chúng tôi sẽ phản hồi yêu cầu của bạn trong thời gian sớm nhất có thể.</p>
+      </div>
+    </section>
+
+    <footer>
+      © 2026 Nguyễn Công Hùng. Chính sách này áp dụng riêng cho ứng dụng VoiceLedger – Sổ Chi Tiêu.
+    </footer>
+  </div>
+</body>
+
+</html>
