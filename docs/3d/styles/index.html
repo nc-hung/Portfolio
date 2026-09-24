@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="vi" class="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Style Lab & Gallery — 3 Phong Cách Web 3D Thịnh Hành</title>
+
+    <!-- SEO -->
+    <meta name="description" content="Bộ sưu tập 3 phong cách Web 3D hàng đầu thế giới: Renaissance Editorial Parallax, Apple-style Liquid Chrome & Refractive Glass, và Interactive Isometric Mini-World.">
+    <meta name="keywords" content="Web 3D, Creative Frontend, Three.js, GSAP ScrollTrigger, Lenis, Liquid Chrome, Isometric, Editorial Parallax">
+    <meta name="author" content="Nguyen Cong Hung">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://nguyenconghung.up.railway.app/3d/styles/">
+
+    <!-- Fonts: Cinzel (Editorial/Renaissance), Outfit (Display), Geist (Body), Geist Mono (Code) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Outfit:wght@400;500;600;700;800&family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Phosphor Icons -->
+    <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        cinzel: ['Cinzel', 'serif'],
+                        display: ['Outfit', 'sans-serif'],
+                        body: ['Geist', 'sans-serif'],
+                        mono: ['"Geist Mono"', 'monospace'],
+                    },
+                    colors: {
+                        obsidian: '#07090e',
+                        gold: {
+                            300: '#e6ca85',
+                            400: '#d4af37',
+                            500: '#c5a059',
+                            600: '#9e7d3b',
+                        },
+                        emerald: {
+                            400: '#34d399',
+                            500: '#10b981',
+                            600: '#059669',
+                        },
+                        cyan: {
+                            400: '#22d3ee',
+                            500: '#06b6d4',
+                            600: '#0891b2',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Essential 3D & Animation Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+
+    <style>
+        body {
+            background-color: #07090e;
+            color: #f1f5f9;
+            overflow-x: hidden;
+            transition: background-color 0.5s ease;
+        }
+
+        /* Glass HUD */
+        .glass-hud {
+            background: rgba(13, 19, 31, 0.78);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        /* Style transitions */
+        .style-container {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        .style-container.active {
+            display: block;
+            opacity: 1;
+        }
+
+        /* Style 1: Renaissance Editorial styles */
+        .editorial-paper {
+            background: radial-gradient(circle at 50% 30%, rgba(30, 26, 20, 0.9) 0%, rgba(12, 13, 16, 0.98) 100%);
+        }
+        .editorial-border {
+            border: 1px solid rgba(212, 175, 55, 0.25);
+        }
+        .editorial-gold-text {
+            background: linear-gradient(135deg, #fdf6e2 0%, #d4af37 50%, #aa802c 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Parallax layers */
+        .p-layer {
+            will-change: transform;
+            transition: transform 0.1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #07090e; }
+        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #10b981; }
+
+        @media (prefers-reduced-motion: reduce) {
+            * { transition: none !important; animation: none !important; }
+        }
+    </style>
+</head>
+
+<body class="font-body selection:bg-emerald-500/30 selection:text-emerald-300">
+
+    <!-- Top Universal HUD with Live Style Switcher -->
+    <header class="fixed top-0 left-0 right-0 z-50 px-4 sm:px-6 py-3 pointer-events-auto">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3 glass-hud px-4 py-2.5 rounded-2xl">
+            <!-- Left Brand / Back links -->
+            <div class="flex items-center gap-3 w-full md:w-auto justify-between md:justify-start">
+                <a href="/3d/" class="flex items-center gap-2 group text-xs font-mono text-zinc-400 hover:text-emerald-400 transition-colors">
+                    <i class="ph-bold ph-arrow-left"></i>
+                    <span>Showcase 3D</span>
+                </a>
+                <span class="text-zinc-700 hidden md:inline">|</span>
+                <span class="font-mono text-xs text-white font-bold tracking-wider flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    3D STYLE LAB
+                </span>
+            </div>
+
+            <!-- Center: Segmented Live Style Switcher -->
+            <nav class="flex items-center gap-1 p-1 rounded-xl bg-surface/90 border border-white/10 w-full md:w-auto justify-center" aria-label="Style Navigation">
+                <button id="tab-editorial" class="style-tab px-3 py-1.5 rounded-lg text-xs font-mono font-medium transition-all bg-gold-500 text-obsidian font-bold shadow-sm" data-style="editorial">
+                    01 // Renaissance
+                </button>
+                <button id="tab-chrome" class="style-tab px-3 py-1.5 rounded-lg text-xs font-mono font-medium text-zinc-400 hover:text-white transition-all" data-style="chrome">
+                    02 // Liquid Chrome
+                </button>
+                <button id="tab-isometric" class="style-tab px-3 py-1.5 rounded-lg text-xs font-mono font-medium text-zinc-400 hover:text-white transition-all" data-style="isometric">
+                    03 // Isometric Room
+                </button>
+            </nav>
+
+            <!-- Right: Performance & Action buttons -->
+            <div class="hidden sm:flex items-center gap-3">
+                <div class="px-2.5 py-1 rounded-full bg-surface border border-white/5 font-mono text-[11px] text-zinc-400 flex items-center gap-1.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                    <span id="lab-fps">60</span> FPS
+                </div>
+                <a href="/" class="px-3 py-1 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-mono text-zinc-300 transition-all">
+                    Portfolio Chính
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container Swapped by Tabs -->
+    <main class="relative z-10 pt-20">
+
+        <!-- ================================================================
+             STYLE 01: RENAISSANCE EDITORIAL PARALLAX (REFERENCE IMAGE STYLE)
+             Technique: GSAP ScrollTrigger + Lenis + Multi-layer 2.5D Depth + Classical Typo
+             ================================================================ -->
+        <section id="style-editorial" class="style-container active min-h-screen relative editorial-paper text-zinc-200">
+            <!-- Classical Background Framing Layer -->
+            <div class="absolute inset-0 pointer-events-none opacity-20 bg-[radial-gradient(#d4af37_1px,transparent_1px)] [background-size:24px_24px]"></div>
+
+            <div class="max-w-6xl mx-auto px-6 py-16 space-y-16">
+                <!-- Header Badge -->
+                <div class="text-center space-y-4">
+                    <div class="inline-flex items-center gap-2 px-4 py-1 rounded-full editorial-border text-gold-400 font-cinzel text-xs tracking-widest uppercase">
+                        <span>✦ STYLE 01</span> · <span>RENAISSANCE EDITORIAL SCROLLYTELLING</span>
+                    </div>
+                    <h1 class="text-4xl sm:text-6xl md:text-7xl font-cinzel font-black tracking-tight editorial-gold-text">
+                        KỶ NGUYÊN TỰ ĐỘNG HOÁ
+                    </h1>
+                    <p class="font-cinzel text-xs sm:text-sm text-gold-300/80 tracking-[0.25em] uppercase">
+                        IVY 90-Day Challenge · Monorepo & AI Vision
+                    </p>
+                </div>
+
+                <!-- 2.5D Multi-layer Depth Stage -->
+                <div id="editorial-stage" class="relative w-full aspect-[16/10] max-h-[620px] rounded-3xl overflow-hidden editorial-border shadow-2xl bg-black/40 flex items-center justify-center p-6 sm:p-12">
+                    
+                    <!-- Background Depth Plane (Atmospheric Classical Geometry) -->
+                    <div class="p-layer absolute inset-0 flex items-center justify-center pointer-events-none" data-depth="0.15">
+                        <svg class="w-full h-full max-w-2xl opacity-25 text-gold-400" viewBox="0 0 500 500" fill="none" stroke="currentColor">
+                            <circle cx="250" cy="250" r="210" stroke-width="1" stroke-dasharray="4 4" />
+                            <circle cx="250" cy="250" r="150" stroke-width="1.5" />
+                            <circle cx="250" cy="250" r="90" stroke-width="1" />
+                            <polygon points="250,40 430,350 70,350" stroke-width="1.2" />
+                            <polygon points="250,460 430,150 70,150" stroke-width="1.2" />
+                        </svg>
+                    </div>
+
+                    <!-- Midground Layer (The Product & Classical Architectural Cutout) -->
+                    <div class="p-layer relative z-10 max-w-xl text-center space-y-6" data-depth="0.45">
+                        <div class="inline-block p-4 rounded-2xl bg-black/70 backdrop-blur-md editorial-border shadow-2xl">
+                            <div class="font-mono text-[10px] text-gold-400 tracking-widest uppercase mb-1">KIẾN TRÚC HỆ THỐNG</div>
+                            <h2 class="font-cinzel font-bold text-2xl sm:text-3xl text-white">
+                                2 App Next.js 14 · Gemini AI OCR
+                            </h2>
+                            <p class="text-xs text-zinc-300 font-body leading-relaxed mt-3 max-w-md mx-auto">
+                                Học viên nộp minh chứng mỗi ngày qua Zalo Login v4. Trí tuệ nhân tạo thị giác tự động đối soát và chấm điểm, giải phóng 90% nhân lực vận hành khoá học.
+                            </p>
+                        </div>
+
+                        <!-- Technical Chips -->
+                        <div class="flex flex-wrap items-center justify-center gap-2 font-mono text-[11px]">
+                            <span class="px-3 py-1 rounded-full bg-gold-400/10 editorial-border text-gold-300">Turborepo</span>
+                            <span class="px-3 py-1 rounded-full bg-gold-400/10 editorial-border text-gold-300">Zalo Login v4</span>
+                            <span class="px-3 py-1 rounded-full bg-gold-400/10 editorial-border text-gold-300">Signed URL v4</span>
+                            <span class="px-3 py-1 rounded-full bg-gold-400/10 editorial-border text-gold-300">Vertex Gemini</span>
+                        </div>
+                    </div>
+
+                    <!-- Foreground Floating Parallax Cards (Fast Motion on Mouse) -->
+                    <div class="p-layer absolute top-6 left-6 z-20 hidden sm:block" data-depth="0.8">
+                        <div class="p-4 rounded-xl bg-black/80 backdrop-blur-md editorial-border text-left space-y-1 shadow-xl">
+                            <div class="text-[10px] font-mono text-gold-400">STUDENT ENGAGEMENT</div>
+                            <div class="text-lg font-cinzel font-bold text-white">Streak 90 Days</div>
+                            <div class="text-[10px] text-zinc-400">Tự động hoá ghi danh & nhắc nộp</div>
+                        </div>
+                    </div>
+
+                    <div class="p-layer absolute bottom-6 right-6 z-20 hidden sm:block" data-depth="0.95">
+                        <div class="p-4 rounded-xl bg-black/80 backdrop-blur-md editorial-border text-right space-y-1 shadow-xl">
+                            <div class="text-[10px] font-mono text-gold-400">AI ACCURACY</div>
+                            <div class="text-lg font-cinzel font-bold text-white">99.2% OCR Match</div>
+                            <div class="text-[10px] text-zinc-400">Quét cự ly Strava & thời gian Zoom</div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Footer Narrative Quote -->
+                <div class="text-center max-w-2xl mx-auto space-y-2 border-t border-gold-400/20 pt-8">
+                    <p class="font-cinzel italic text-sm text-gold-300/90">
+                        "Kỹ thuật này dùng hiệu ứng 2.5D Layered Parallax kết hợp quán tính cuộn Lenis, mang lại vẻ sang trọng điện ảnh chuẩn các triển lãm mỹ thuật quốc tế."
+                    </p>
+                    <div class="font-mono text-xs text-zinc-500">
+                        Rê chuột qua khung ảnh phía trên để trải nghiệm độ trễ chiều sâu không gian (Depth Parallax).
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================================================================
+             STYLE 02: APPLE-STYLE LIQUID CHROME & REFRACTIVE GLASS
+             Technique: Three.js WebGL MeshPhysicalMaterial, Fresnel Refraction, HDR Light
+             ================================================================ -->
+        <section id="style-chrome" class="style-container min-h-screen relative bg-gradient-to-b from-[#04060a] to-[#0a101d] text-white">
+            <div class="max-w-6xl mx-auto px-6 py-16 space-y-12">
+                <!-- Header -->
+                <div class="text-center space-y-3">
+                    <div class="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 font-mono text-xs uppercase tracking-wider">
+                        ✦ STYLE 02 · LIQUID CHROME & REFRACTIVE GLASS
+                    </div>
+                    <h1 class="text-4xl sm:text-6xl font-display font-extrabold tracking-tight">
+                        TOA MANAGEMENT & SEPAY
+                    </h1>
+                    <p class="text-zinc-400 text-sm max-w-xl mx-auto">
+                        Phong cách kim loại lỏng kết hợp kính khúc xạ ánh sáng theo thời gian thực — đẳng cấp công nghệ phần cứng và tài chính sang trọng.
+                    </p>
+                </div>
+
+                <!-- Three.js Chrome Canvas Viewport -->
+                <div class="relative w-full aspect-[16/9] max-h-[580px] rounded-3xl overflow-hidden border border-white/10 bg-black/60 shadow-2xl">
+                    <canvas id="chrome-webgl-canvas" class="w-full h-full cursor-grab active:cursor-grabbing"></canvas>
+
+                    <!-- Floating Glass Spec Card Overlaid on 3D Chrome -->
+                    <div class="absolute bottom-6 left-6 right-6 sm:right-auto max-w-md p-6 rounded-2xl bg-white/[0.06] backdrop-blur-2xl border border-white/20 shadow-2xl pointer-events-none">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="font-mono text-xs text-cyan-400 font-semibold tracking-wider">MONEY-ACCURATE ENGINE</span>
+                            <span class="text-[10px] font-mono text-zinc-400">PHYSICAL GLOSS</span>
+                        </div>
+                        <h3 class="font-display font-bold text-xl text-white">Đối Soát FIFO & QR Ngân Hàng</h3>
+                        <p class="text-xs text-zinc-300 mt-2 leading-relaxed">
+                            Sử dụng toán học Decimal chính xác tuyệt đối. Khối kim loại lỏng 3D phản chiếu ánh sáng studio và biến dạng sóng khi bạn nhấp chuột.
+                        </p>
+                        <div class="mt-4 pt-3 border-t border-white/10 flex items-center justify-between font-mono text-xs">
+                            <span class="text-emerald-400">0.00% Sai Lệch</span>
+                            <span class="text-zinc-400">&lt;1s Webhook SEPAY</span>
+                        </div>
+                    </div>
+
+                    <!-- Interaction Hint -->
+                    <div class="absolute top-4 right-4 px-3 py-1.5 rounded-xl bg-black/50 border border-white/10 text-[11px] font-mono text-zinc-400 pointer-events-none">
+                        Nhấp chuột để tạo sóng kim loại lỏng
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================================================================
+             STYLE 03: INTERACTIVE ISOMETRIC CYBER ROOM / MINI-WORLD
+             Technique: Three.js OrthographicCamera (35.264° angle), Low-Poly WMS Model
+             ================================================================ -->
+        <section id="style-isometric" class="style-container min-h-screen relative bg-[#090d16] text-white">
+            <div class="max-w-6xl mx-auto px-6 py-16 space-y-8">
+                <!-- Header -->
+                <div class="text-center space-y-3">
+                    <div class="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-mono text-xs uppercase tracking-wider">
+                        ✦ STYLE 03 · ISOMETRIC LOW-POLY MINI-WORLD
+                    </div>
+                    <h1 class="text-4xl sm:text-6xl font-display font-extrabold tracking-tight">
+                        TRUNG TÂM ĐIỀU HÀNH KHO & ERP
+                    </h1>
+                    <p class="text-zinc-400 text-sm max-w-xl mx-auto">
+                        Mô hình không gian 3D đẳng cự mô phỏng hệ thống vận hành siêu thị Emart và bot kho hàng tự động. Nhấp vào các vật thể để khám phá.
+                    </p>
+                </div>
+
+                <!-- Isometric Canvas Container -->
+                <div class="relative w-full aspect-[16/9] max-h-[620px] rounded-3xl overflow-hidden border border-emerald-500/20 bg-surface shadow-2xl">
+                    <canvas id="isometric-webgl-canvas" class="w-full h-full cursor-grab active:cursor-grabbing"></canvas>
+
+                    <!-- Interactive Tooltip Overlay -->
+                    <div id="iso-tooltip" class="absolute top-6 left-6 p-5 rounded-2xl bg-surface/90 backdrop-blur-md border border-emerald-500/40 max-w-sm pointer-events-auto transition-all">
+                        <div class="flex items-center gap-2 text-emerald-400 font-mono text-xs mb-1">
+                            <i class="ph-bold ph-cube"></i>
+                            <span id="iso-title">BĂNG CHUYỀN VẬN HÀNH KHO</span>
+                        </div>
+                        <p id="iso-desc" class="text-xs text-zinc-300 leading-relaxed">
+                            Mô phỏng luồng luân chuyển hàng hoá và đối soát công nợ theo thời gian thực giữa kho và sàn bán lẻ.
+                        </p>
+                        <div class="mt-3 text-[11px] font-mono text-zinc-500">
+                            Xoay/kéo chuột để đổi góc nhìn · Click vật thể để xem chi tiết
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ================= JAVASCRIPT CONTROLLERS ================= -->
+    <script>
+        // ================= 1. STYLE SWITCHER LOGIC =================
+        const tabs = {
+            editorial: document.getElementById('tab-editorial'),
+            chrome: document.getElementById('tab-chrome'),
+            isometric: document.getElementById('tab-isometric')
+        };
+        const containers = {
+            editorial: document.getElementById('style-editorial'),
+            chrome: document.getElementById('style-chrome'),
+            isometric: document.getElementById('style-isometric')
+        };
+
+        let currentActiveStyle = 'editorial';
+
+        function switchStyle(styleName) {
+            if (currentActiveStyle === styleName) return;
+            currentActiveStyle = styleName;
+
+            // Update Tab active classes
+            Object.keys(tabs).forEach(k => {
+                if (k === styleName) {
+                    tabs[k].className = "style-tab px-3 py-1.5 rounded-lg text-xs font-mono font-bold transition-all bg-emerald-500 text-obsidian shadow-sm";
+                } else {
+                    tabs[k].className = "style-tab px-3 py-1.5 rounded-lg text-xs font-mono font-medium text-zinc-400 hover:text-white transition-all";
+                }
+            });
+
+            // Switch container visibility
+            Object.keys(containers).forEach(k => {
+                if (k === styleName) {
+                    containers[k].classList.add('active');
+                } else {
+                    containers[k].classList.remove('active');
+                }
+            });
+
+            // Trigger specific resize or rendering activates
+            if (styleName === 'chrome') initChromeScene();
+            if (styleName === 'isometric') initIsometricScene();
+        }
+
+        tabs.editorial.addEventListener('click', () => switchStyle('editorial'));
+        tabs.chrome.addEventListener('click', () => switchStyle('chrome'));
+        tabs.isometric.addEventListener('click', () => switchStyle('isometric'));
+
+        // ================= 2. STYLE 01: 2.5D PARALLAX CONTROLLER =================
+        const editorialStage = document.getElementById('editorial-stage');
+        const pLayers = document.querySelectorAll('#editorial-stage .p-layer');
+
+        editorialStage.addEventListener('mousemove', (e) => {
+            const rect = editorialStage.getBoundingClientRect();
+            const x = (e.clientX - rect.left) / rect.width - 0.5;
+            const y = (e.clientY - rect.top) / rect.height - 0.5;
+
+            pLayers.forEach(layer => {
+                const depth = parseFloat(layer.dataset.depth) || 0.5;
+                const moveX = x * depth * 70;
+                const moveY = y * depth * 50;
+                layer.style.transform = `translate3d(${moveX}px, ${moveY}px, 0)`;
+            });
+        });
+
+        editorialStage.addEventListener('mouseleave', () => {
+            pLayers.forEach(layer => {
+                layer.style.transform = `translate3d(0, 0, 0)`;
+            });
+        });
+
+        // ================= 3. STYLE 02: LIQUID CHROME THREE.JS =================
+        let chromeRenderer, chromeScene, chromeCamera, chromeMesh;
+        let chromeInitialized = false;
+
+        function initChromeScene() {
+            if (chromeInitialized) return;
+            chromeInitialized = true;
+
+            const cCanvas = document.getElementById('chrome-webgl-canvas');
+            if (!cCanvas) return;
+
+            chromeRenderer = new THREE.WebGLRenderer({ canvas: cCanvas, alpha: true, antialias: true });
+            chromeRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            chromeRenderer.setSize(cCanvas.parentElement.clientWidth, cCanvas.parentElement.clientHeight);
+
+            chromeScene = new THREE.Scene();
+            chromeCamera = new THREE.PerspectiveCamera(45, cCanvas.parentElement.clientWidth / cCanvas.parentElement.clientHeight, 0.1, 100);
+            chromeCamera.position.set(0, 0, 8);
+
+            // Studio Lights for Chrome
+            const ambient = new THREE.AmbientLight(0xffffff, 0.5);
+            chromeScene.add(ambient);
+
+            const light1 = new THREE.DirectionalLight(0x22d3ee, 3.5);
+            light1.position.set(5, 5, 5);
+            chromeScene.add(light1);
+
+            const light2 = new THREE.DirectionalLight(0x10b981, 2.5);
+            light2.position.set(-5, -5, 2);
+            chromeScene.add(light2);
+
+            const light3 = new THREE.PointLight(0xffffff, 4, 15);
+            light3.position.set(0, 3, 4);
+            chromeScene.add(light3);
+
+            // Chrome Torus Knot Mesh with Ultra Reflective Physical Material
+            const cGeo = new THREE.TorusKnotGeometry(1.9, 0.6, 128, 32);
+            const cMat = new THREE.MeshPhysicalMaterial({
+                color: 0x112233,
+                emissive: 0x051a1e,
+                roughness: 0.05,
+                metalness: 0.96,
+                clearcoat: 1.0,
+                clearcoatRoughness: 0.05,
+                reflectivity: 1.0
+            });
+
+            chromeMesh = new THREE.Mesh(cGeo, cMat);
+            chromeScene.add(chromeMesh);
+
+            // Orbit controls
+            const controls = new THREE.OrbitControls(chromeCamera, chromeRenderer.domElement);
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.05;
+            controls.enableZoom = false;
+
+            // Interactive Ripple on Click
+            cCanvas.addEventListener('click', () => {
+                gsap.to(chromeMesh.scale, {
+                    x: 1.15, y: 1.15, z: 1.15, duration: 0.2, yoyo: true, repeat: 1, ease: 'power2.out'
+                });
+            });
+
+            window.addEventListener('resize', () => {
+                if (!cCanvas.parentElement) return;
+                chromeCamera.aspect = cCanvas.parentElement.clientWidth / cCanvas.parentElement.clientHeight;
+                chromeCamera.updateProjectionMatrix();
+                chromeRenderer.setSize(cCanvas.parentElement.clientWidth, cCanvas.parentElement.clientHeight);
+            });
+
+            function animateChrome() {
+                requestAnimationFrame(animateChrome);
+                if (currentActiveStyle === 'chrome') {
+                    chromeMesh.rotation.x += 0.005;
+                    chromeMesh.rotation.y += 0.008;
+                    controls.update();
+                    chromeRenderer.render(chromeScene, chromeCamera);
+                }
+            }
+            animateChrome();
+        }
+
+        // ================= 4. STYLE 03: ISOMETRIC MINI-WORLD THREE.JS =================
+        let isoRenderer, isoScene, isoCamera;
+        let isoInitialized = false;
+
+        function initIsometricScene() {
+            if (isoInitialized) return;
+            isoInitialized = true;
+
+            const iCanvas = document.getElementById('isometric-webgl-canvas');
+            if (!iCanvas) return;
+
+            const width = iCanvas.parentElement.clientWidth;
+            const height = iCanvas.parentElement.clientHeight;
+
+            isoRenderer = new THREE.WebGLRenderer({ canvas: iCanvas, alpha: true, antialias: true });
+            isoRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            isoRenderer.setSize(width, height);
+            isoRenderer.shadowMap.enabled = true;
+
+            isoScene = new THREE.Scene();
+
+            // Orthographic Camera for true Isometric angle
+            const aspect = width / height;
+            const d = 8;
+            isoCamera = new THREE.OrthographicCamera(-d * aspect, d * aspect, d, -d, 0.1, 100);
+            isoCamera.position.set(12, 12, 12);
+            isoCamera.lookAt(0, 0, 0);
+
+            // Isometric Lighting
+            const hemiLight = new THREE.HemisphereLight(0xffffff, 0x0f172a, 0.8);
+            isoScene.add(hemiLight);
+
+            const dirLight = new THREE.DirectionalLight(0x10b981, 2.0);
+            dirLight.position.set(10, 20, 10);
+            dirLight.castShadow = true;
+            isoScene.add(dirLight);
+
+            // Ground Floor (Isometric Grid Plate)
+            const floorGeo = new THREE.BoxGeometry(14, 0.4, 14);
+            const floorMat = new THREE.MeshStandardMaterial({ color: 0x0d131f, roughness: 0.8 });
+            const floor = new THREE.Mesh(floorGeo, floorMat);
+            floor.position.y = -0.2;
+            floor.receiveShadow = true;
+            isoScene.add(floor);
+
+            // Room Floor Grid Lines
+            const grid = new THREE.GridHelper(14, 14, 0x10b981, 0x1e293b);
+            grid.position.y = 0.01;
+            isoScene.add(grid);
+
+            // Low-Poly Objects in Room
+            const interactiveObjects = [];
+
+            // 1. Server Rack
+            const rackGeo = new THREE.BoxGeometry(2, 4.5, 1.6);
+            const rackMat = new THREE.MeshStandardMaterial({ color: 0x1e293b, metalness: 0.7, roughness: 0.3 });
+            const rack = new THREE.Mesh(rackGeo, rackMat);
+            rack.position.set(-4, 2.25, -3);
+            rack.castShadow = true;
+            isoScene.add(rack);
+            interactiveObjects.push({
+                mesh: rack,
+                title: "TỦ RACK MÁY CHỦ VIETTEL IDC",
+                desc: "Hạ tầng máy chủ trong nước: latency thấp, đường truyền ổn định, tối ưu chi phí vận hành cho doanh nghiệp."
+            });
+
+            // 2. Operations Workstation Table & TV Screen (Emart TV Queue)
+            const tableGeo = new THREE.BoxGeometry(3.5, 1.2, 2);
+            const tableMat = new THREE.MeshStandardMaterial({ color: 0x334155 });
+            const table = new THREE.Mesh(tableGeo, tableMat);
+            table.position.set(2, 0.6, -3);
+            isoScene.add(table);
+
+            const tvGeo = new THREE.BoxGeometry(2.4, 1.4, 0.2);
+            const tvMat = new THREE.MeshStandardMaterial({ color: 0x06b6d4, emissive: 0x0891b2, emissiveIntensity: 0.6 });
+            const tv = new THREE.Mesh(tvGeo, tvMat);
+            tv.position.set(2, 2.2, -3);
+            isoScene.add(tv);
+            interactiveObjects.push({
+                mesh: tv,
+                title: "MÀN HÌNH ĐIỀU PHỐI TÀI XẾ (EMART WMS)",
+                desc: "Hệ thống xếp lượt và hiển thị hàng đợi tài xế theo thời gian thực vận hành trực tiếp trên sàn siêu thị Emart."
+            });
+
+            // 3. Automated Conveyor Belt with Boxes
+            const beltGeo = new THREE.BoxGeometry(8, 0.6, 1.8);
+            const beltMat = new THREE.MeshStandardMaterial({ color: 0x10b981, roughness: 0.4 });
+            const belt = new THREE.Mesh(beltGeo, beltMat);
+            belt.position.set(0, 0.3, 2.5);
+            isoScene.add(belt);
+
+            const boxGeo = new THREE.BoxGeometry(0.8, 0.8, 0.8);
+            const boxMat = new THREE.MeshStandardMaterial({ color: 0xe2e8f0 });
+            for (let i = -2; i <= 2; i += 2) {
+                const box = new THREE.Mesh(boxGeo, boxMat);
+                box.position.set(i * 1.5, 1.0, 2.5);
+                box.castShadow = true;
+                isoScene.add(box);
+            }
+            interactiveObjects.push({
+                mesh: belt,
+                title: "BĂNG CHUYỀN VẬN HÀNH & ĐỐI SOÁT ĐƠN HÀNG",
+                desc: "Luồng dữ liệu đồng bộ đơn hàng và cập nhật công nợ FIFO chuẩn xác từng giây không gián đoạn."
+            });
+
+            // Interactive Raycaster for Clicks
+            const raycaster = new THREE.Raycaster();
+            const mouse = new THREE.Vector2();
+            const isoTitle = document.getElementById('iso-title');
+            const isoDesc = document.getElementById('iso-desc');
+
+            iCanvas.addEventListener('click', (event) => {
+                const rect = iCanvas.getBoundingClientRect();
+                mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+                mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+
+                raycaster.setFromCamera(mouse, isoCamera);
+                const intersects = raycaster.intersectObjects(interactiveObjects.map(o => o.mesh));
+
+                if (intersects.length > 0) {
+                    const hit = interactiveObjects.find(o => o.mesh === intersects[0].object);
+                    if (hit) {
+                        isoTitle.textContent = hit.title;
+                        isoDesc.textContent = hit.desc;
+                        gsap.fromTo(hit.mesh.scale, { x: 1.15, y: 1.15, z: 1.15 }, { x: 1, y: 1, z: 1, duration: 0.3 });
+                    }
+                }
+            });
+
+            // Orbit controls
+            const isoControls = new THREE.OrbitControls(isoCamera, isoRenderer.domElement);
+            isoControls.enableDamping = true;
+            isoControls.dampingFactor = 0.05;
+            isoControls.maxPolarAngle = Math.PI / 2.1; // Don't look under floor
+
+            window.addEventListener('resize', () => {
+                if (!iCanvas.parentElement) return;
+                const w = iCanvas.parentElement.clientWidth;
+                const h = iCanvas.parentElement.clientHeight;
+                const a = w / h;
+                isoCamera.left = -d * a;
+                isoCamera.right = d * a;
+                isoCamera.top = d;
+                isoCamera.bottom = -d;
+                isoCamera.updateProjectionMatrix();
+                isoRenderer.setSize(w, h);
+            });
+
+            function animateIso() {
+                requestAnimationFrame(animateIso);
+                if (currentActiveStyle === 'isometric') {
+                    isoControls.update();
+                    isoRenderer.render(isoScene, isoCamera);
+                }
+            }
+            animateIso();
+        }
+
+        // ================= 5. FPS COUNTER =================
+        let labFrames = 0, lastLabTime = performance.now();
+        const labFpsElem = document.getElementById('lab-fps');
+        function trackFps(now) {
+            requestAnimationFrame(trackFps);
+            labFrames++;
+            if (now - lastLabTime >= 1000) {
+                if (labFpsElem) labFpsElem.textContent = labFrames;
+                labFrames = 0;
+                lastLabTime = now;
+            }
+        }
+        trackFps(performance.now());
+
+        // GSAP cleanup on unmount
+        window.addEventListener('beforeunload', () => {
+            ScrollTrigger.getAll().forEach(t => t.kill());
+            gsap.globalTimeline.clear();
+        });
+    </script>
+</body>
+
+</html>

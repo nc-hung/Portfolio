@@ -1,0 +1,1448 @@
+<!DOCTYPE html>
+<html lang="vi" class="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nguyễn Công Hưng — 3D Web & Systems Engineering Showcase</title>
+
+    <!-- Primary SEO -->
+    <meta name="description" content="Không gian trải nghiệm Web 3D & Creative Scrollytelling của Nguyễn Công Hưng. Phô diễn các sản phẩm thực chiến (IVY 90 ngày, Hệ thống đối soát công nợ, Zalo Mini App, AI Bot) qua công nghệ Three.js, GSAP ScrollTrigger và Lenis Smooth Scroll.">
+    <meta name="keywords" content="Creative Web Developer, 3D Web, Three.js, GSAP ScrollTrigger, Lenis, WebGL, Nguyễn Công Hưng, Fullstack Engineer, Vietnam">
+    <meta name="author" content="Nguyen Cong Hung">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://nguyenconghung.up.railway.app/3d/">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Nguyễn Công Hưng — 3D Web & Systems Showcase">
+    <meta property="og:description" content="Trải nghiệm Web 3D tương tác & bóc tách kiến trúc hệ thống thực chiến: Three.js, GSAP ScrollTrigger & Lenis.">
+    <meta property="og:url" content="https://nguyenconghung.up.railway.app/3d/">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Phosphor Icons -->
+    <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        display: ['Outfit', 'system-ui', 'sans-serif'],
+                        body: ['Geist', 'system-ui', 'sans-serif'],
+                        mono: ['"Geist Mono"', 'ui-monospace', 'monospace'],
+                    },
+                    colors: {
+                        obsidian: '#07090e',
+                        surface: '#0d131f',
+                        panel: 'rgba(15, 23, 42, 0.72)',
+                        emerald: {
+                            400: '#34d399',
+                            500: '#10b981',
+                            600: '#059669',
+                            700: '#047857'
+                        },
+                        cyan: {
+                            400: '#22d3ee',
+                            500: '#06b6d4',
+                            600: '#0891b2'
+                        }
+                    },
+                    boxShadow: {
+                        'glow-emerald': '0 0 35px -5px rgba(16, 185, 129, 0.25)',
+                        'glow-cyan': '0 0 35px -5px rgba(6, 182, 212, 0.25)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Essential 3D & Animation Libraries (CDN) -->
+    <!-- Three.js r128 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- Three.js OrbitControls for Sandbox -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <!-- GSAP & ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <!-- Lenis Smooth Scroll -->
+    <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+
+    <style>
+        /* Smooth scrolling core reset */
+        html.lenis, html.lenis body {
+            height: auto;
+        }
+        .lenis.lenis-smooth {
+            scroll-behavior: auto !important;
+        }
+        .lenis.lenis-smooth [data-lenis-prevent] {
+            overscroll-behavior: contain;
+        }
+        .lenis.lenis-stopped {
+            overflow: hidden;
+        }
+        .lenis.lenis-scrolling iframe {
+            pointer-events: none;
+        }
+
+        /* Ambient scanline and noise texture */
+        body {
+            background-color: #07090e;
+            color: #f1f5f9;
+            overflow-x: hidden;
+        }
+        
+        .noise-overlay {
+            position: fixed;
+            inset: 0;
+            background-image: radial-gradient(rgba(16, 185, 129, 0.04) 1px, transparent 1px);
+            background-size: 32px 32px;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Glassmorphism surfaces */
+        .glass-panel {
+            background: rgba(13, 19, 31, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .glass-card {
+            background: linear-gradient(135deg, rgba(20, 29, 47, 0.65) 0%, rgba(13, 19, 31, 0.85) 100%);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+        }
+        .glass-card:hover {
+            border-color: rgba(16, 185, 129, 0.4);
+            box-shadow: 0 10px 30px -10px rgba(16, 185, 129, 0.2);
+        }
+
+        /* Technical text glows */
+        .glow-text-emerald {
+            text-shadow: 0 0 20px rgba(16, 185, 129, 0.5);
+        }
+        .glow-text-cyan {
+            text-shadow: 0 0 20px rgba(6, 182, 212, 0.5);
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #07090e;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #10b981;
+        }
+
+        /* Radar dot animation */
+        @keyframes radar-pulse {
+            0% { transform: scale(1); opacity: 0.9; }
+            50% { transform: scale(2.2); opacity: 0; }
+            100% { transform: scale(1); opacity: 0; }
+        }
+        .radar-ring {
+            animation: radar-pulse 2.2s cubic-bezier(0.24, 0, 0.38, 1) infinite;
+        }
+    </style>
+</head>
+
+<body class="font-body selection:bg-emerald-500/30 selection:text-emerald-300">
+    <div class="noise-overlay"></div>
+
+    <!-- WebGL Background Canvas -->
+    <canvas id="webgl-canvas" class="fixed inset-0 w-full h-full pointer-events-none z-0"></canvas>
+
+    <!-- Top Navigation HUD -->
+    <header class="fixed top-0 left-0 right-0 z-50 px-4 sm:px-8 py-4 pointer-events-auto">
+        <div class="max-w-7xl mx-auto flex items-center justify-between glass-panel px-4 sm:px-6 py-3 rounded-2xl">
+            <!-- Brand / Identification -->
+            <div class="flex items-center gap-3">
+                <a href="/3d/" class="flex items-center gap-2 group">
+                    <span class="w-8 h-8 rounded-lg bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-400 font-mono font-bold text-sm group-hover:bg-emerald-500 group-hover:text-black transition-all">
+                        3D
+                    </span>
+                    <div class="flex flex-col">
+                        <span class="font-display font-bold text-sm tracking-wide text-white group-hover:text-emerald-400 transition-colors">
+                            NGUYEN CONG HUNG
+                        </span>
+                        <span class="text-[10px] font-mono text-emerald-400 tracking-wider flex items-center gap-1.5">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block animate-pulse"></span>
+                            CREATIVE & SYSTEMS SHOWCASE
+                        </span>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Quick Navigation anchors -->
+            <nav class="hidden md:flex items-center gap-6 font-mono text-xs text-zinc-400">
+                <a href="#hero" class="hover:text-emerald-400 transition-colors">01 // TỔNG QUAN</a>
+                <a href="#scrollytelling" class="hover:text-emerald-400 transition-colors">02 // DỰ ÁN 3D</a>
+                <a href="#sandbox" class="hover:text-emerald-400 transition-colors">03 // BÓC TÁCH KIẾN TRÚC</a>
+                <a href="#capabilities" class="hover:text-emerald-400 transition-colors">04 // NĂNG LỰC CỐT LÕI</a>
+                <a href="/3d/styles/" class="text-cyan-400 hover:text-cyan-300 font-bold transition-colors">✦ 3D STYLE LAB</a>
+            </nav>
+
+            <!-- Action Controls & Return Button -->
+            <div class="flex items-center gap-3">
+                <!-- FPS / GPU indicator -->
+                <div id="fps-badge" class="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface border border-white/5 font-mono text-[11px] text-zinc-400">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                    <span id="fps-counter">60</span> FPS
+                </div>
+
+                <!-- Sound FX Toggle (Synthesized Audio) -->
+                <button id="sound-toggle" aria-label="Toggle Sound" class="w-8 h-8 rounded-full bg-surface border border-white/10 hover:border-emerald-500/50 flex items-center justify-center text-zinc-400 hover:text-emerald-400 transition-all text-sm">
+                    <i class="ph-bold ph-speaker-slash" id="sound-icon"></i>
+                </button>
+
+                <!-- Return to Classic Portfolio -->
+                <a href="/" class="flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-white/5 hover:bg-emerald-500/10 border border-white/10 hover:border-emerald-500/40 text-xs font-medium text-zinc-200 hover:text-emerald-300 transition-all">
+                    <i class="ph-bold ph-arrow-left"></i>
+                    <span>Bản Chuẩn</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Flow (Scroll Container) -->
+    <main class="relative z-10">
+
+        <!-- ================= SECTION 1: HERO ================= -->
+        <section id="hero" class="min-h-screen flex flex-col justify-center items-center px-4 sm:px-6 pt-24 pb-16 relative">
+            <div class="max-w-5xl mx-auto text-center space-y-6">
+                <!-- Status tag -->
+                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass-panel border border-emerald-500/30 text-emerald-400 font-mono text-xs tracking-wider uppercase">
+                    <span class="relative flex h-2 w-2">
+                        <span class="radar-ring absolute inline-flex h-full w-full rounded-full bg-emerald-400"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                    </span>
+                    GSAP ScrollTrigger · Lenis Momentum · WebGL 3D
+                </div>
+
+                <!-- Main Title -->
+                <h1 class="text-4xl sm:text-6xl md:text-7xl font-display font-black tracking-tight text-white leading-none">
+                    HỆ THỐNG VẬN HÀNH <br>
+                    <span class="bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400 bg-clip-text text-transparent">
+                        TRONG KHÔNG GIAN 3D
+                    </span>
+                </h1>
+
+                <!-- Subtitle -->
+                <p class="max-w-2xl mx-auto text-base sm:text-lg text-zinc-300 font-normal leading-relaxed">
+                    Trải nghiệm bóc tách kiến trúc các hệ thống tài chính, ERP/WMS và giải pháp AI mà tôi trực tiếp xây dựng — kết hợp chuẩn xác từng đồng nghiệp vụ với chiều sâu thị giác tương tác mượt mà.
+                </p>
+
+                <!-- Interactive CTA Buttons -->
+                <div class="flex flex-wrap items-center justify-center gap-4 pt-4">
+                    <a href="#scrollytelling" class="px-6 py-3 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 text-obsidian font-bold text-sm hover:from-emerald-400 hover:to-teal-400 transition-all shadow-glow-emerald flex items-center gap-2">
+                        <i class="ph-bold ph-navigation-arrow"></i>
+                        <span>Bắt đầu Khám Phá</span>
+                    </a>
+                    <a href="#sandbox" class="px-6 py-3 rounded-xl glass-panel text-white font-medium text-sm hover:border-emerald-500/40 hover:text-emerald-300 transition-all flex items-center gap-2">
+                        <i class="ph-bold ph-cube"></i>
+                        <span>Phòng Thí Nghiệm 3D</span>
+                    </a>
+                    <a href="/3d/styles/" class="px-6 py-3 rounded-xl border border-cyan-500/40 bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 font-medium text-sm transition-all flex items-center gap-2 shadow-sm">
+                        <i class="ph-bold ph-palette"></i>
+                        <span>3D Style Lab (3 Phong Cách)</span>
+                    </a>
+                </div>
+
+                <!-- Spec Grid HUD -->
+                <div class="pt-12 grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-3xl mx-auto text-left">
+                    <div class="glass-panel p-4 rounded-xl border-l-2 border-l-emerald-500">
+                        <div class="text-[11px] font-mono text-zinc-400 uppercase">Khung Render</div>
+                        <div class="text-sm font-display font-bold text-white mt-1">Three.js WebGL</div>
+                        <div class="text-[11px] font-mono text-emerald-400 mt-0.5">Shader & Crystalline</div>
+                    </div>
+                    <div class="glass-panel p-4 rounded-xl border-l-2 border-l-cyan-500">
+                        <div class="text-[11px] font-mono text-zinc-400 uppercase">Quán Tính Cuộn</div>
+                        <div class="text-sm font-display font-bold text-white mt-1">Lenis Engine</div>
+                        <div class="text-[11px] font-mono text-cyan-400 mt-0.5">Momentum 60fps</div>
+                    </div>
+                    <div class="glass-panel p-4 rounded-xl border-l-2 border-l-emerald-500">
+                        <div class="text-[11px] font-mono text-zinc-400 uppercase">Trục Thời Gian</div>
+                        <div class="text-sm font-display font-bold text-white mt-1">ScrollTrigger</div>
+                        <div class="text-[11px] font-mono text-emerald-400 mt-0.5">Scrubbed Pinned</div>
+                    </div>
+                    <div class="glass-panel p-4 rounded-xl border-l-2 border-l-teal-500">
+                        <div class="text-[11px] font-mono text-zinc-400 uppercase">Năng Lực Lõi</div>
+                        <div class="text-sm font-display font-bold text-white mt-1">Full-stack & AI</div>
+                        <div class="text-[11px] font-mono text-teal-400 mt-0.5">Money-Accurate</div>
+                    </div>
+                </div>
+
+                <!-- Scroll Prompt Indicator -->
+                <div class="pt-8 flex flex-col items-center gap-2 text-zinc-500 font-mono text-xs">
+                    <span>CUỘN ĐỂ DU HÀNH</span>
+                    <div class="w-5 h-8 rounded-full border-2 border-zinc-600 flex items-start justify-center p-1">
+                        <div class="w-1.5 h-2 rounded-full bg-emerald-400 animate-bounce"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= SECTION 2: SCROLLYTELLING PINNED PRODUCTS ================= -->
+        <section id="scrollytelling" class="relative">
+            <!-- Header for Scrollytelling -->
+            <div class="max-w-7xl mx-auto px-4 sm:px-8 py-16 text-center">
+                <div class="inline-flex items-center gap-2 font-mono text-xs text-emerald-400 uppercase tracking-wider mb-2">
+                    <i class="ph-bold ph-stack"></i> Chương 02 // Bóc Tách Sản Phẩm Thực Chiến
+                </div>
+                <h2 class="text-3xl sm:text-5xl font-display font-bold text-white">
+                    Kiến Trúc Không Gian Qua Từng Trục Cuộn
+                </h2>
+                <p class="text-zinc-400 text-sm sm:text-base max-w-xl mx-auto mt-3">
+                    Khi bạn cuộn xuống, trục thời gian GSAP sẽ ghim từng phân cảnh và điều khiển camera 3D bóc tách hệ thống từng lớp.
+                </p>
+            </div>
+
+            <!-- PINNED CONTAINER FOR PROJECTS -->
+            <div id="pinned-projects-wrapper" class="relative">
+
+                <!-- PROJECT 1: IVY 90-Day Challenge Platform -->
+                <div class="project-slide min-h-screen flex items-center justify-center px-4 sm:px-8 py-12 relative" data-project="ivy">
+                    <div class="max-w-6xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                        <!-- Left Column: Spatial Card Info -->
+                        <div class="lg:col-span-6 space-y-6">
+                            <div class="glass-card p-6 sm:p-8 rounded-3xl border border-emerald-500/30">
+                                <div class="flex items-center justify-between gap-4 mb-4">
+                                    <span class="px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 font-mono text-xs text-emerald-400 font-semibold">
+                                        01 / DỰ ÁN CHỦ LỰC 2026
+                                    </span>
+                                    <span class="text-xs font-mono text-zinc-400">IVY × OX MULTIMEDIA</span>
+                                </div>
+
+                                <h3 class="text-2xl sm:text-3xl font-display font-bold text-white leading-tight">
+                                    Nền Tảng "Thử Thách 90 Ngày" Học Tập & Rèn Luyện
+                                </h3>
+                                <p class="text-xs font-mono text-cyan-400 mt-1">
+                                    Monorepo Turborepo · 2 App Next.js 14 · Gemini AI OCR · Zalo Login
+                                </p>
+
+                                <p class="text-sm text-zinc-300 leading-relaxed mt-4">
+                                    Học viên nộp bài hàng ngày trên app mobile-first bằng Zalo Login v4 (chuẩn hoá SĐT, chống mạo danh). AI Vertex Gemini + Vision tự động quét ảnh minh chứng (Strava/Zoom) theo từng task để giảm tải chấm bài thủ công.
+                                </p>
+
+                                <!-- 3D Interactive Architecture Layers -->
+                                <div class="mt-6 space-y-3 font-mono text-xs">
+                                    <div class="p-3 rounded-xl bg-surface/80 border border-white/5 flex items-center justify-between">
+                                        <div class="flex items-center gap-2 text-zinc-300">
+                                            <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                                            <span>Layer 1: Frontend Monorepo</span>
+                                        </div>
+                                        <span class="text-zinc-500">Student & Admin Console</span>
+                                    </div>
+                                    <div class="p-3 rounded-xl bg-surface/80 border border-white/5 flex items-center justify-between">
+                                        <div class="flex items-center gap-2 text-cyan-400">
+                                            <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
+                                            <span>Layer 2: AI Vision OCR Engine</span>
+                                        </div>
+                                        <span class="text-zinc-500">Vertex Gemini + Vision</span>
+                                    </div>
+                                    <div class="p-3 rounded-xl bg-surface/80 border border-white/5 flex items-center justify-between">
+                                        <div class="flex items-center gap-2 text-zinc-300">
+                                            <span class="w-2 h-2 rounded-full bg-teal-400"></span>
+                                            <span>Layer 3: Storage & Database</span>
+                                        </div>
+                                        <span class="text-zinc-500">GCS Private Signed URL + Postgres</span>
+                                    </div>
+                                </div>
+
+                                <!-- Action buttons -->
+                                <div class="mt-6 pt-6 border-t border-white/10 flex flex-wrap items-center gap-3">
+                                    <a href="https://oxstudent.oxmultimedia.vn/today" target="_blank" rel="noopener noreferrer" class="px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-obsidian font-bold text-xs transition-all flex items-center gap-1.5">
+                                        <span>Xem Live Học Viên</span>
+                                        <i class="ph-bold ph-arrow-up-right"></i>
+                                    </a>
+                                    <button class="inspect-btn px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-mono text-zinc-300 transition-all" data-target="ivy">
+                                        <i class="ph-bold ph-magnifying-glass-plus mr-1"></i> Bóc tách 3D Mesh
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Column: Interactive 3D Hologram Frame -->
+                        <div class="lg:col-span-6 flex items-center justify-center">
+                            <div class="hologram-box relative w-full max-w-md aspect-[4/3] rounded-3xl glass-card border border-emerald-500/20 p-6 flex flex-col justify-between overflow-hidden">
+                                <!-- Top status -->
+                                <div class="flex items-center justify-between border-b border-white/10 pb-3 font-mono text-xs text-zinc-400">
+                                    <span class="text-emerald-400 flex items-center gap-1">
+                                        <i class="ph-bold ph-cpu"></i> AI VERIFICATION NODE
+                                    </span>
+                                    <span class="text-[10px] text-zinc-500">CONFIDENCE: 98.4%</span>
+                                </div>
+
+                                <!-- Center Visual Graphic (Holographic Nodes) -->
+                                <div class="py-6 flex flex-col items-center justify-center text-center space-y-3">
+                                    <div class="w-20 h-20 rounded-2xl bg-gradient-to-tr from-emerald-500/20 to-cyan-500/20 border border-emerald-400/50 flex items-center justify-center text-3xl text-emerald-300 shadow-glow-emerald animate-pulse">
+                                        <i class="ph-bold ph-scan"></i>
+                                    </div>
+                                    <div class="font-display font-bold text-lg text-white">Automated OCR Pipeline</div>
+                                    <div class="text-xs font-mono text-zinc-400 max-w-xs">
+                                        Quét thời gian chạy Strava / thời lượng Zoom qua Signed URL bảo mật.
+                                    </div>
+                                </div>
+
+                                <!-- Bottom metrics -->
+                                <div class="grid grid-cols-3 gap-2 pt-3 border-t border-white/10 font-mono text-center text-xs">
+                                    <div class="p-2 rounded-lg bg-surface/50">
+                                        <div class="text-emerald-400 font-bold">2 Apps</div>
+                                        <div class="text-[10px] text-zinc-500">Turborepo</div>
+                                    </div>
+                                    <div class="p-2 rounded-lg bg-surface/50">
+                                        <div class="text-cyan-400 font-bold">0s Pass</div>
+                                        <div class="text-[10px] text-zinc-500">Zalo Auth</div>
+                                    </div>
+                                    <div class="p-2 rounded-lg bg-surface/50">
+                                        <div class="text-teal-400 font-bold">RBAC</div>
+                                        <div class="text-[10px] text-zinc-500">Audit Logs</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PROJECT 2: Wholesale Order & Debt Reconciliation System -->
+                <div class="project-slide min-h-screen flex items-center justify-center px-4 sm:px-8 py-12 relative" data-project="toa">
+                    <div class="max-w-6xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                        <!-- Left Column: Spatial Card Info -->
+                        <div class="lg:col-span-6 space-y-6">
+                            <div class="glass-card p-6 sm:p-8 rounded-3xl border border-cyan-500/30">
+                                <div class="flex items-center justify-between gap-4 mb-4">
+                                    <span class="px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 font-mono text-xs text-cyan-400 font-semibold">
+                                        02 / HỆ THỐNG TÀI CHÍNH & ĐỐI SOÁT
+                                    </span>
+                                    <span class="text-xs font-mono text-zinc-400">FINANCIAL ENGINE</span>
+                                </div>
+
+                                <h3 class="text-2xl sm:text-3xl font-display font-bold text-white leading-tight">
+                                    Quản Lý Đơn Hàng, Công Nợ & Đối Soát FIFO
+                                </h3>
+                                <p class="text-xs font-mono text-emerald-400 mt-1">
+                                    Node.js · Express · TypeScript · Prisma · PostgreSQL · Decimal Arithmetic
+                                </p>
+
+                                <p class="text-sm text-zinc-300 leading-relaxed mt-4">
+                                    Hệ thống cốt lõi cho vựa sỉ và hộ kinh doanh: phân tách chặt chẽ giữa tầng API, tầng nghiệp vụ và cơ sở dữ liệu. Sử dụng số học số thập phân Decimal chuẩn xác tuyệt đối để số dư công nợ không bao giờ lệch dù chỉ 1 đồng.
+                                </p>
+
+                                <!-- 3D Architecture Breakdown -->
+                                <div class="mt-6 space-y-3 font-mono text-xs">
+                                    <div class="p-3 rounded-xl bg-surface/80 border border-white/5 flex items-center justify-between">
+                                        <div class="flex items-center gap-2 text-cyan-300">
+                                            <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
+                                            <span>Thuật toán FIFO Reconciliation</span>
+                                        </div>
+                                        <span class="text-zinc-500">Tự động phân bổ thanh toán</span>
+                                    </div>
+                                    <div class="p-3 rounded-xl bg-surface/80 border border-white/5 flex items-center justify-between">
+                                        <div class="flex items-center gap-2 text-emerald-300">
+                                            <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                                            <span>Chiến lược Sao Lưu Định Kỳ</span>
+                                        </div>
+                                        <span class="text-zinc-500">Khôi phục nhanh khi sự cố</span>
+                                    </div>
+                                    <div class="p-3 rounded-xl bg-surface/80 border border-white/5 flex items-center justify-between">
+                                        <div class="flex items-center gap-2 text-zinc-300">
+                                            <span class="w-2 h-2 rounded-full bg-teal-400"></span>
+                                            <span>Xuất Hoá Đơn In & Bảng Kê NCC</span>
+                                        </div>
+                                        <span class="text-zinc-500">In nhiệt / VietQR một chạm</span>
+                                    </div>
+                                </div>
+
+                                <!-- Action buttons -->
+                                <div class="mt-6 pt-6 border-t border-white/10 flex flex-wrap items-center gap-3">
+                                    <a href="/#work" class="px-4 py-2 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-obsidian font-bold text-xs transition-all flex items-center gap-1.5">
+                                        <span>Chi tiết trên Portfolio</span>
+                                        <i class="ph-bold ph-arrow-right"></i>
+                                    </a>
+                                    <button class="inspect-btn px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-mono text-zinc-300 transition-all" data-target="toa">
+                                        <i class="ph-bold ph-cube mr-1"></i> Mô phỏng Khối Dữ Liệu
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Column: Interactive Hologram Box -->
+                        <div class="lg:col-span-6 flex items-center justify-center">
+                            <div class="hologram-box relative w-full max-w-md aspect-[4/3] rounded-3xl glass-card border border-cyan-500/20 p-6 flex flex-col justify-between overflow-hidden">
+                                <div class="flex items-center justify-between border-b border-white/10 pb-3 font-mono text-xs text-zinc-400">
+                                    <span class="text-cyan-400 flex items-center gap-1">
+                                        <i class="ph-bold ph-scales"></i> FIFO BALANCE ENGINE
+                                    </span>
+                                    <span class="text-[10px] text-emerald-400">DELTA: 0.00 VND</span>
+                                </div>
+
+                                <div class="py-6 flex flex-col items-center justify-center text-center space-y-3">
+                                    <div class="w-20 h-20 rounded-2xl bg-gradient-to-tr from-cyan-500/20 to-emerald-500/20 border border-cyan-400/50 flex items-center justify-center text-3xl text-cyan-300 shadow-glow-cyan animate-pulse">
+                                        <i class="ph-bold ph-currency-dollar"></i>
+                                    </div>
+                                    <div class="font-display font-bold text-lg text-white">Zero-Error Decimal Matrix</div>
+                                    <div class="text-xs font-mono text-zinc-400 max-w-xs">
+                                        Kiểm toán giao dịch kép, đối soát theo từng đợt nhập xuất hàng hoá.
+                                    </div>
+                                </div>
+
+                                <div class="grid grid-cols-3 gap-2 pt-3 border-t border-white/10 font-mono text-center text-xs">
+                                    <div class="p-2 rounded-lg bg-surface/50">
+                                        <div class="text-emerald-400 font-bold">100%</div>
+                                        <div class="text-[10px] text-zinc-500">Chính xác</div>
+                                    </div>
+                                    <div class="p-2 rounded-lg bg-surface/50">
+                                        <div class="text-cyan-400 font-bold">FIFO</div>
+                                        <div class="text-[10px] text-zinc-500">Đối soát</div>
+                                    </div>
+                                    <div class="p-2 rounded-lg bg-surface/50">
+                                        <div class="text-teal-400 font-bold">Prisma</div>
+                                        <div class="text-[10px] text-zinc-500">Type-Safe</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PROJECT 3: Zalo Mini App Commerce Platform -->
+                <div class="project-slide min-h-screen flex items-center justify-center px-4 sm:px-8 py-12 relative" data-project="zalo">
+                    <div class="max-w-6xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                        <div class="lg:col-span-6 space-y-6">
+                            <div class="glass-card p-6 sm:p-8 rounded-3xl border border-teal-500/30">
+                                <div class="flex items-center justify-between gap-4 mb-4">
+                                    <span class="px-3 py-1 rounded-full bg-teal-500/10 border border-teal-500/30 font-mono text-xs text-teal-400 font-semibold">
+                                        03 / BÁN HÀNG ĐA NỀN TẢNG
+                                    </span>
+                                    <span class="text-xs font-mono text-zinc-400">ECOSYSTEM INTEGRATION</span>
+                                </div>
+
+                                <h3 class="text-2xl sm:text-3xl font-display font-bold text-white leading-tight">
+                                    Nền Tảng Bán Hàng Zalo Mini App & NestJS BFF
+                                </h3>
+                                <p class="text-xs font-mono text-teal-400 mt-1">
+                                    Zalo Mini App · NestJS BFF · Clean Architecture · SEPAY (VietQR Webhook) · Redis
+                                </p>
+
+                                <p class="text-sm text-zinc-300 leading-relaxed mt-4">
+                                    Tích hợp trực tiếp vào phần mềm bán hàng hiện có của doanh nghiệp thay vì thay thế. Sử dụng kiến trúc BFF (Backend For Frontend) gia cố bảo mật và SEPAY VietQR webhook để tự động xác nhận chuyển khoản ngân hàng trong tích tắc.
+                                </p>
+
+                                <div class="mt-6 space-y-3 font-mono text-xs">
+                                    <div class="p-3 rounded-xl bg-surface/80 border border-white/5 flex items-center justify-between">
+                                        <div class="flex items-center gap-2 text-teal-300">
+                                            <span class="w-2 h-2 rounded-full bg-teal-400"></span>
+                                            <span>Clean Architecture BFF</span>
+                                        </div>
+                                        <span class="text-zinc-500">NestJS + Redis Cache</span>
+                                    </div>
+                                    <div class="p-3 rounded-xl bg-surface/80 border border-white/5 flex items-center justify-between">
+                                        <div class="flex items-center gap-2 text-cyan-300">
+                                            <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
+                                            <span>Resilient Event Sync</span>
+                                        </div>
+                                        <span class="text-zinc-500">Bảo toàn đơn khi nguồn lỗi</span>
+                                    </div>
+                                    <div class="p-3 rounded-xl bg-surface/80 border border-white/5 flex items-center justify-between">
+                                        <div class="flex items-center gap-2 text-emerald-300">
+                                            <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                                            <span>SEPAY VietQR Gateway</span>
+                                        </div>
+                                        <span class="text-zinc-500">Khớp tiền tự động qua Webhook</span>
+                                    </div>
+                                </div>
+
+                                <div class="mt-6 pt-6 border-t border-white/10 flex flex-wrap items-center gap-3">
+                                    <a href="https://zalo.me/s/4316200907390639897/" target="_blank" rel="noopener noreferrer" class="px-4 py-2 rounded-xl bg-teal-500 hover:bg-teal-400 text-obsidian font-bold text-xs transition-all flex items-center gap-1.5">
+                                        <span>Mở Mini App Zalo</span>
+                                        <i class="ph-bold ph-arrow-up-right"></i>
+                                    </a>
+                                    <button class="inspect-btn px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-mono text-zinc-300 transition-all" data-target="zalo">
+                                        <i class="ph-bold ph-arrows-merge mr-1"></i> Xem Luồng Đồng Bộ
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="lg:col-span-6 flex items-center justify-center">
+                            <div class="hologram-box relative w-full max-w-md aspect-[4/3] rounded-3xl glass-card border border-teal-500/20 p-6 flex flex-col justify-between overflow-hidden">
+                                <div class="flex items-center justify-between border-b border-white/10 pb-3 font-mono text-xs text-zinc-400">
+                                    <span class="text-teal-400 flex items-center gap-1">
+                                        <i class="ph-bold ph-device-mobile"></i> ZALO CLIENT &lt;--&gt; BFF
+                                    </span>
+                                    <span class="text-[10px] text-emerald-400">REALTIME SYNC</span>
+                                </div>
+
+                                <div class="py-6 flex flex-col items-center justify-center text-center space-y-3">
+                                    <div class="w-20 h-20 rounded-2xl bg-gradient-to-tr from-teal-500/20 to-emerald-500/20 border border-teal-400/50 flex items-center justify-center text-3xl text-teal-300 shadow-glow-emerald animate-pulse">
+                                        <i class="ph-bold ph-qr-code"></i>
+                                    </div>
+                                    <div class="font-display font-bold text-lg text-white">Instant VietQR Settlement</div>
+                                    <div class="text-xs font-mono text-zinc-400 max-w-xs">
+                                        Xác thực thanh toán ngân hàng tự động, giải phóng nhân sự check sao kê.
+                                    </div>
+                                </div>
+
+                                <div class="grid grid-cols-3 gap-2 pt-3 border-t border-white/10 font-mono text-center text-xs">
+                                    <div class="p-2 rounded-lg bg-surface/50">
+                                        <div class="text-emerald-400 font-bold">&lt;1s</div>
+                                        <div class="text-[10px] text-zinc-500">Khớp tiền</div>
+                                    </div>
+                                    <div class="p-2 rounded-lg bg-surface/50">
+                                        <div class="text-teal-400 font-bold">NestJS</div>
+                                        <div class="text-[10px] text-zinc-500">BFF Layer</div>
+                                    </div>
+                                    <div class="p-2 rounded-lg bg-surface/50">
+                                        <div class="text-cyan-400 font-bold">0% Lệch</div>
+                                        <div class="text-[10px] text-zinc-500">Tồn kho</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PROJECT 4: AI Warehouse & Sales Operations Bot -->
+                <div class="project-slide min-h-screen flex items-center justify-center px-4 sm:px-8 py-12 relative" data-project="bot">
+                    <div class="max-w-6xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                        <div class="lg:col-span-6 space-y-6">
+                            <div class="glass-card p-6 sm:p-8 rounded-3xl border border-emerald-500/30">
+                                <div class="flex items-center justify-between gap-4 mb-4">
+                                    <span class="px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 font-mono text-xs text-emerald-400 font-semibold">
+                                        04 / TỰ ĐỘNG HOÁ & TRÍ TUỆ NHÂN TẠO
+                                    </span>
+                                    <span class="text-xs font-mono text-zinc-400">AUTONOMOUS PIPELINE</span>
+                                </div>
+
+                                <h3 class="text-2xl sm:text-3xl font-display font-bold text-white leading-tight">
+                                    Bot Tự Động Hoá Kho & Nhắc Nợ Thông Minh
+                                </h3>
+                                <p class="text-xs font-mono text-cyan-400 mt-1">
+                                    Next.js · Node.js · Gemini AI · POS/ERP Sync · Zalo Official Account · node-cron
+                                </p>
+
+                                <p class="text-sm text-zinc-300 leading-relaxed mt-4">
+                                    Tự động hoá liên thông dữ liệu giữa kho hàng và hệ thống bán hàng. AI Gemini phân tích biến động tồn kho, trích xuất thông tin hoá đơn và tự động gửi tin nhắn nhắc nợ kèm mã VietQR qua Zalo OA định kỳ.
+                                </p>
+
+                                <div class="mt-6 space-y-3 font-mono text-xs">
+                                    <div class="p-3 rounded-xl bg-surface/80 border border-white/5 flex items-center justify-between">
+                                        <div class="flex items-center gap-2 text-emerald-300">
+                                            <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                                            <span>AI Analytics (Gemini Pro)</span>
+                                        </div>
+                                        <span class="text-zinc-500">Phân tích rủi ro quá hạn</span>
+                                    </div>
+                                    <div class="p-3 rounded-xl bg-surface/80 border border-white/5 flex items-center justify-between">
+                                        <div class="flex items-center gap-2 text-cyan-300">
+                                            <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
+                                            <span>Zalo OA Dynamic Messaging</span>
+                                        </div>
+                                        <span class="text-zinc-500">Tin nhắn kèm mã QR cá nhân</span>
+                                    </div>
+                                    <div class="p-3 rounded-xl bg-surface/80 border border-white/5 flex items-center justify-between">
+                                        <div class="flex items-center gap-2 text-teal-300">
+                                            <span class="w-2 h-2 rounded-full bg-teal-400"></span>
+                                            <span>Lịch Trình Tự Động node-cron</span>
+                                        </div>
+                                        <span class="text-zinc-500">Vận hành 24/7 ổn định</span>
+                                    </div>
+                                </div>
+
+                                <div class="mt-6 pt-6 border-t border-white/10 flex flex-wrap items-center gap-3">
+                                    <a href="/#services" class="px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-obsidian font-bold text-xs transition-all flex items-center gap-1.5">
+                                        <span>Khám Phá Dịch Vụ AI</span>
+                                        <i class="ph-bold ph-arrow-right"></i>
+                                    </a>
+                                    <button class="inspect-btn px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-mono text-zinc-300 transition-all" data-target="bot">
+                                        <i class="ph-bold ph-robot mr-1"></i> Kích Hoạt Mô Phỏng Bot
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="lg:col-span-6 flex items-center justify-center">
+                            <div class="hologram-box relative w-full max-w-md aspect-[4/3] rounded-3xl glass-card border border-emerald-500/20 p-6 flex flex-col justify-between overflow-hidden">
+                                <div class="flex items-center justify-between border-b border-white/10 pb-3 font-mono text-xs text-zinc-400">
+                                    <span class="text-emerald-400 flex items-center gap-1">
+                                        <i class="ph-bold ph-robot"></i> AUTONOMOUS AGENT CORE
+                                    </span>
+                                    <span class="text-[10px] text-cyan-400">CRON ACTIVE</span>
+                                </div>
+
+                                <div class="py-6 flex flex-col items-center justify-center text-center space-y-3">
+                                    <div class="w-20 h-20 rounded-2xl bg-gradient-to-tr from-emerald-500/20 to-teal-500/20 border border-emerald-400/50 flex items-center justify-center text-3xl text-emerald-300 shadow-glow-emerald animate-pulse">
+                                        <i class="ph-bold ph-chats-circle"></i>
+                                    </div>
+                                    <div class="font-display font-bold text-lg text-white">Smart Reminder Loop</div>
+                                    <div class="text-xs font-mono text-zinc-400 max-w-xs">
+                                        Tự động thu hồi công nợ bằng tin nhắn chuẩn mực, thân thiện qua Zalo.
+                                    </div>
+                                </div>
+
+                                <div class="grid grid-cols-3 gap-2 pt-3 border-t border-white/10 font-mono text-center text-xs">
+                                    <div class="p-2 rounded-lg bg-surface/50">
+                                        <div class="text-emerald-400 font-bold">24/7</div>
+                                        <div class="text-[10px] text-zinc-500">Tự vận hành</div>
+                                    </div>
+                                    <div class="p-2 rounded-lg bg-surface/50">
+                                        <div class="text-cyan-400 font-bold">Gemini</div>
+                                        <div class="text-[10px] text-zinc-500">Phân tích</div>
+                                    </div>
+                                    <div class="p-2 rounded-lg bg-surface/50">
+                                        <div class="text-teal-400 font-bold">ZNS/OA</div>
+                                        <div class="text-[10px] text-zinc-500">Tích hợp</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ================= SECTION 3: 3D SYSTEM ARCHITECTURE SANDBOX ================= -->
+        <section id="sandbox" class="min-h-screen py-24 px-4 sm:px-8 relative">
+            <div class="max-w-7xl mx-auto space-y-8">
+                <!-- Section Header -->
+                <div class="text-center max-w-3xl mx-auto space-y-3">
+                    <div class="inline-flex items-center gap-2 font-mono text-xs text-cyan-400 uppercase tracking-wider">
+                        <i class="ph-bold ph-hand-pointing"></i> Chương 03 // Phòng Thí Nghiệm Tương Tác
+                    </div>
+                    <h2 class="text-3xl sm:text-5xl font-display font-bold text-white">
+                        Mô Hình 3D Bóc Tách Hệ Thống
+                    </h2>
+                    <p class="text-zinc-400 text-sm sm:text-base">
+                        Sử dụng chuột trái để <strong>xoay 360°</strong>, chuột phải để <strong>di chuyển</strong> và con lăn để <strong>phóng to/thu nhỏ</strong>. Bấm các nút chế độ bên dưới để quan sát từng tầng dữ liệu.
+                    </p>
+                </div>
+
+                <!-- 3D Interactive Viewport Container -->
+                <div class="relative w-full aspect-[16/9] max-h-[640px] rounded-3xl overflow-hidden glass-panel border border-white/10 shadow-2xl">
+                    <!-- Interactive Canvas Mount -->
+                    <div id="interactive-sandbox-canvas" class="w-full h-full cursor-grab active:cursor-grabbing"></div>
+
+                    <!-- Sandbox Controls HUD (Overlay) -->
+                    <div class="absolute top-4 left-4 right-4 flex flex-wrap items-center justify-between gap-3 pointer-events-none">
+                        <div class="glass-panel px-3.5 py-1.5 rounded-xl border border-white/10 text-xs font-mono text-zinc-300 pointer-events-auto flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                            <span>Trạng thái: 3D Live Cluster</span>
+                        </div>
+
+                        <!-- Shader / Layer View Controls -->
+                        <div class="glass-panel p-1 rounded-xl border border-white/10 flex items-center gap-1 pointer-events-auto">
+                            <button id="btn-view-composite" class="sandbox-ctrl px-3 py-1 rounded-lg bg-emerald-500 text-obsidian font-mono font-bold text-xs transition-all">
+                                Toàn Phần
+                            </button>
+                            <button id="btn-view-wireframe" class="sandbox-ctrl px-3 py-1 rounded-lg text-zinc-400 hover:text-white font-mono text-xs transition-all">
+                                Khung Dây
+                            </button>
+                            <button id="btn-view-layers" class="sandbox-ctrl px-3 py-1 rounded-lg text-zinc-400 hover:text-white font-mono text-xs transition-all">
+                                Tách Tầng
+                            </button>
+                            <button id="btn-view-reset" class="px-2.5 py-1 rounded-lg text-zinc-400 hover:text-emerald-400 font-mono text-xs transition-all" title="Khôi phục góc nhìn">
+                                <i class="ph-bold ph-arrow-clockwise"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Sandbox Bottom Info Bar -->
+                    <div class="absolute bottom-4 left-4 right-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 pointer-events-none">
+                        <div id="cluster-label" class="glass-panel px-4 py-2 rounded-xl border border-white/10 text-xs font-mono text-emerald-300 pointer-events-auto">
+                            ✦ CỤM ARCHITECTURE: <span class="text-white font-bold" id="cluster-name">Clean Architecture BFF + Real-time Sync</span>
+                        </div>
+                        <div class="glass-panel px-3 py-1.5 rounded-xl border border-white/10 text-[11px] font-mono text-zinc-400 pointer-events-auto">
+                            Kéo chuột để xoay · Cuộn để zoom
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= SECTION 4: CAPABILITIES MATRIX ================= -->
+        <section id="capabilities" class="py-20 px-4 sm:px-8 relative">
+            <div class="max-w-7xl mx-auto space-y-12">
+                <div class="text-center max-w-3xl mx-auto space-y-3">
+                    <div class="inline-flex items-center gap-2 font-mono text-xs text-emerald-400 uppercase tracking-wider">
+                        <i class="ph-bold ph-lightning"></i> Chương 04 // Ma Trận Năng Lực
+                    </div>
+                    <h2 class="text-3xl sm:text-5xl font-display font-bold text-white">
+                        Kỹ Năng & Công Nghệ Thực Chiến
+                    </h2>
+                    <p class="text-zinc-400 text-sm sm:text-base">
+                        Sự giao thoa giữa tư duy kỹ thuật nền tảng (hạ tầng, số học tiền, bảo mật) và khả năng ứng dụng công nghệ đồ hoạ sáng tạo đón đầu xu hướng.
+                    </p>
+                </div>
+
+                <!-- 4 Capability Pillar Cards with 3D Parallax Tilt -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Pillar 1 -->
+                    <div class="capability-card glass-card p-6 rounded-2xl border border-white/10 space-y-4 hover:border-emerald-500/40">
+                        <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 text-2xl">
+                            <i class="ph-bold ph-currency-dollar"></i>
+                        </div>
+                        <h3 class="font-display font-bold text-lg text-white">Hệ Thống Tiền & Đối Soát</h3>
+                        <p class="text-xs text-zinc-400 leading-relaxed">
+                            Đối soát FIFO tự động, số học Decimal tuyệt đối không sai lệch, bảng kê nhà cung cấp, hoá đơn QR in nhiệt và phục hồi dữ liệu chủ động.
+                        </p>
+                        <div class="pt-2 flex flex-wrap gap-1.5 font-mono text-[11px] text-emerald-400">
+                            <span class="px-2 py-0.5 rounded bg-emerald-500/10">Prisma</span>
+                            <span class="px-2 py-0.5 rounded bg-emerald-500/10">Postgres</span>
+                            <span class="px-2 py-0.5 rounded bg-emerald-500/10">Decimal.js</span>
+                        </div>
+                    </div>
+
+                    <!-- Pillar 2 -->
+                    <div class="capability-card glass-card p-6 rounded-2xl border border-white/10 space-y-4 hover:border-cyan-500/40">
+                        <div class="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 text-2xl">
+                            <i class="ph-bold ph-tree-structure"></i>
+                        </div>
+                        <h3 class="font-display font-bold text-lg text-white">Clean Architecture & BFF</h3>
+                        <p class="text-xs text-zinc-400 leading-relaxed">
+                            NestJS BFF, phân tách Domain/Infra rõ ràng, kết nối bền vững tới ERP/POS sẵn có, chống gãy vỡ dữ liệu, bảo mật định danh nhiều lớp.
+                        </p>
+                        <div class="pt-2 flex flex-wrap gap-1.5 font-mono text-[11px] text-cyan-400">
+                            <span class="px-2 py-0.5 rounded bg-cyan-500/10">NestJS</span>
+                            <span class="px-2 py-0.5 rounded bg-cyan-500/10">Redis</span>
+                            <span class="px-2 py-0.5 rounded bg-cyan-500/10">Zalo SDK</span>
+                        </div>
+                    </div>
+
+                    <!-- Pillar 3 -->
+                    <div class="capability-card glass-card p-6 rounded-2xl border border-white/10 space-y-4 hover:border-emerald-500/40">
+                        <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 text-2xl">
+                            <i class="ph-bold ph-cube-transparent"></i>
+                        </div>
+                        <h3 class="font-display font-bold text-lg text-white">Creative Web & Motion</h3>
+                        <p class="text-xs text-zinc-400 leading-relaxed">
+                            Three.js WebGL, GSAP ScrollTrigger timeline ghim màn hình, Lenis smooth scroll không lag, tối ưu FPS trên thiết bị di động.
+                        </p>
+                        <div class="pt-2 flex flex-wrap gap-1.5 font-mono text-[11px] text-emerald-400">
+                            <span class="px-2 py-0.5 rounded bg-emerald-500/10">Three.js</span>
+                            <span class="px-2 py-0.5 rounded bg-emerald-500/10">GSAP</span>
+                            <span class="px-2 py-0.5 rounded bg-emerald-500/10">Lenis</span>
+                        </div>
+                    </div>
+
+                    <!-- Pillar 4 -->
+                    <div class="capability-card glass-card p-6 rounded-2xl border border-white/10 space-y-4 hover:border-teal-500/40">
+                        <div class="w-12 h-12 rounded-xl bg-teal-500/10 border border-teal-500/30 flex items-center justify-center text-teal-400 text-2xl">
+                            <i class="ph-bold ph-brain"></i>
+                        </div>
+                        <h3 class="font-display font-bold text-lg text-white">Tích Hợp AI & Automation</h3>
+                        <p class="text-xs text-zinc-400 leading-relaxed">
+                            Gemini AI Studio, Vision OCR quét tài liệu, trích xuất hoá đơn, bot nhắc việc thông minh qua Zalo OA, tự động hoá quy trình với cron job.
+                        </p>
+                        <div class="pt-2 flex flex-wrap gap-1.5 font-mono text-[11px] text-teal-400">
+                            <span class="px-2 py-0.5 rounded bg-teal-500/10">Gemini</span>
+                            <span class="px-2 py-0.5 rounded bg-teal-500/10">Vision OCR</span>
+                            <span class="px-2 py-0.5 rounded bg-teal-500/10">node-cron</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= SECTION 5: CONTACT & HANDSHAKE PORTAL ================= -->
+        <section id="contact" class="py-24 px-4 sm:px-8 relative">
+            <div class="max-w-4xl mx-auto glass-card rounded-3xl p-8 sm:p-12 border border-emerald-500/30 shadow-glow-emerald text-center space-y-6">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-mono text-xs">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    SẴN SÀNG HỢP TÁC FREELANCE TOÀN CẦU
+                </div>
+
+                <h2 class="text-3xl sm:text-5xl font-display font-black text-white">
+                    Bắt Đầu Dự Án Tiếp Theo Cùng Tôi
+                </h2>
+
+                <p class="text-zinc-300 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
+                    Dù bạn cần một hệ thống quản lý công nợ/hoá đơn tin cậy, tự động hoá quy trình kinh doanh bằng AI, hay một giao diện web 3D sáng tạo bùng nổ — tôi phản hồi phương án kỹ thuật và báo giá trong 24 giờ.
+                </p>
+
+                <!-- Action Links -->
+                <div class="pt-4 flex flex-wrap items-center justify-center gap-4">
+                    <a href="mailto:business.nc.hung@gmail.com" class="px-6 py-3 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-obsidian font-bold text-sm transition-all shadow-glow-emerald flex items-center gap-2">
+                        <i class="ph-bold ph-envelope-simple"></i>
+                        <span>business.nc.hung@gmail.com</span>
+                    </a>
+                    <a href="tel:0981815237" class="px-6 py-3 rounded-xl glass-panel text-white hover:text-emerald-300 hover:border-emerald-500/40 font-medium text-sm transition-all flex items-center gap-2">
+                        <i class="ph-bold ph-phone-call"></i>
+                        <span>+84 981 815 237</span>
+                    </a>
+                    <a href="https://github.com/nc-hung" target="_blank" rel="noopener noreferrer" class="px-6 py-3 rounded-xl glass-panel text-white hover:text-emerald-300 hover:border-emerald-500/40 font-medium text-sm transition-all flex items-center gap-2">
+                        <i class="ph-bold ph-github-logo"></i>
+                        <span>GitHub</span>
+                    </a>
+                </div>
+
+                <!-- Return Button -->
+                <div class="pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-zinc-500">
+                    <div>© 2026 NGUYỄN CÔNG HƯNG · ALL RIGHTS RESERVED</div>
+                    <a href="/" class="hover:text-emerald-400 transition-colors flex items-center gap-1 text-zinc-400">
+                        <i class="ph-bold ph-arrow-left"></i> Quay lại trang Portfolio cơ bản
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ================= JAVASCRIPT: LENIS + GSAP + THREE.JS ENGINE ================= -->
+    <script>
+        // Check WebGL availability
+        function isWebGLAvailable() {
+            try {
+                const canvas = document.createElement('canvas');
+                return !!(window.WebGLRenderingContext && (canvas.getContext('webgl') || canvas.getContext('experimental-webgl')));
+            } catch (e) {
+                return false;
+            }
+        }
+
+        // ================= 1. LENIS SMOOTH SCROLL INIT =================
+        let lenis;
+        try {
+            lenis = new Lenis({
+                duration: 1.2,
+                easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+                smoothWheel: true,
+                touchMultiplier: 1.5,
+            });
+
+            // Synchronize Lenis with GSAP ScrollTrigger
+            lenis.on('scroll', ScrollTrigger.update);
+            gsap.ticker.add((time) => {
+                lenis.raf(time * 1000);
+            });
+            gsap.ticker.lagSmoothing(0);
+        } catch (e) {
+            console.warn('Lenis smooth scroll fallback to native', e);
+        }
+
+        // Handle smooth anchor clicks with Lenis
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const targetId = this.getAttribute('href');
+                if (targetId === '#' || !targetId) return;
+                const targetElem = document.querySelector(targetId);
+                if (targetElem) {
+                    e.preventDefault();
+                    if (lenis) {
+                        lenis.scrollTo(targetElem, { offset: -60 });
+                    } else {
+                        targetElem.scrollIntoView({ behavior: 'smooth' });
+                    }
+                }
+            });
+        });
+
+        // ================= 2. THREE.JS BACKGROUND SCENE =================
+        const canvas = document.getElementById('webgl-canvas');
+        const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true, powerPreference: "high-performance" });
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.setSize(window.innerWidth, window.innerHeight);
+
+        const scene = new THREE.Scene();
+        // Subtle atmospheric fog
+        scene.fog = new THREE.FogExp2(0x07090e, 0.035);
+
+        const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 100);
+        camera.position.set(0, 0, 15);
+
+        // Lighting
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+        scene.add(ambientLight);
+
+        const dirLightEmerald = new THREE.DirectionalLight(0x10b981, 1.8);
+        dirLightEmerald.position.set(5, 10, 7);
+        scene.add(dirLightEmerald);
+
+        const dirLightCyan = new THREE.DirectionalLight(0x06b6d4, 1.4);
+        dirLightCyan.position.set(-5, -10, -7);
+        scene.add(dirLightCyan);
+
+        // Particle Constellation Field
+        const particleCount = 1200;
+        const particleGeo = new THREE.BufferGeometry();
+        const particlePositions = new Float32Array(particleCount * 3);
+        const particleScales = new Float32Array(particleCount);
+
+        for (let i = 0; i < particleCount; i++) {
+            particlePositions[i * 3] = (Math.random() - 0.5) * 60;
+            particlePositions[i * 3 + 1] = (Math.random() - 0.5) * 60;
+            particlePositions[i * 3 + 2] = (Math.random() - 0.5) * 50 - 5;
+            particleScales[i] = Math.random() * 2.5 + 0.5;
+        }
+
+        particleGeo.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3));
+
+        // Custom circular glow particle texture via canvas
+        const createParticleTexture = () => {
+            const c = document.createElement('canvas');
+            c.width = 64; c.height = 64;
+            const ctx = c.getContext('2d');
+            const g = ctx.createRadialGradient(32, 32, 0, 32, 32, 32);
+            g.addColorStop(0, 'rgba(52, 211, 153, 1)');
+            g.addColorStop(0.3, 'rgba(6, 182, 212, 0.5)');
+            g.addColorStop(1, 'rgba(0, 0, 0, 0)');
+            ctx.fillStyle = g;
+            ctx.fillRect(0, 0, 64, 64);
+            const texture = new THREE.CanvasTexture(c);
+            return texture;
+        };
+
+        const particleMat = new THREE.PointsMaterial({
+            size: 0.35,
+            map: createParticleTexture(),
+            transparent: true,
+            blending: THREE.AdditiveBlending,
+            depthWrite: false,
+            opacity: 0.75
+        });
+
+        const particlePoints = new THREE.Points(particleGeo, particleMat);
+        scene.add(particlePoints);
+
+        // Core 3D Crystalline Gyroscope (The System Anchor)
+        const coreGroup = new THREE.Group();
+        scene.add(coreGroup);
+
+        // Outer Icosahedron Wireframe
+        const icoGeo = new THREE.IcosahedronGeometry(4.2, 1);
+        const icoMat = new THREE.MeshStandardMaterial({
+            color: 0x10b981,
+            wireframe: true,
+            transparent: true,
+            opacity: 0.35,
+            emissive: 0x059669,
+            emissiveIntensity: 0.2
+        });
+        const icoMesh = new THREE.Mesh(icoGeo, icoMat);
+        coreGroup.add(icoMesh);
+
+        // Middle Octahedron
+        const octaGeo = new THREE.OctahedronGeometry(2.8, 0);
+        const octaMat = new THREE.MeshStandardMaterial({
+            color: 0x06b6d4,
+            wireframe: true,
+            transparent: true,
+            opacity: 0.6,
+            emissive: 0x0891b2,
+            emissiveIntensity: 0.3
+        });
+        const octaMesh = new THREE.Mesh(octaGeo, octaMat);
+        coreGroup.add(octaMesh);
+
+        // Inner glowing solid core (Torus knot representing the core ledger loop)
+        const innerGeo = new THREE.TorusKnotGeometry(1.4, 0.3, 80, 16);
+        const innerMat = new THREE.MeshPhysicalMaterial({
+            color: 0x34d399,
+            roughness: 0.1,
+            metalness: 0.9,
+            clearcoat: 1.0,
+            clearcoatRoughness: 0.1,
+            emissive: 0x064e3b,
+            emissiveIntensity: 0.4
+        });
+        const innerMesh = new THREE.Mesh(innerGeo, innerMat);
+        coreGroup.add(innerMesh);
+
+        // Floating architectural satellite cubes representing decoupled microservices/layers
+        const satelliteGroup = new THREE.Group();
+        coreGroup.add(satelliteGroup);
+        const satellites = [];
+
+        const satGeo = new THREE.BoxGeometry(0.8, 0.8, 0.8);
+        const satColors = [0x10b981, 0x06b6d4, 0x34d399, 0x38bdf8];
+
+        for (let i = 0; i < 6; i++) {
+            const angle = (i / 6) * Math.PI * 2;
+            const radius = 6.2;
+            const satMat = new THREE.MeshStandardMaterial({
+                color: satColors[i % satColors.length],
+                wireframe: true,
+                transparent: true,
+                opacity: 0.7
+            });
+            const satMesh = new THREE.Mesh(satGeo, satMat);
+            satMesh.position.set(Math.cos(angle) * radius, Math.sin(angle) * radius * 0.5, Math.sin(angle) * 2);
+            satelliteGroup.add(satMesh);
+            satellites.push({ mesh: satMesh, speed: 0.01 + i * 0.003, angle });
+        }
+
+        // Mouse Parallax tracking
+        let mouseX = 0, mouseY = 0;
+        let targetMouseX = 0, targetMouseY = 0;
+
+        window.addEventListener('mousemove', (e) => {
+            targetMouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+            targetMouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+        });
+
+        // Resize handler
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // ================= 3. GSAP SCROLLTRIGGER SCRUBBED TIMELINE =================
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Background 3D object transformation synced to overall scroll
+        const masterTl = gsap.timeline({
+            scrollTrigger: {
+                trigger: 'main',
+                start: 'top top',
+                end: 'bottom bottom',
+                scrub: 1.2
+            }
+        });
+
+        masterTl
+            // Scroll to Project 1 (IVY)
+            .to(coreGroup.position, { x: 3.5, y: -0.5, z: 2, ease: 'power1.inOut' }, 0)
+            .to(coreGroup.rotation, { x: Math.PI * 0.8, y: Math.PI * 1.2, ease: 'none' }, 0)
+            .to(camera.position, { z: 12, ease: 'power1.inOut' }, 0)
+
+            // Scroll to Project 2 (Toa)
+            .to(coreGroup.position, { x: -3.5, y: 0.5, z: 1, ease: 'power1.inOut' }, 0.25)
+            .to(coreGroup.rotation, { x: Math.PI * 1.6, y: Math.PI * 2.4, ease: 'none' }, 0.25)
+            .to(icoMesh.scale, { x: 1.3, y: 1.3, z: 1.3 }, 0.25)
+
+            // Scroll to Project 3 (Zalo)
+            .to(coreGroup.position, { x: 3.2, y: -0.2, z: 0, ease: 'power1.inOut' }, 0.5)
+            .to(coreGroup.rotation, { x: Math.PI * 2.4, y: Math.PI * 3.6, ease: 'none' }, 0.5)
+
+            // Scroll to Project 4 (AI Bot)
+            .to(coreGroup.position, { x: -3.0, y: 0.3, z: 2, ease: 'power1.inOut' }, 0.75)
+            .to(coreGroup.rotation, { x: Math.PI * 3.2, y: Math.PI * 4.8, ease: 'none' }, 0.75)
+
+            // Final section (Sandbox & Contact)
+            .to(coreGroup.position, { x: 0, y: 0, z: -5, ease: 'power1.inOut' }, 1.0)
+            .to(coreGroup.rotation, { x: Math.PI * 4, y: Math.PI * 6, ease: 'none' }, 1.0);
+
+        // Project slide card reveals
+        document.querySelectorAll('.project-slide').forEach((slide, idx) => {
+            gsap.from(slide.querySelector('.glass-card'), {
+                scrollTrigger: {
+                    trigger: slide,
+                    start: 'top 75%',
+                    end: 'top 30%',
+                    scrub: 0.6,
+                },
+                y: 60,
+                opacity: 0.2,
+                scale: 0.95,
+                ease: 'power2.out'
+            });
+
+            gsap.from(slide.querySelector('.hologram-box'), {
+                scrollTrigger: {
+                    trigger: slide,
+                    start: 'top 70%',
+                    end: 'top 25%',
+                    scrub: 0.6,
+                },
+                y: 80,
+                opacity: 0,
+                rotateY: idx % 2 === 0 ? 15 : -15,
+                ease: 'power2.out'
+            });
+        });
+
+        // ================= 4. SECTION 3 INTERACTIVE 3D SANDBOX =================
+        const sandboxMount = document.getElementById('interactive-sandbox-canvas');
+        if (sandboxMount && typeof THREE.OrbitControls !== 'undefined') {
+            const sRenderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            sRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            sRenderer.setSize(sandboxMount.clientWidth, sandboxMount.clientHeight);
+            sandboxMount.appendChild(sRenderer.domElement);
+
+            const sScene = new THREE.Scene();
+            const sCamera = new THREE.PerspectiveCamera(45, sandboxMount.clientWidth / sandboxMount.clientHeight, 0.1, 100);
+            sCamera.position.set(0, 4, 12);
+
+            const controls = new THREE.OrbitControls(sCamera, sRenderer.domElement);
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.05;
+            controls.maxDistance = 22;
+            controls.minDistance = 5;
+
+            // Lights
+            const sAmbient = new THREE.AmbientLight(0xffffff, 0.8);
+            sScene.add(sAmbient);
+            const sPoint1 = new THREE.PointLight(0x10b981, 2, 20);
+            sPoint1.position.set(6, 6, 6);
+            sScene.add(sPoint1);
+            const sPoint2 = new THREE.PointLight(0x06b6d4, 1.5, 20);
+            sPoint2.position.set(-6, -6, -6);
+            sScene.add(sPoint2);
+
+            // Layered System Architecture Models:
+            // 3 stacked architectural planes (UI Layer, BFF/API Layer, Database & AI Layer)
+            const sandboxCluster = new THREE.Group();
+            sScene.add(sandboxCluster);
+
+            const createLayerPlane = (y, color, title) => {
+                const grp = new THREE.Group();
+                grp.position.y = y;
+
+                // Translucent platform
+                const pGeo = new THREE.BoxGeometry(6, 0.2, 4);
+                const pMat = new THREE.MeshPhysicalMaterial({
+                    color: color,
+                    transparent: true,
+                    opacity: 0.25,
+                    roughness: 0.2,
+                    metalness: 0.8,
+                    wireframe: false
+                });
+                const pMesh = new THREE.Mesh(pGeo, pMat);
+                grp.add(pMesh);
+
+                // Platform wireframe border
+                const edgeGeo = new THREE.EdgesGeometry(pGeo);
+                const edgeMat = new THREE.LineBasicMaterial({ color: color });
+                const wire = new THREE.LineSegments(edgeGeo, edgeMat);
+                grp.add(wire);
+
+                // 3 small node cubes on the platform
+                for (let i = -1; i <= 1; i++) {
+                    const nGeo = new THREE.BoxGeometry(0.8, 0.6, 0.8);
+                    const nMat = new THREE.MeshStandardMaterial({
+                        color: color,
+                        metalness: 0.8,
+                        roughness: 0.3
+                    });
+                    const nMesh = new THREE.Mesh(nGeo, nMat);
+                    nMesh.position.set(i * 1.8, 0.4, 0);
+                    grp.add(nMesh);
+                }
+
+                return grp;
+            };
+
+            const layerUI = createLayerPlane(2.5, 0x10b981, 'Frontend & Client');
+            const layerBFF = createLayerPlane(0, 0x06b6d4, 'NestJS BFF & Sync');
+            const layerDB = createLayerPlane(-2.5, 0x059669, 'Database & AI Engine');
+
+            sandboxCluster.add(layerUI);
+            sandboxCluster.add(layerBFF);
+            sandboxCluster.add(layerDB);
+
+            // Vertical connecting data beams
+            const beamGeo = new THREE.CylinderGeometry(0.04, 0.04, 5.2, 8);
+            const beamMat = new THREE.MeshBasicMaterial({ color: 0x34d399, transparent: true, opacity: 0.6 });
+            for (let x = -2; x <= 2; x += 4) {
+                for (let z = -1.2; z <= 1.2; z += 2.4) {
+                    const beam = new THREE.Mesh(beamGeo, beamMat);
+                    beam.position.set(x, 0, z);
+                    sandboxCluster.add(beam);
+                }
+            }
+
+            // Sandbox View Mode Buttons
+            const btnComposite = document.getElementById('btn-view-composite');
+            const btnWireframe = document.getElementById('btn-view-wireframe');
+            const btnLayers = document.getElementById('btn-view-layers');
+            const btnReset = document.getElementById('btn-view-reset');
+            const clusterNameElem = document.getElementById('cluster-name');
+
+            function resetActiveBtns() {
+                [btnComposite, btnWireframe, btnLayers].forEach(b => {
+                    b.className = "sandbox-ctrl px-3 py-1 rounded-lg text-zinc-400 hover:text-white font-mono text-xs transition-all";
+                });
+            }
+
+            btnComposite.addEventListener('click', () => {
+                resetActiveBtns();
+                btnComposite.className = "sandbox-ctrl px-3 py-1 rounded-lg bg-emerald-500 text-obsidian font-mono font-bold text-xs transition-all";
+                clusterNameElem.textContent = "Clean Architecture BFF + Real-time Sync";
+                gsap.to(layerUI.position, { y: 2.5, duration: 0.6 });
+                gsap.to(layerBFF.position, { y: 0, duration: 0.6 });
+                gsap.to(layerDB.position, { y: -2.5, duration: 0.6 });
+                sandboxCluster.traverse(child => {
+                    if (child.isMesh && child.material) child.material.wireframe = false;
+                });
+            });
+
+            btnWireframe.addEventListener('click', () => {
+                resetActiveBtns();
+                btnWireframe.className = "sandbox-ctrl px-3 py-1 rounded-lg bg-cyan-500 text-obsidian font-mono font-bold text-xs transition-all";
+                clusterNameElem.textContent = "Wireframe Mesh · Data Pipeline Lattice";
+                sandboxCluster.traverse(child => {
+                    if (child.isMesh && child.material) child.material.wireframe = true;
+                });
+            });
+
+            btnLayers.addEventListener('click', () => {
+                resetActiveBtns();
+                btnLayers.className = "sandbox-ctrl px-3 py-1 rounded-lg bg-teal-500 text-obsidian font-mono font-bold text-xs transition-all";
+                clusterNameElem.textContent = "Phân Tầng Rõ Ràng: UI -> BFF -> Database & AI";
+                gsap.to(layerUI.position, { y: 4.2, duration: 0.8 });
+                gsap.to(layerBFF.position, { y: 0, duration: 0.8 });
+                gsap.to(layerDB.position, { y: -4.2, duration: 0.8 });
+            });
+
+            btnReset.addEventListener('click', () => {
+                gsap.to(sCamera.position, { x: 0, y: 4, z: 12, duration: 0.8, onUpdate: () => controls.update() });
+            });
+
+            // Sandbox Resize
+            window.addEventListener('resize', () => {
+                if (!sandboxMount) return;
+                sCamera.aspect = sandboxMount.clientWidth / sandboxMount.clientHeight;
+                sCamera.updateProjectionMatrix();
+                sRenderer.setSize(sandboxMount.clientWidth, sandboxMount.clientHeight);
+            });
+
+            // Sandbox render loop
+            function animateSandbox() {
+                requestAnimationFrame(animateSandbox);
+                sandboxCluster.rotation.y += 0.002;
+                controls.update();
+                sRenderer.render(sScene, sCamera);
+            }
+            animateSandbox();
+        }
+
+        // ================= 5. MAIN RENDER & FPS COUNTER LOOP =================
+        let frameCount = 0;
+        let lastTime = performance.now();
+        const fpsElem = document.getElementById('fps-counter');
+
+        function animate(now) {
+            requestAnimationFrame(animate);
+
+            // FPS Calculation
+            frameCount++;
+            if (now - lastTime >= 1000) {
+                if (fpsElem) fpsElem.textContent = frameCount;
+                frameCount = 0;
+                lastTime = now;
+            }
+
+            // Smooth mouse interpolation (LERP)
+            mouseX += (targetMouseX - mouseX) * 0.05;
+            mouseY += (targetMouseY - mouseY) * 0.05;
+
+            // Rotate core background elements
+            icoMesh.rotation.x += 0.002;
+            icoMesh.rotation.y += 0.003;
+            octaMesh.rotation.x -= 0.003;
+            octaMesh.rotation.y -= 0.002;
+            innerMesh.rotation.z += 0.004;
+
+            // Orbit satellite cubes
+            satellites.forEach(sat => {
+                sat.angle += sat.speed;
+                sat.mesh.position.x = Math.cos(sat.angle) * 6.2;
+                sat.mesh.position.y = Math.sin(sat.angle) * 3.1;
+                sat.mesh.rotation.x += 0.02;
+                sat.mesh.rotation.y += 0.02;
+            });
+
+            // Subtle particle drift
+            particlePoints.rotation.y += 0.0004;
+
+            // Dynamic camera parallax with mouse
+            camera.position.x = mouseX * 1.5;
+            camera.position.y = -mouseY * 1.5;
+            camera.lookAt(coreGroup.position);
+
+            renderer.render(scene, camera);
+        }
+        animate(performance.now());
+
+        // GSAP and ScrollTrigger Cleanup on unmount / navigation
+        window.addEventListener('beforeunload', () => {
+            ScrollTrigger.getAll().forEach(t => t.kill());
+            gsap.globalTimeline.clear();
+            if (lenis) lenis.destroy();
+        });
+
+        // ================= 6. WEB AUDIO API SYNTHESIZER (SOUND FX) =================
+        let audioCtx = null;
+        let isAudioMuted = true;
+        const soundToggle = document.getElementById('sound-toggle');
+        const soundIcon = document.getElementById('sound-icon');
+
+        function playClickSound() {
+            if (isAudioMuted || !audioCtx) return;
+            try {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(520, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(260, audioCtx.currentTime + 0.08);
+                gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.08);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.08);
+            } catch (e) {}
+        }
+
+        soundToggle.addEventListener('click', () => {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+            isAudioMuted = !isAudioMuted;
+            if (isAudioMuted) {
+                soundIcon.className = "ph-bold ph-speaker-slash";
+                soundToggle.classList.remove('text-emerald-400', 'border-emerald-500/60');
+            } else {
+                soundIcon.className = "ph-bold ph-speaker-high";
+                soundToggle.classList.add('text-emerald-400', 'border-emerald-500/60');
+                playClickSound();
+            }
+        });
+
+        // Trigger subtle click sound on interactive elements
+        document.querySelectorAll('button, a').forEach(el => {
+            el.addEventListener('mouseenter', () => playClickSound());
+        });
+
+        // ================= 7. INSPECT BUTTONS (QUICK TELEPORT) =================
+        document.querySelectorAll('.inspect-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const target = btn.dataset.target;
+                const sandbox = document.getElementById('sandbox');
+                if (sandbox) {
+                    if (lenis) lenis.scrollTo(sandbox, { offset: -60 });
+                    else sandbox.scrollIntoView({ behavior: 'smooth' });
+
+                    // Highlight corresponding layer
+                    const btnLayers = document.getElementById('btn-view-layers');
+                    if (btnLayers) setTimeout(() => btnLayers.click(), 600);
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
