@@ -36,5 +36,11 @@ TypeScript, Node.js, NestJS, Express, React, React Native, Next.js, PostgreSQL, 
 - Mobile Developer, N.A.M Tech (2024-present): Scrum process.
 - ERP/WMS/CRM Developer, Thiso Retail / Emart (2022-2024): operated, released and fixed the Emart mall app.
 
+## Freelance products (personal apps) & policies
+- Apps & policies hub: https://nguyenconghung.up.railway.app/apps/
+- General Terms of Use (shared by all apps): https://nguyenconghung.up.railway.app/terms/
+- LingoPop (English/Chinese learning game, Android & iOS, com.nguyenconghung.lingopop; Flutter + Flame + Firebase; egg shooter, balloon pop, speed quiz, ELO 1v1 duels, leaderboards, chat): product page https://nguyenconghung.up.railway.app/lingopop/ · privacy https://nguyenconghung.up.railway.app/lingopop/privacy/ · terms https://nguyenconghung.up.railway.app/lingopop/terms/
+- VoiceLedger - So Chi Tieu (offline voice expense tracker, Android, com.voiceledger.money): privacy https://nguyenconghung.up.railway.app/voiceledger/privacy/
+
 ## Availability
 Available for freelance web and app development worldwide, including Europe and Germany. Remote, English-speaking. Replies within 24 hours.

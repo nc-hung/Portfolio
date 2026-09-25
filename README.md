@@ -79,6 +79,21 @@ Tài liệu này liệt kê chi tiết toàn bộ nội dung được hiển th�
 
 ---
 
+## 🎮 3b. Sản phẩm freelance (Freelance products)
+Section `#freelance` trên trang chủ, tách riêng khỏi dự án khách hàng; dữ liệu ở hằng `FREELANCE` + `t.freelance`. CV (`docs/cv/`) có mục tương ứng.
+
+### LingoPop — 2026 (trang giới thiệu: `/lingopop/`)
+- **Loại hình**: Game học từ vựng tiếng Anh & tiếng Trung, Android & iOS (`com.nguyenconghung.lingopop`).
+- **Mô tả**: Bắn Trứng Khủng Long, Bong Bóng Bay, Đố Vui Siêu Tốc, Đấu Trí 1 vs 1 (ghép trận ELO); bảng xếp hạng ELO / XP tuần / bạn bè, kết bạn, chat có kiểm duyệt, tủ đồ, quà hằng ngày, sổ từ vựng. 16 chủ đề × 320 từ mỗi ngôn ngữ.
+- **Công nghệ**: Flutter, Flame, Provider, Firebase (Auth, Firestore, Cloud Functions, Hosting), AdMob + UMP/ATT, in-app purchase.
+- **Trang**: `docs/lingopop/index.html` (song ngữ VI/EN, dùng chung khoá `lang` với trang chủ), ảnh trong `docs/lingopop/img/` (WebP 540px, chụp từ bản build Android). Chính sách: `/lingopop/privacy/`, `/lingopop/terms/`.
+
+### VoiceLedger – Sổ Chi Tiêu — 2026
+- **Loại hình**: App tài chính cá nhân Android, ngoại tuyến hoàn toàn (`com.voiceledger.money`).
+- **Mô tả**: Ghi thu chi bằng giọng nói, chụp hoá đơn, ngân sách tháng, biểu đồ, khoá sinh trắc học, sao lưu ZIP/CSV/JSON. Chính sách: `/voiceledger/privacy/`.
+
+---
+
 ## 📈 4. Kinh nghiệm (Professional Journey)
 
 ### 1. OX Multimedia (06/2026 - nay)

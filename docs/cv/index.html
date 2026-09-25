@@ -121,6 +121,12 @@
       border-bottom: 1px solid var(--rule);
     }
 
+    .plink {
+      color: var(--blue);
+      text-decoration: none;
+      font-weight: 400;
+    }
+
     h3 {
       color: var(--navy);
       font-size: 11.2px;
@@ -314,6 +320,21 @@
             ]
           },
         ],
+        freelanceTitle: `Sản phẩm freelance`,
+        freelance: [
+          {
+            title: `LingoPop - Game học tiếng Anh &amp; tiếng Trung | Android &amp; iOS`, meta: `2026 &nbsp;|&nbsp; <a class="plink" href="https://nguyenconghung.up.railway.app/lingopop/">nguyenconghung.up.railway.app/lingopop</a>`, bullets: [
+              `Tự thiết kế và phát triển trọn vẹn một game học từ vựng: bắn trứng, bong bóng bay, đố vui siêu tốc và đấu trí 1 vs 1 thời gian thực có ghép trận theo ELO, bảng xếp hạng, kết bạn và chat có kiểm duyệt.`,
+              `Flutter + Flame, một codebase cho bản Android và iOS giống hệt nhau; backend Firebase (Auth, Firestore, Cloud Functions TypeScript) chấm điểm trận đấu và xác thực mua hàng trên máy chủ.`,
+              `Đăng nhập Google/Apple/Facebook/Zalo, AdMob kèm UMP và ATT, mua trong ứng dụng, xoá tài khoản trong app; 319 bài test tự động cho app, Cloud Functions và security rules.`,
+            ]
+          },
+          {
+            title: `VoiceLedger - Sổ chi tiêu bằng giọng nói | Android`, meta: `2026 &nbsp;|&nbsp; <a class="plink" href="https://nguyenconghung.up.railway.app/apps/">nguyenconghung.up.railway.app/apps</a>`, bullets: [
+              `Ứng dụng ghi thu chi bằng giọng nói, chụp hoá đơn, ngân sách tháng và biểu đồ; hoạt động hoàn toàn ngoại tuyến, không máy chủ, không tài khoản; khoá sinh trắc học, sao lưu ZIP/CSV/JSON.`,
+            ]
+          },
+        ],
         addlTitle: `Dự án khác`,
         projects: [
           {
@@ -417,6 +438,21 @@
             ]
           },
         ],
+        freelanceTitle: `Freelance Products`,
+        freelance: [
+          {
+            title: `LingoPop - English &amp; Chinese Learning Game | Android &amp; iOS`, meta: `2026 &nbsp;|&nbsp; <a class="plink" href="https://nguyenconghung.up.railway.app/lingopop/">nguyenconghung.up.railway.app/lingopop</a>`, bullets: [
+              `Designed and built a vocabulary game end to end: egg shooter, balloon pop, speed quiz and real-time 1v1 duels with ELO matchmaking, leaderboards, friends and moderated chat.`,
+              `Flutter + Flame with one codebase for identical Android and iOS builds; Firebase backend (Auth, Firestore, TypeScript Cloud Functions) handles match scoring and purchase verification server-side.`,
+              `Google/Apple/Facebook/Zalo sign-in, AdMob with UMP and ATT, in-app purchases, in-app account deletion; 319 automated tests across the app, Cloud Functions and security rules.`,
+            ]
+          },
+          {
+            title: `VoiceLedger - Voice Expense Book | Android`, meta: `2026 &nbsp;|&nbsp; <a class="plink" href="https://nguyenconghung.up.railway.app/apps/">nguyenconghung.up.railway.app/apps</a>`, bullets: [
+              `Log spending by voice, attach receipt photos, set monthly budgets and view charts; fully offline with no server or account, biometric lock, and ZIP/CSV/JSON backup.`,
+            ]
+          },
+        ],
         addlTitle: `Additional Project Experience`,
         projects: [
           {
@@ -469,6 +505,7 @@
         : `<div class="proj">${e.proj}</div>${li(e.bullets)}`
       ).join('');
       const projects = d.projects.map(p => `<h3>${p.title}</h3>${li(p.bullets)}`).join('');
+      const freelance = d.freelance.map(p => `<div class="role-meta"><h3>${p.title}</h3><span class="where">${p.meta}</span></div>${li(p.bullets)}`).join('');
       const skills = d.skills.map(s => `<div><b>${s.label}</b> ${s.value}</div>`).join('');
       const edu = d.education.map(e => `<div><b>${e.inst}</b> - ${e.detail}</div>`).join('');
       return `
@@ -481,6 +518,8 @@
     <div class="grid2">${strengths}</div>
     <h2>${d.expTitle}</h2>
     ${exp}
+    <h2>${d.freelanceTitle}</h2>
+    ${freelance}
     <h2>${d.addlTitle}</h2>
     ${projects}
     <h2>${d.achTitle}</h2>
